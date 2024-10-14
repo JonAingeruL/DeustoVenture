@@ -1,0 +1,13 @@
+--------MAPA.txt-------- Aimar
+He creado 2 pantallas de juego en formato txt,
+
+Se supone que en el juego la -1- tiene que estar debajo de la -2-
+
+SIGNIFICADO DE NUMEROS:
+
+	0-> Camino (el jugador pasa por aqui)
+	1-> Arbol (el jugador no pasa por aqui)
+	2-> Arbol gigante (el jugador no pasa por aqui)
+	
+	Para probar si el mapeado funciona, se le puede asignar un color a cada número
+	(EJ: Verde claro al arbol, verde oscuro al arbol gigante y carne al camino)
