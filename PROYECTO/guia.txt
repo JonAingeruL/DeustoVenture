@@ -11,3 +11,25 @@ SIGNIFICADO DE NUMEROS:
 	
 	Para probar si el mapeado funciona, se le puede asignar un color a cada número
 	(EJ: Verde claro al arbol, verde oscuro al arbol gigante y carne al camino)
+------Manejo de celdas------ Ángel
+
+Para dibujar cada celda del juego, cargo el fichero mapa.txt en un array. 
+Cada celda se cargará por separado, así que habrá que llamar al método 
+cada vez que se cambie de celda.
+
+Una vez el mapa está cargado, se dibuja a sí mismo recorriendo el array y colocando bloques,
+pero todavía NO tiene colisiones.
+
+Tampoco hay ningún sistema que se ocupe de cambiar de celda dependiendo de la posición en la actual,
+pero tengo un par de ideas sencillas:
+	1.Dependiendo de una posición fija -> Simplemente cambiando de celda cada vez que se va a
+	un punto de la pantalla. De cada celda sólo se puede ir a otras dos (anterior y posterior). 
+	Esto limita las formas posibles de cada celda, así que no me convence.
+
+	2.Dependiendo de los bordes -> Cuando el jugador toca los bordes de la pantalla, cambia de celda.
+	Una vez más, esto limita las posibles celdas y obliga a que los números sean contiguos
+	
+	3. Guardar posiciones de cambio de celda + celdas de cambio en algún sitio -> Esta es la idea que más
+	me convence personalmente. Guardando en algún sitio estas posiciones (sugiero en el mapa.txt, al final
+	de cada celda con algun caracter especial indicativo como <> o "") podriamos tener completa libertad a la
+	hora de diseñar el mapa, pero hay que pensar en cómo guardar y como cargar estos datos.
