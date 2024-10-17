@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// Despues de crear el ManejoTeclado y los controles de movimiento del juego y
 	// hacer que lo pueda leer el GamePanel, hay que crear el mapa y el jugador
 	//Creo el mapa
-	Mapa mapa = new Mapa(2);
+	Mapa mapa = new Mapa(1);
 
 	// Creo el jugador
 	// TODO Pensar el esquema de herencias de la clase personaje y crear una clase
@@ -167,6 +167,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public void update() {
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		personaje.movimiento(tecladoM);
+		//Después comprobamos si el personaje ha cambiado de celda
+		mapa.detectarCambio(personaje);
 
 	}
 
