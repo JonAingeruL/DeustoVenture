@@ -23,18 +23,21 @@ public class Personaje {
 		if (tecladoM.arribaPulsado == true) {
 			jugadorY -= velocidadJugador; // Basicamente cuando el jugador mantenga pulado W el personaje se movera 4
 											// hacia arriba, 4 porque hemos puesto esa su velocidad
+
 		} else if (tecladoM.abajoPulsado == true) {
 			jugadorY += velocidadJugador; // Basicamente cuando el jugador mantenga pulado S el personaje se movera 4
 											// hacia abajo, 4 porque hemos puesto esa su velocidad
+
 		} else if (tecladoM.izquierdaPulsado == true) {
 			jugadorX -= velocidadJugador; // Basicamente cuando el jugador mantenga pulado A el personaje se movera 4
-											// hacia la izq, 4 porque hemos puesto esa su velocidad
+
 		} else if (tecladoM.derechaPulsado == true) {
 			jugadorX += velocidadJugador; // Basicamente cuando el jugador mantenga pulado D el personaje se movera 4
 											// hacia la der, 4 porque hemos puesto esa su velocidad
+
 		}
 	}
-
+	
 	/**
 	 * Devuelve la posición en X del jugador
 	 * 

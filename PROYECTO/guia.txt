@@ -28,3 +28,5 @@ Basicamente funcionará siempre que en el eje horizontal de nuestro mapa de celd
 tenga dominio -10<= x <=+10 (que no haya por ejemplo una celda 11 a la derecha de una 10).
 
 Antes de dibujar más mapa, es importante mirar el javadoc y entender cómo funciona esto.
+
+
