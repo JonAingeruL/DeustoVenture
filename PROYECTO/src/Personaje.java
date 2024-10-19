@@ -19,19 +19,30 @@ public class Personaje {
 	 * Esta funcion controla el movimiento del personaje jugable según la interacción con el teclado
 	 * @param tecladoM El objeto manejoTeclado a utilizar
 	 */
-	public void movimiento(ManejoTeclado tecladoM) {
+	public void movimiento(ManejoTeclado tecladoM, Mapa mapa, int tamanoBaldosa) {
+		//Dependiendo de la tecla pulsada, muevo al jugador en la dirección correspondiente.
+		//Después compruebo si hay colisión con el mapa, y en ese caso revierto el movimiento lo que haga falta
+		//para corregirla.
 		if (tecladoM.arribaPulsado == true) {
-			jugadorY -= velocidadJugador; // Basicamente cuando el jugador mantenga pulado W el personaje se movera 4
-											// hacia arriba, 4 porque hemos puesto esa su velocidad
+			jugadorY -= velocidadJugador;
+			while(detectaColision(mapa, tamanoBaldosa)) {
+				jugadorY += 1;
+			}
 		} else if (tecladoM.abajoPulsado == true) {
-			jugadorY += velocidadJugador; // Basicamente cuando el jugador mantenga pulado S el personaje se movera 4
-											// hacia abajo, 4 porque hemos puesto esa su velocidad
+			jugadorY += velocidadJugador;
+			while(detectaColision(mapa, tamanoBaldosa)) {
+				jugadorY -= 1;
+			}
 		} else if (tecladoM.izquierdaPulsado == true) {
-			jugadorX -= velocidadJugador; // Basicamente cuando el jugador mantenga pulado A el personaje se movera 4
-											// hacia la izq, 4 porque hemos puesto esa su velocidad
+			jugadorX -= velocidadJugador;
+			while(detectaColision(mapa, tamanoBaldosa)) {
+				jugadorX += 1;
+			}
 		} else if (tecladoM.derechaPulsado == true) {
-			jugadorX += velocidadJugador; // Basicamente cuando el jugador mantenga pulado D el personaje se movera 4
-											// hacia la der, 4 porque hemos puesto esa su velocidad
+			jugadorX += velocidadJugador;
+			while(detectaColision(mapa, tamanoBaldosa)) {
+				jugadorX -= 1;
+			}
 		}
 	}
 
@@ -88,4 +99,28 @@ public class Personaje {
 	public void setVelocidadJugador(int velocidadJugador) {
 		this.velocidadJugador = velocidadJugador;
 	}
+	/**
+	 * Este método detecta colisiones entre el personaje y el mapa. Devuelve un booleano.
+	 * @param mapa El mapa que puede colisionar con el jugador
+	 * @param tamanobaldosa El tamaño de cada baldosa del mapa
+	 * @return
+	 */
+	public boolean detectaColision(Mapa mapa, int tamanobaldosa) {
+		//Recorro el array celda completo
+		for (int i = 0; i < mapa.getCelda().length; i++) {
+			for (int j = 0; j < mapa.getCelda()[i].length; j++) {
+				//Por cada baldosa no vacía, calcula si está colisionando de algún modo con el personaje
+				if (mapa.getCelda()[i][j] != 0) {
+					if (((((jugadorX <= (i*tamanobaldosa)+tamanobaldosa) && (jugadorX >= i*tamanobaldosa))||((jugadorX+ tamanobaldosa <= (i*tamanobaldosa)+tamanobaldosa) && (jugadorX+tamanobaldosa >= i*tamanobaldosa)))&& (((jugadorY <= (j*tamanobaldosa)+tamanobaldosa) && (jugadorY >= j*tamanobaldosa)) || ((jugadorY+ tamanobaldosa <= (j*tamanobaldosa)+tamanobaldosa) && (jugadorY+tamanobaldosa >= j*tamanobaldosa))))) {
+					System.out.println("Hay colision");
+					return true;
+					}
+				}
+				
+			}
+		}
+		return false;
+	}
+	
+
 }

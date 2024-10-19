@@ -116,33 +116,35 @@ public class Mapa {
 				// corresponde
 				case 1:
 					g.setColor(Color.GREEN);
-					g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 					break;
 				case 2:
 					g.setColor(Color.GREEN.darker());
-					g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 					break;
 				default:
 					g.setColor(Color.GRAY);
-					g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 					break;
 				}
+				g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 			}
 		}
 	}
-/**
- * Este método detecta cuando un jugador se sale de la celda actual y
- * lo transporta a la siguiente (vertical +10/-10, horizontal +1/-1)
- * Alterando las coordenadas del eje que sea necesario para que la 
- * posición del jugador sea coherente con la anterior
- * @param personaje El personaje para el que se va a detectar el cambio de celda
- */
+
+	/**
+	 * Este método detecta cuando un jugador se sale de la celda actual y lo
+	 * transporta a la siguiente (vertical +10/-10, horizontal +1/-1) Alterando las
+	 * coordenadas del eje que sea necesario para que la posición del jugador sea
+	 * coherente con la anterior
+	 * 
+	 * @param personaje El personaje para el que se va a detectar el cambio de celda
+	 */
 	public void detectarCambio(Personaje personaje) {
 		boolean hayCambio = false;
-		//Se intenta que cuando el jugador sale de una celda siempre quede
-		//la mitad del personaje fuera y la mitad dentro (IMPORTANTE tener en cuenta que
-		//ni las coordenadas del mapa ni las del jugador tienen el 0,0 en el centro)
-		//Si el jugador se sale por el eje X se suma/resta 1, y en el caso del eje Y, 10.
+		// Se intenta que cuando el jugador sale de una celda siempre quede
+		// la mitad del personaje fuera y la mitad dentro (IMPORTANTE tener en cuenta
+		// que
+		// ni las coordenadas del mapa ni las del jugador tienen el 0,0 en el centro)
+		// Si el jugador se sale por el eje X se suma/resta 1, y en el caso del eje Y,
+		// 10.
 		if (personaje.getJugadorX() > 744) {
 			numCelda = numCelda + 1;
 			hayCambio = true;
@@ -160,10 +162,9 @@ public class Mapa {
 			hayCambio = true;
 			personaje.setJugadorY(552);
 		}
-		//Si se ha detectado algún cambio, se cambia la celda a la que corresponda
+		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
 			setCelda(cargarCelda("src\\mapa.txt", numCelda));
 		}
 	}
-
 }

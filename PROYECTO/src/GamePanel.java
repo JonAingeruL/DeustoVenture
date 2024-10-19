@@ -166,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// Para hacer las dos cosas dentro del bucle tenemos que crear dos metodos
 	public void update() {
 		// El personaje tiene una función movimiento a la que llamamos ahora
-		personaje.movimiento(tecladoM);
+		personaje.movimiento(tecladoM, mapa, tamañoBaldosa);
 		//Después comprobamos si el personaje ha cambiado de celda
 		mapa.detectarCambio(personaje);
 
