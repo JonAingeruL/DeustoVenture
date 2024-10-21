@@ -1,0 +1,60 @@
+
+//Código de prueba de colisiones, Aimar Moreno (no las detecta bien y falla al moverse, cada vez que se apreta una tecla de movimiento,
+el código explota y empieza a detectar movimientos en todos los sentidos, no dejando mover al jugador (solo pasa en un mapa cargado))
+
+	public void movimiento(ManejoTeclado tecladoM, Mapa mapa, int tamanoBaldosa) {
+		if (tecladoM.arribaPulsado == true) {
+			jugadorY -= velocidadJugador; // Basicamente cuando el jugador mantenga pulado W el personaje se movera 4
+											// hacia arriba, 4 porque hemos puesto esa su velocidad
+			while (detectarColisiones( mapa,tamanoBaldosa)) {
+				jugadorY+=1;
+				
+			}
+		} else if (tecladoM.abajoPulsado == true) {
+			jugadorY += velocidadJugador; // Basicamente cuando el jugador mantenga pulado S el personaje se movera 4
+											// hacia abajo, 4 porque hemos puesto esa su velocidad
+			while (detectarColisiones( mapa,tamanoBaldosa)) {
+				jugadorY+=1;
+				
+			}
+		} else if (tecladoM.izquierdaPulsado == true) {
+			jugadorX -= velocidadJugador; // Basicamente cuando el jugador mantenga pulado A el personaje se movera 4
+											// hacia la izq, 4 porque hemos puesto esa su velocidad
+			while (detectarColisiones( mapa,tamanoBaldosa)) {
+				jugadorX+=1;
+				
+			}
+		} else if (tecladoM.derechaPulsado == true) {
+			jugadorX += velocidadJugador; // Basicamente cuando el jugador mantenga pulado D el personaje se movera 4
+											// hacia la der, 4 porque hemos puesto esa su velocidad
+			while (detectarColisiones( mapa,tamanoBaldosa)) {
+				jugadorX-=1;
+				
+			}
+		}
+
+
+
+
+
+
+
+
+public boolean detectarColisiones(Mapa mapa , int tamanoBaldosa) {
+		for (int i = 0; i < mapa.getCelda().length; i++) {
+			for (int j = 0; j < mapa.getCelda()[i].length; j++) {
+				if (mapa.getCelda()[i][j]!=0) {
+					if ((
+							((jugadorX>(i*tamanoBaldosa)) && (jugadorX<(i*tamanoBaldosa)+tamanoBaldosa)
+							||(jugadorX+tamanoBaldosa<(i*tamanoBaldosa)+tamanoBaldosa)))
+							&& (jugadorX+tamanoBaldosa>(i*tamanoBaldosa)
+							&&(((jugadorY>(j*tamanoBaldosa)) && (jugadorY<(j*tamanoBaldosa)+tamanoBaldosa))
+							|| ((jugadorY+tamanoBaldosa>(j*tamanoBaldosa)) && (jugadorY+tamanoBaldosa<(j*tamanoBaldosa)+tamanoBaldosa)))));
+					System.out.println("Hay colision");
+					return true;
+				}
+			}
+			
+		}
+		return false;
+	};

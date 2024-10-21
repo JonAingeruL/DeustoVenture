@@ -39,3 +39,6 @@ Después queda decidir como resolver realmente la colisión.
 Lo que he decidido hacer es comprovar si hay colisión cada vez que el juggador se mueve con las teclas
 en cualquier dirección. Si se detecta algo, sumo +/-1 en el sentido opuesto al movimiento original hasta que
 deje de detectarse.
+=======
+
+>>>>>>> branch 'master' of https://github.com/JonAingeruL/DeustoVenture.git
