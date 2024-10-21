@@ -141,9 +141,8 @@ public class Mapa {
 		boolean hayCambio = false;
 		// Se intenta que cuando el jugador sale de una celda siempre quede
 		// la mitad del personaje fuera y la mitad dentro (IMPORTANTE tener en cuenta
-		// que
-		// ni las coordenadas del mapa ni las del jugador tienen el 0,0 en el centro)
-		// Si el jugador se sale por el eje X se suma/resta 1, y en el caso del eje Y,
+		// que ni las coordenadas del mapa ni las del jugador tienen el 0,0 en el centro)
+		// Si el jugador se sale por el eje X se suma/resta al numCelda 1, y en el caso del eje Y,
 		// 10.
 		if (personaje.getJugadorX() > 744) {
 			numCelda = numCelda + 1;

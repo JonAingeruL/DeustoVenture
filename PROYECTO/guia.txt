@@ -18,13 +18,24 @@ Para dibujar cada celda del juego, cargo el fichero mapa.txt en un array.
 Cada celda se cargará por separado, así que habrá que llamar al método 
 cada vez que se cambie de celda.
 
-Una vez el mapa está cargado, se dibuja a sí mismo recorriendo el array y colocando bloques,
-pero todavía NO tiene colisiones.
+Una vez el mapa está cargado, se dibuja a sí mismo recorriendo el array y colocando bloques.
 
 Ya he implementado el cambio de celdas, basándome en una idea de Aimar. El funcionamiento está
 explicado con comentarios y javadoc en el nuevo método de Mapa "detectarCambio".
 
 Basicamente funcionará siempre que en el eje horizontal de nuestro mapa de celdas
-tenga dominio -10<= x <=+10 (que no haya por ejemplo una celda 11 a la derecha de una 10).
+tenga dominio en el eje X -10<= x <=+10 (que no haya por ejemplo una celda 11 a la derecha de una 10).
 
 Antes de dibujar más mapa, es importante mirar el javadoc y entender cómo funciona esto.
+
+-----Colisiones Mapa-Jugador------Ángel
+
+Para resolver las colisiones jugador mapa, lo primero que necesito hacer es detectarlas.
+Utilizo para esto el método detectaColisión que, aunque es realmente lioso, lo único que hace
+es comprobar si hay alguna superposición jugador-mapa en cualquier dirección posible (Explicado en detalle en el método).
+Una vez detectada cualquier colisión, se devuelve true.
+
+Después queda decidir como resolver realmente la colisión.
+Lo que he decidido hacer es comprovar si hay colisión cada vez que el juggador se mueve con las teclas
+en cualquier dirección. Si se detecta algo, sumo +/-1 en el sentido opuesto al movimiento original hasta que
+deje de detectarse.

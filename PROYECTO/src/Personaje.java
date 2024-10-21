@@ -111,7 +111,15 @@ public class Personaje {
 			for (int j = 0; j < mapa.getCelda()[i].length; j++) {
 				//Por cada baldosa no vacía, calcula si está colisionando de algún modo con el personaje
 				if (mapa.getCelda()[i][j] != 0) {
-					if (((((jugadorX <= (i*tamanobaldosa)+tamanobaldosa) && (jugadorX >= i*tamanobaldosa))||((jugadorX+ tamanobaldosa <= (i*tamanobaldosa)+tamanobaldosa) && (jugadorX+tamanobaldosa >= i*tamanobaldosa)))&& (((jugadorY <= (j*tamanobaldosa)+tamanobaldosa) && (jugadorY >= j*tamanobaldosa)) || ((jugadorY+ tamanobaldosa <= (j*tamanobaldosa)+tamanobaldosa) && (jugadorY+tamanobaldosa >= j*tamanobaldosa))))) {
+					//Compruebo si hay colisión en X con la esquina izquierda
+					if (((((jugadorX <= (i*tamanobaldosa)+tamanobaldosa) && (jugadorX >= i*tamanobaldosa))
+							//Compruebo si hay colisión en X con la esquina derecha
+							||((jugadorX+ tamanobaldosa <= (i*tamanobaldosa)+tamanobaldosa) && (jugadorX+tamanobaldosa >= i*tamanobaldosa)))
+							//Compruebo si hay colisión en Y por arriba
+							&& (((jugadorY <= (j*tamanobaldosa)+tamanobaldosa) && (jugadorY >= j*tamanobaldosa))
+							//Compruebo si hay colisión en Y por abajo
+							|| ((jugadorY+ tamanobaldosa <= (j*tamanobaldosa)+tamanobaldosa) && (jugadorY+tamanobaldosa >= j*tamanobaldosa))))) {
+						//Debe detectarse por lo menos una colisión en el eje X y una colisión en el eje Y 
 					System.out.println("Hay colision");
 					return true;
 					}
