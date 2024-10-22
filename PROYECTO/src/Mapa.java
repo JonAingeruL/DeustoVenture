@@ -144,22 +144,22 @@ public class Mapa {
 		// que ni las coordenadas del mapa ni las del jugador tienen el 0,0 en el centro)
 		// Si el jugador se sale por el eje X se suma/resta al numCelda 1, y en el caso del eje Y,
 		// 10.
-		if (jugador.getJugadorX() > 744) {
+		if (jugador.getX() > 744) {
 			numCelda = numCelda + 10;
 			hayCambio = true;
-			jugador.setJugadorX(-24);
-		} else if (jugador.getJugadorX() < -24) {
+			jugador.setX(-24);
+		} else if (jugador.getX() < -24) {
 			numCelda = numCelda - 10;
 			hayCambio = true;
-			jugador.setJugadorX(744);
-		} else if (jugador.getJugadorY() > 552) {
+			jugador.setX(744);
+		} else if (jugador.getY() > 552) {
 			numCelda = numCelda - 1;
 			hayCambio = true;
-			jugador.setJugadorY(-24);
-		} else if (jugador.getJugadorY() < -24) {
+			jugador.setY(-24);
+		} else if (jugador.getY() < -24) {
 			numCelda = numCelda + 1;
 			hayCambio = true;
-			jugador.setJugadorY(552);
+			jugador.setY(552);
 		}
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {

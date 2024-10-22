@@ -1,10 +1,28 @@
 
-public class Jugador extends Personaje{
+import java.awt.Color;
+import java.awt.Graphics2D;
 
-	public Jugador(int personajeX, int personajeY, int velocidadPersonaje) {
-		super(personajeX, personajeY, velocidadPersonaje);
+import entidades.Personaje;
+
+public class Jugador extends Personaje{
+	
+	GamePanel gp;
+	ManejoTeclado maneT;
+
+	public Jugador(GamePanel gp, ManejoTeclado maneT) {
 		
+		this.gp = gp;
+		this.maneT = maneT;
+		
+		valoresDefault();
 	}
+	
+	public void valoresDefault() {
+		x = 350;
+		y = 300;
+		velocidad = 4;
+	}
+	
 	// Aqui dentro vamos a cambiar la posicion del personaje
 	// Hay que recordar que en java la esquina superior izq tiene la cordenada 0,0
 	/**
@@ -20,80 +38,32 @@ public class Jugador extends Personaje{
 		// movimiento lo que haga falta
 		// para corregirla.
 		if (tecladoM.arribaPulsado == true) {
-			personajeY -= velocidadPersonaje;
+			y -= velocidad;
 			while (detectaColision(mapa, tamanoBaldosa)) {
-				personajeY += 1;
+				y += 1;
 			}
 		} else if (tecladoM.abajoPulsado == true) {
-			personajeY += velocidadPersonaje;
+			y += velocidad;
 			while (detectaColision(mapa, tamanoBaldosa)) {
-				personajeY -= 1;
+				y -= 1;
 			}
 		} else if (tecladoM.izquierdaPulsado == true) {
-			personajeX -= velocidadPersonaje;
+			x -= velocidad;
 			while (detectaColision(mapa, tamanoBaldosa)) {
-				personajeX += 1;
+				x += 1;
 			}
 		} else if (tecladoM.derechaPulsado == true) {
-			personajeX += velocidadPersonaje;
+			x += velocidad;
 			while (detectaColision(mapa, tamanoBaldosa)) {
-				personajeX -= 1;
+				x -= 1;
 			}
 		}
 	}
 	
-	/**
-	 * Devuelve la posición en X del jugador
-	 * 
-	 * @return Posición en X jugador (int)
-	 */
-	public int getJugadorX() {
-		return personajeX;
-	}
-
-	/**
-	 * Establece la posición del jugador en X
-	 * 
-	 * @param jugadorX Posición en x del jugador
-	 */
-	public void setJugadorX(int personajeX) {
-		this.personajeX = personajeX;
-	}
-
-	/**
-	 * Devuelve la posición en Y del jugador
-	 * 
-	 * @return Posición en Y jugador (int)
-	 */
-	public int getJugadorY() {
-		return personajeY;
-	}
-
-	/**
-	 * Establece la posición en Y del jugador
-	 * 
-	 * @param jugadorY Posición en Y del jugador
-	 */
-	public void setJugadorY(int personajeY) {
-		this.personajeY = personajeY;
-	}
-
-	/**
-	 * Devuelve la velocidad del jugador
-	 * 
-	 * @return velocidad del jugador
-	 */
-	public int getVelocidadJugador() {
-		return velocidadPersonaje;
-	}
-
-	/**
-	 * Establece la velocidad del jugador
-	 * 
-	 * @param velocidadJugador La velocidad con la que se moverá el jugador
-	 */
-	public void setVelocidadJugador(int velocidadPersonaje) {
-		this.velocidadPersonaje = velocidadPersonaje;
+	public void dibujarPer(Graphics2D g2) {
+		g2.setColor(Color.white);
+		
+		g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa); 
 	}
 
 	/**
@@ -112,15 +82,15 @@ public class Jugador extends Personaje{
 				// personaje
 				if (mapa.getCelda()[i][j] != 0) {
 					// Compruebo si hay colisión en X con la esquina izquierda
-					if (((((personajeX <= (i * tamanobaldosa) + tamanobaldosa) && (personajeX >= i * tamanobaldosa))
+					if (((((x <= (i * tamanobaldosa) + tamanobaldosa) && (x >= i * tamanobaldosa))
 							// Compruebo si hay colisión en X con la esquina derecha
-							|| ((personajeX + tamanobaldosa <= (i * tamanobaldosa) + tamanobaldosa)
-									&& (personajeX + tamanobaldosa >= i * tamanobaldosa)))
+							|| ((x + tamanobaldosa <= (i * tamanobaldosa) + tamanobaldosa)
+									&& (x + tamanobaldosa >= i * tamanobaldosa)))
 							// Compruebo si hay colisión en Y por arriba
-							&& (((personajeY <= (j * tamanobaldosa) + tamanobaldosa) && (personajeY >= j * tamanobaldosa))
+							&& (((y <= (j * tamanobaldosa) + tamanobaldosa) && (y >= j * tamanobaldosa))
 									// Compruebo si hay colisión en Y por abajo
-									|| ((personajeY + tamanobaldosa <= (j * tamanobaldosa) + tamanobaldosa)
-											&& (personajeY + tamanobaldosa >= j * tamanobaldosa))))) {
+									|| ((y + tamanobaldosa <= (j * tamanobaldosa) + tamanobaldosa)
+											&& (y + tamanobaldosa >= j * tamanobaldosa))))) {
 						// Debe detectarse por lo menos una colisión en el eje X y una colisión en el
 						// eje Y
 						System.out.println("Hay colision");
@@ -132,6 +102,8 @@ public class Jugador extends Personaje{
 		}
 		return false;
 	}
+	
+	
 
 
 }

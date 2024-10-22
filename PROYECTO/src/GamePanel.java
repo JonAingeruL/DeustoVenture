@@ -55,7 +55,8 @@ public class GamePanel extends JPanel implements Runnable {
 	// Creo el jugador
 	// TODO Pensar el esquema de herencias de la clase personaje y crear una clase
 	// personajeJugable (PJ) que sea la que controla el jugador
-	Jugador jugador = new Jugador(350, 300, 4);
+	Jugador jugador = new Jugador(this, tecladoM);
+	
 
 	// Creamos un constructor de este GamePanel
 	public GamePanel() {
@@ -187,16 +188,14 @@ public class GamePanel extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D) g; // La clase Graphics2D extiende de la clase Graphics para proporcionar un
 										// control mas sofisticado sobre la geometria, transformacion de coordenadas,
 										// manejo del color y el layout de los textos
-
+		
 		// Vamos a probar dibujando un cuadrado como personaje en la pantalla
 		// Este metodo dibuja un triangulo con el color que has puesto antes y puedes
 		// ponerle el tamaño que quieras
 		//Antes de dibujar al personaje, dibujamos el mapa para que el personaje siempre se pinte encima
 		mapa.dibujarCelda(g2, tamañoBaldosa);
-		// Establecemos el color del personaje
-		g2.setColor(Color.white);
-		//Dibujamos el personaje
-		g2.fillRect(jugador.getJugadorX(), jugador.getJugadorY(), tamañoBaldosa, tamañoBaldosa); // De momento usamos esto para el personaje
+		jugador.dibujarPer(g2);
+		
 		g2.dispose(); // Esto sirve para ahorrar memoria en el dibujado
 	}
 }
