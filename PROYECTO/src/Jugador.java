@@ -1,17 +1,19 @@
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import entidades.Personaje;
 
 public class Jugador extends Personaje{
-	
 	GamePanel gp;
 	ManejoTeclado maneT;
+	private boolean estaDentroDeMazmorra=true;
+	//en caso de que se quieran añadir más números que tengan colision, se añaden a esta lista
+	private List<Integer> zonasConColision = List.of(1);
 
 	public Jugador(GamePanel gp, ManejoTeclado maneT) {
 		
@@ -121,14 +123,24 @@ public class Jugador extends Personaje{
 	 * @return
 	 */
 	public boolean detectaColision(Mapa mapa, int tamanobaldosa) {
+		//se usa para saber en que celda esta el jugador
+		int celdaX = (x+24)/tamanobaldosa;
+		if (x<-24) {
+			celdaX=mapa.getCelda().length-1;	
+		}
+		int celdaY = (y+24)/tamanobaldosa;
+		if (y<-24) {
+			celdaY=mapa.getCelda()[0].length-1;
+		}
+		System.out.println("Posicionjugador:"+celdaX+","+celdaY+", Posicion coords: "+x+","+y);
 		// Recorro el array celda completo
+		
 		for (int i = 0; i < mapa.getCelda().length; i++) {
 			for (int j = 0; j < mapa.getCelda()[i].length; j++) {
 				// Por cada baldosa no vacía, calcula si está colisionando de algún modo con el
-				// personaje
-				if (mapa.getCelda()[i][j] != 0) {
-					// Compruebo si hay colisión en X con la esquina izquierda
-					if (((((x <= (i * tamanobaldosa) + tamanobaldosa) && (x >= i * tamanobaldosa))
+				// personaje, USANDO LA LISTA QUE TENEMOS DE NUMEROS COLISIONABLES
+				if (zonasConColision.contains(mapa.getCelda()[i][j])) {
+				 if (((((x <= (i * tamanobaldosa) + tamanobaldosa) && (x >= i * tamanobaldosa))
 							// Compruebo si hay colisión en X con la esquina derecha
 							|| ((x + tamanobaldosa <= (i * tamanobaldosa) + tamanobaldosa)
 									&& (x + tamanobaldosa >= i * tamanobaldosa)))
@@ -137,19 +149,97 @@ public class Jugador extends Personaje{
 									// Compruebo si hay colisión en Y por abajo
 									|| ((y + tamanobaldosa <= (j * tamanobaldosa) + tamanobaldosa)
 											&& (y + tamanobaldosa >= j * tamanobaldosa))))) {
-						// Debe detectarse por lo menos una colisión en el eje X y una colisión en el
-						// eje Y
 						System.out.println("Hay colision");
-						return true;
+							 return true;
 					}
-				}
+				} else {
+					//este switch analiza cada uno de los numeros que se han asignado para cada portal 
+					//puesto en guia.txt NO ESTÁ COMPLETO, SOLO EL DE DEL TUTORIAL AL MAPA PRINCIPAL
 
+					switch (mapa.getCelda()[i][j]) {
+					
+					case 0:
+						
+						break;
+						
+					case 20:
+						System.out.println("20");
+						if(celdaX==i && celdaY==j) {
+							System.out.println("dentro");
+							if (this.estaDentroDeMazmorra) {
+								
+								mapa.cargarCelda("src/mapa.txt", 1);
+								
+								this.estaDentroDeMazmorra = false;
+								//POSICIONES NUEVAS PARA DESPUES CARGAR EL MAPA
+								x=350;
+								y=230;
+							}	else {
+								mapa.cargarCelda("src/tutorial.txt", 4);
+								x=530;
+								y=185;
+								this.estaDentroDeMazmorra = true;
+								
+							}
+							
+						}
+						break;
+
+					case 21:
+						if (!estaDentroDeMazmorra) {
+							mapa.cargarCelda("src/dungeon1.txt", 1);
+							
+							estaDentroDeMazmorra = true;
+						}	else {
+							mapa.cargarCelda("src/tutorial.txt", 1);
+							
+							estaDentroDeMazmorra = false;
+						}
+						break;
+					
+					case 22: 
+						if (!estaDentroDeMazmorra) {
+							mapa.cargarCelda("src/dungeon2.txt", 1);
+							
+							estaDentroDeMazmorra = true;
+						}	else {
+							mapa.cargarCelda("src/tutorial.txt", 1);
+							
+							estaDentroDeMazmorra = false;
+						}
+						break;
+					case 23:
+						if (!estaDentroDeMazmorra) {
+							mapa.cargarCelda("src/casa.txt", 1);
+						
+							estaDentroDeMazmorra = true;
+						}	else {
+							mapa.cargarCelda("src/tutorial.txt", 1);
+							
+							estaDentroDeMazmorra = false;
+						}
+						break;
+					case 24:
+						if (!estaDentroDeMazmorra) {
+							mapa.cargarCelda("src/dungeon3.txt", 1);
+							
+						  estaDentroDeMazmorra= true;
+						}	else {
+							mapa.cargarCelda("src/tutorial.txt", 1);
+							
+							estaDentroDeMazmorra = false;
+							
+						}
+						break;
+						}
+					}
+
+				}
 			}
-		}
+
+
+	
 		return false;
 	}
-	
-	
-
-
 }
+	

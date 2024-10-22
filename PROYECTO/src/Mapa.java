@@ -24,7 +24,7 @@ public class Mapa {
 	public Mapa(int numCelda) {
 		super();
 		this.numCelda = numCelda;
-		this.celda = cargarCelda("src/tutorial.txt", numCelda);
+		cargarCelda("src/tutorial.txt", numCelda);
 	}
 
 	/**
@@ -70,15 +70,18 @@ public class Mapa {
 	 * @param num   La celda a cargar
 	 * @return Una celda int[][] sacada del indice correspondiente de un fichero
 	 */
-	public int[][] cargarCelda(String celda, int num) {
+	public void cargarCelda(String celda, int num) {
 		// Creo un array donde se guardarán los números
 		int[][] map = new int[16][12];
+
 		try {
 			// Leo el fichero
 			Scanner sc = new Scanner(new FileInputStream(celda));
 			while (sc.hasNextLine()) {
+				
 				// Si la linea actual contiene el indice que busco, la escaneo
 				if (sc.nextLine().contains("-" + num)) {
+
 					for (int i = 0; i < 12; i++) {
 						String linea = new String(sc.nextLine());
 						// Divido cada linea en sus números y los voy metiendo al array
@@ -98,7 +101,7 @@ public class Mapa {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return map;
+		setCelda(map);
 	}
 
 	/**
@@ -119,6 +122,9 @@ public class Mapa {
 					break;
 				case 2:
 					g.setColor(Color.GREEN.darker());
+					break;
+				case 20:
+					g.setColor(Color.YELLOW);
 					break;
 				default:
 					g.setColor(Color.GRAY);
@@ -163,7 +169,7 @@ public class Mapa {
 		}
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
-			setCelda(cargarCelda("src/tutorial.txt", numCelda));
+			cargarCelda("src/tutorial.txt", numCelda);
 		}
 	}
 }
