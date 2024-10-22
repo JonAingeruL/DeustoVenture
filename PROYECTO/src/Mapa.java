@@ -24,7 +24,7 @@ public class Mapa {
 	public Mapa(int numCelda) {
 		super();
 		this.numCelda = numCelda;
-		this.celda = cargarCelda("src\\mapa.txt", numCelda);
+		this.celda = cargarCelda("src/tutorial.txt", numCelda);
 	}
 
 	/**
@@ -145,25 +145,25 @@ public class Mapa {
 		// Si el jugador se sale por el eje X se suma/resta al numCelda 1, y en el caso del eje Y,
 		// 10.
 		if (jugador.getJugadorX() > 744) {
-			numCelda = numCelda + 1;
+			numCelda = numCelda + 10;
 			hayCambio = true;
 			jugador.setJugadorX(-24);
 		} else if (jugador.getJugadorX() < -24) {
-			numCelda = numCelda - 1;
+			numCelda = numCelda - 10;
 			hayCambio = true;
 			jugador.setJugadorX(744);
 		} else if (jugador.getJugadorY() > 552) {
-			numCelda = numCelda - 10;
+			numCelda = numCelda - 1;
 			hayCambio = true;
 			jugador.setJugadorY(-24);
 		} else if (jugador.getJugadorY() < -24) {
-			numCelda = numCelda + 10;
+			numCelda = numCelda + 1;
 			hayCambio = true;
 			jugador.setJugadorY(552);
 		}
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
-			setCelda(cargarCelda("src\\mapa.txt", numCelda));
+			setCelda(cargarCelda("src/tutorial.txt", numCelda));
 		}
 	}
 }
