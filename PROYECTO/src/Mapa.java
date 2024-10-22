@@ -137,29 +137,29 @@ public class Mapa {
 	 * 
 	 * @param personaje El personaje para el que se va a detectar el cambio de celda
 	 */
-	public void detectarCambio(Personaje personaje) {
+	public void detectarCambio(Jugador jugador) {
 		boolean hayCambio = false;
 		// Se intenta que cuando el jugador sale de una celda siempre quede
 		// la mitad del personaje fuera y la mitad dentro (IMPORTANTE tener en cuenta
 		// que ni las coordenadas del mapa ni las del jugador tienen el 0,0 en el centro)
 		// Si el jugador se sale por el eje X se suma/resta al numCelda 1, y en el caso del eje Y,
 		// 10.
-		if (personaje.getJugadorX() > 744) {
+		if (jugador.getJugadorX() > 744) {
 			numCelda = numCelda + 1;
 			hayCambio = true;
-			personaje.setJugadorX(-24);
-		} else if (personaje.getJugadorX() < -24) {
+			jugador.setJugadorX(-24);
+		} else if (jugador.getJugadorX() < -24) {
 			numCelda = numCelda - 1;
 			hayCambio = true;
-			personaje.setJugadorX(744);
-		} else if (personaje.getJugadorY() > 552) {
+			jugador.setJugadorX(744);
+		} else if (jugador.getJugadorY() > 552) {
 			numCelda = numCelda - 10;
 			hayCambio = true;
-			personaje.setJugadorY(-24);
-		} else if (personaje.getJugadorY() < -24) {
+			jugador.setJugadorY(-24);
+		} else if (jugador.getJugadorY() < -24) {
 			numCelda = numCelda + 10;
 			hayCambio = true;
-			personaje.setJugadorY(552);
+			jugador.setJugadorY(552);
 		}
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {

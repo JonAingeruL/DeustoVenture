@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
 
+	private static final long serialVersionUID = 1L;
+	
 	// AJUSTES DE PANTALLA
 	final int tamañoOriginalBaldosa = 16; // Una baldosa de 16x16 (una baldosa en la medida en pixeles para crear un
 											// personaje, ncp...)
@@ -53,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// Creo el jugador
 	// TODO Pensar el esquema de herencias de la clase personaje y crear una clase
 	// personajeJugable (PJ) que sea la que controla el jugador
-	Personaje personaje = new Personaje(350, 300, 4);
+	Jugador jugador = new Jugador(350, 300, 4);
 
 	// Creamos un constructor de este GamePanel
 	public GamePanel() {
@@ -166,9 +168,9 @@ public class GamePanel extends JPanel implements Runnable {
 	// Para hacer las dos cosas dentro del bucle tenemos que crear dos metodos
 	public void update() {
 		// El personaje tiene una función movimiento a la que llamamos ahora
-		personaje.movimiento(tecladoM, mapa, tamañoBaldosa);
+		jugador.movimiento(tecladoM, mapa, tamañoBaldosa);
 		//Después comprobamos si el personaje ha cambiado de celda
-		mapa.detectarCambio(personaje);
+		mapa.detectarCambio(jugador);
 
 	}
 
@@ -194,7 +196,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// Establecemos el color del personaje
 		g2.setColor(Color.white);
 		//Dibujamos el personaje
-		g2.fillRect(personaje.getJugadorX(), personaje.getJugadorY(), tamañoBaldosa, tamañoBaldosa); // De momento usamos esto para el personaje
+		g2.fillRect(jugador.getJugadorX(), jugador.getJugadorY(), tamañoBaldosa, tamañoBaldosa); // De momento usamos esto para el personaje
 		g2.dispose(); // Esto sirve para ahorrar memoria en el dibujado
 	}
 }
