@@ -39,7 +39,6 @@ public class Jugador extends Personaje{
 			while (detectaColision(mapa, tamanoBaldosa)) {
 				personajeX -= 1;
 			}
-			personajeX += velocidadPersonaje;
 		}
 	}
 	
