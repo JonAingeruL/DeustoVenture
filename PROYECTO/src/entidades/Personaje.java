@@ -8,8 +8,11 @@ public class Personaje {
 	// velocidad
 	public int velocidad;
 	
-	public BufferedImage arriba1, arriba2, abajo1, abajo2, derecha1, derecha2, izquierda1, izquierda2;
+	public BufferedImage arriba1, arriba2, arriba3,  abajo1, abajo2, abajo3, derecha1, derecha2, derecha3, izquierda1, izquierda2, izquierda3;
 	public String direccion;
+	
+	public int contadorSprites = 0;
+	public int numSprite = 1;
 	
 	public int getX() {
 		return x;

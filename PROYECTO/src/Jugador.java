@@ -35,14 +35,18 @@ public class Jugador extends Personaje{
 		
 		try {
 			
-			arriba1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
-			arriba2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
-			abajo1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
-			abajo2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
-			derecha1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
-			derecha2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
-			izquierda1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
-			izquierda2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			arriba1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/arribaPers1.png"));
+			arriba2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/arribaPers2.png"));
+			arriba3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/arribaPers3.png"));
+			abajo1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/abajoPers1.png"));
+			abajo2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/abajoPers2.png"));
+			abajo3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/abajoPers3.png"));
+			derecha1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/derechaPers1.png"));
+			derecha2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/derechaPers2.png"));
+			derecha3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/derechaPers3.png"));
+			izquierda1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers1.png"));
+			izquierda2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers2.png"));
+			izquierda3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers3.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -63,31 +67,47 @@ public class Jugador extends Personaje{
 		// Después compruebo si hay colisión con el mapa, y en ese caso revierto el
 		// movimiento lo que haga falta
 		// para corregirla.
-		if (tecladoM.arribaPulsado == true) {
-			direccion = "arriba";
-			y -= velocidad;
-			while (detectaColision(mapa, tamanoBaldosa)) {
-				y += 1;
+		
+		if(tecladoM.arribaPulsado == true || tecladoM.abajoPulsado == true || tecladoM.izquierdaPulsado == true || tecladoM.derechaPulsado == true) {
+			
+			if (tecladoM.arribaPulsado == true) {
+				direccion = "arriba";
+				y -= velocidad;
+				while (detectaColision(mapa, tamanoBaldosa)) {
+					y += 1;
+				}
+			} else if (tecladoM.abajoPulsado == true) {
+				direccion = "abajo";
+				y += velocidad;
+				while (detectaColision(mapa, tamanoBaldosa)) {
+					y -= 1;
+				}
+			} else if (tecladoM.izquierdaPulsado == true) {
+				direccion = "izquierda";
+				x -= velocidad;
+				while (detectaColision(mapa, tamanoBaldosa)) {
+					x += 1;
+				}
+			} else if (tecladoM.derechaPulsado == true) {
+				direccion = "derecha";
+				x += velocidad;
+				while (detectaColision(mapa, tamanoBaldosa)) {
+					x -= 1;
+				}
 			}
-		} else if (tecladoM.abajoPulsado == true) {
-			direccion = "abajo";
-			y += velocidad;
-			while (detectaColision(mapa, tamanoBaldosa)) {
-				y -= 1;
-			}
-		} else if (tecladoM.izquierdaPulsado == true) {
-			direccion = "izquierda";
-			x -= velocidad;
-			while (detectaColision(mapa, tamanoBaldosa)) {
-				x += 1;
-			}
-		} else if (tecladoM.derechaPulsado == true) {
-			direccion = "derecha";
-			x += velocidad;
-			while (detectaColision(mapa, tamanoBaldosa)) {
-				x -= 1;
+			
+			contadorSprites++;
+			if(contadorSprites > 12) {
+				if(numSprite == 1) {
+					numSprite = 2;
+				}
+				else if(numSprite == 2) {
+					numSprite = 1;
+				}
+				contadorSprites = 0;
 			}
 		}
+			
 	}
 	
 	public void dibujarPer(Graphics2D g2) {
@@ -99,16 +119,40 @@ public class Jugador extends Personaje{
 		
 		switch(direccion) {
 		case "arriba":
-			imagen = arriba1;
+			if (numSprite == 1) {
+				imagen = arriba1;
+			}
+			if (numSprite == 2) {
+				imagen = arriba2;
+				imagen = arriba3;
+			}
 			break;
 		case "abajo":
-			imagen = abajo1;
+			if (numSprite == 1) {
+				imagen = abajo1;
+			}
+			if(numSprite == 2) {
+				imagen = abajo2;
+				imagen = abajo3;
+			}
 			break;
 		case "izquierda":
-			imagen = izquierda1;
+			if (numSprite == 1) {
+				imagen = izquierda1;
+			}
+			if(numSprite == 2) {
+				imagen = izquierda2;
+				imagen = izquierda3;
+			}
 			break;
 		case "derecha":
-			imagen = derecha1;
+			if (numSprite == 1) {
+				imagen = derecha1;
+			}
+			if (numSprite == 2) {
+				imagen = derecha2;
+				imagen = derecha3;
+			}
 			break;
 		}
 		g2.drawImage(imagen, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
