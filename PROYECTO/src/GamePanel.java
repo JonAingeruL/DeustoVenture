@@ -13,16 +13,16 @@ public class GamePanel extends JPanel implements Runnable {
 	final int tamañoOriginalBaldosa = 16; // Una baldosa de 16x16 (una baldosa en la medida en pixeles para crear un
 											// personaje, ncp...)
 	// Como el tamaño es muy pequeño para las pantallas actuales hay que escalarlo
-	final int escala = 3; // De esta manera escalara en x3 los 16 pixeles, para que se vea mas grande
+	final int escala = 4; // De esta manera escalara en x3 los 16 pixeles, para que se vea mas grande
 
-	final int tamañoBaldosa = tamañoOriginalBaldosa * escala; // Con esto escalamos el tamaño original a 48x48 y es lo
+	final int tamañoBaldosa = tamañoOriginalBaldosa * escala; // Con esto escalamos el tamaño original a 64x64 y es lo
 																// que aparecera en pantalla
 
 	// Para ajustar el tamaño de la pantalla tenemos quen saber cuantas baldosas
 	// pueden entrar horizontal y verticalmente
 	final int maxPantallaColu = 16; // 16 baldosas en la parte de arriba cada una con un numero igual de pixeles
 	final int maxPantallaFila = 12; // 12 baldosas en cada fila, lo que hara una pantalla de 16x12 con cada baldosa
-									// de 48 pixeles
+									// de 64 pixeles
 	// Ahora creamos dos variables para ponerle la altura y la anchura de la
 	// pantalla
 	final int pantallaAnchuta = maxPantallaColu * tamañoBaldosa; // 768 pixeles de ancho
