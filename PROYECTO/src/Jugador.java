@@ -1,6 +1,10 @@
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import entidades.Personaje;
 
@@ -15,12 +19,32 @@ public class Jugador extends Personaje{
 		this.maneT = maneT;
 		
 		valoresDefault();
+		conseguirImagenJugador();
 	}
 	
 	public void valoresDefault() {
 		x = 350;
 		y = 300;
 		velocidad = 4;
+		direccion = "abajo";
+	}
+	
+	public void conseguirImagenJugador() {
+		
+		try {
+			
+			arriba1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			arriba2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			abajo1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			abajo2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			derecha1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			derecha2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			izquierda1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			izquierda2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/pruebaSkin.png"));
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// Aqui dentro vamos a cambiar la posicion del personaje
@@ -38,21 +62,25 @@ public class Jugador extends Personaje{
 		// movimiento lo que haga falta
 		// para corregirla.
 		if (tecladoM.arribaPulsado == true) {
+			direccion = "arriba";
 			y -= velocidad;
 			while (detectaColision(mapa, tamanoBaldosa)) {
 				y += 1;
 			}
 		} else if (tecladoM.abajoPulsado == true) {
+			direccion = "abajo";
 			y += velocidad;
 			while (detectaColision(mapa, tamanoBaldosa)) {
 				y -= 1;
 			}
 		} else if (tecladoM.izquierdaPulsado == true) {
+			direccion = "izquierda";
 			x -= velocidad;
 			while (detectaColision(mapa, tamanoBaldosa)) {
 				x += 1;
 			}
 		} else if (tecladoM.derechaPulsado == true) {
+			direccion = "derecha";
 			x += velocidad;
 			while (detectaColision(mapa, tamanoBaldosa)) {
 				x -= 1;
@@ -61,9 +89,27 @@ public class Jugador extends Personaje{
 	}
 	
 	public void dibujarPer(Graphics2D g2) {
-		g2.setColor(Color.white);
+		//g2.setColor(Color.white);
 		
-		g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa); 
+		//g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa); 
+		
+		BufferedImage imagen = null;
+		
+		switch(direccion) {
+		case "arriba":
+			imagen = arriba1;
+			break;
+		case "abajo":
+			imagen = abajo1;
+			break;
+		case "izquierda":
+			imagen = izquierda1;
+			break;
+		case "derecha":
+			imagen = derecha1;
+			break;
+		}
+		g2.drawImage(imagen, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
 	}
 
 	/**
