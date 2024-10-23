@@ -25,8 +25,8 @@ public class Jugador extends Personaje{
 	}
 	
 	public void valoresDefault() {
-		x = 350;
-		y = 300;
+		x = 475;
+		y = 400;
 		velocidad = 4;
 		direccion = "abajo";
 	}
@@ -168,12 +168,12 @@ public class Jugador extends Personaje{
 	 */
 	public boolean detectaColision(Mapa mapa, int tamanobaldosa) {
 		//se usa para saber en que celda esta el jugador
-		int celdaX = (x+24)/tamanobaldosa;
-		if (x<-24) {
+		int celdaX = (x+32)/tamanobaldosa;
+		if (x<-32) {
 			celdaX=mapa.getCelda().length-1;	
 		}
-		int celdaY = (y+24)/tamanobaldosa;
-		if (y<-24) {
+		int celdaY = (y+32)/tamanobaldosa;
+		if (y<-32) {
 			celdaY=mapa.getCelda()[0].length-1;
 		}
 		System.out.println("Posicionjugador:"+celdaX+","+celdaY+", Posicion coords: "+x+","+y);
@@ -216,12 +216,12 @@ public class Jugador extends Personaje{
 								
 								this.estaDentroDeMazmorra = false;
 								//POSICIONES NUEVAS PARA DESPUES CARGAR EL MAPA
-								x=350;
-								y=230;
+								x=450;
+								y=300;
 							}	else {
 								mapa.cargarCelda("src/tutorial.txt", 4);
-								x=530;
-								y=185;
+								x=705;
+								y=241;
 								this.estaDentroDeMazmorra = true;
 								
 							}

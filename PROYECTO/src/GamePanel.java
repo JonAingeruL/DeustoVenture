@@ -25,8 +25,8 @@ public class GamePanel extends JPanel implements Runnable {
 									// de 64 pixeles
 	// Ahora creamos dos variables para ponerle la altura y la anchura de la
 	// pantalla
-	final int pantallaAnchuta = maxPantallaColu * tamañoBaldosa; // 768 pixeles de ancho
-	final int pantallaAltura = maxPantallaFila * tamañoBaldosa; // 576 pixeles de alto
+	final int pantallaAnchuta = maxPantallaColu * tamañoBaldosa; // 1024 pixeles de ancho
+	final int pantallaAltura = maxPantallaFila * tamañoBaldosa; // 768 pixeles de alto
 
 	// establecemos los fps como variable
 	// FPS
