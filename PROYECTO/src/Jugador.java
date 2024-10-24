@@ -161,8 +161,9 @@ public class Jugador extends Personaje{
 	}
 
 	/**
-	 * Este método detecta colisiones entre el personaje y el mapa. Devuelve un
-	 * booleano.
+	 * Este método detecta colisiones entre el personaje y el mapa.
+	 * También se ocupa de manejar el cambio de mapa por teletransporte.
+	 * Devuelve un booleano.
 	 * 
 	 * @param mapa          El mapa que puede colisionar con el jugador
 	 * @param tamanobaldosa El tamaño de cada baldosa del mapa
