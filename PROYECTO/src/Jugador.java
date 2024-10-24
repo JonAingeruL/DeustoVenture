@@ -14,7 +14,7 @@ public class Jugador extends Personaje{
 	private boolean estaDentroDeMazmorra=true;
 	private String archivoACargar="src/tutorial.txt";
 	//en caso de que se quieran añadir más números que tengan colision, se añaden a esta lista
-	private List<Integer> zonasConColision = List.of(1,4,6,7,9,10,11,12,13,14,15,16,17,30,31,32,33,35,36,37,38,39,40,
+	private List<Integer> zonasConColision = List.of(1,4,6,7,9,10,11,12,13,15,16,17,30,31,32,33,35,36,37,38,39,40,
 			41,42,43,44,45,46);
 
 	public Jugador(GamePanel gp, ManejoTeclado maneT) {

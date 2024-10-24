@@ -145,6 +145,9 @@ public class Mapa {
 				case 14:
 					g.setColor(Color.RED.brighter());
 					break;
+				case 15:
+					g.setColor(Color.GRAY.darker());
+					break;
 				case 20,21,22,23,24:
 					g.setColor(Color.YELLOW);
 					break;
