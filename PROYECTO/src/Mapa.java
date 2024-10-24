@@ -81,7 +81,7 @@ public class Mapa {
 			while (sc.hasNextLine()) {
 				
 				// Si la linea actual contiene el indice que busco, la escaneo
-				if (sc.nextLine().contains("-" + num)) {
+				if (sc.nextLine().equals("-"+num+"-")) {
 
 					for (int i = 0; i < 12; i++) {
 						String linea = new String(sc.nextLine());
@@ -192,6 +192,7 @@ public class Mapa {
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
 			cargarCelda(jugador.getArchivoACargar(), numCelda);
+			System.out.println(numCelda);
 		}
 	}
 }
