@@ -5,13 +5,45 @@ Se supone que en el juego la -1- tiene que estar debajo de la -2-
 
 SIGNIFICADO DE NUMEROS: 
 
-	0-> Camino (el jugador pasa por aqui)
-	1-> Arbol (Colisionable)
-	20-> Portal a tutorial (colision especial)
-	21-> Portal a mazmorra 1
-	22-> Portal a mazmorra 2
-	23-> Portal a mazmorra 3
-	24-> Portal a una casa
+	0-> Camino (Color.GRAY.lighter())
+	1-> Arbol (Colisionable) (Color.GREEN)
+	2-> Puente (Color.BROWN)
+	3-> 
+	4-> Agua (Colisionable) (Color.BLUE.lighter())
+	5-> Camino montaña (Color.ORANGE().lighter())
+	6-> Montaña (Colisionable) (Color.RED)
+	7-> Lava (Colisionable) (Color.RED.darker())
+	8-> Camino castillo (Color.GRAY)
+	9-> Pared castillo (Color.BLACK)
+	10-> Fusion cesped/agua 
+	11-> Fusion lava/castillo
+	12-> Fusion lava/volcan
+	13-> Fusion agua/montaña
+	14-> Camino volcan (Color.RED.lighter)
+	15-> Volcan
+	16-> Hierba pueblo bosque
+	17-> Hierba pueblo volcan
+	18->
+	19->
+	20-> Portal a tutorial (colision especial) (Color.YELLOW)
+	21-> Portal a mazmorra 1 (colision especial) (Color.YELLOW)
+	22-> Portal a mazmorra 2 (colision especial) (Color.YELLOW)
+	23-> Portal a mazmorra 3 (colision especial) (Color.YELLOW)
+	24-> Portal a casa (colision especial) (Color.YELLOW)
+	25->
+	26->
+	27->
+	28->
+	29->
+	30-> Casa abajo izq
+	31-> Casa abajo der
+	32-> Casa arriba der
+	33-> Casa arriba izq
+	34->
+	35-46-> CASA GRANDE POR FUERA:
+	|43 |44 |45 |46 |
+	|42 |41 |40 |39 |   
+	|35 |36 |37 |38 |   
 	
 	
 	Para probar si el mapeado funciona, se le puede asignar un color a cada número

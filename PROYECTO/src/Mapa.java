@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 public class Mapa {
 	private int[][] celda;
 	private int numCelda;
+	private String archivoACargar="src/tutorial.txt";
 
 	public Mapa(int[][] celda, int numCelda) {
 		super();
@@ -24,7 +25,7 @@ public class Mapa {
 	public Mapa(int numCelda) {
 		super();
 		this.numCelda = numCelda;
-		cargarCelda("src/tutorial.txt", numCelda);
+		cargarCelda(archivoACargar, numCelda);
 	}
 
 	/**
@@ -117,17 +118,38 @@ public class Mapa {
 				switch (celda[j][i]) {
 				// Por cada celda, dependiendo de su número, voy dibujando bloques donde
 				// corresponde
-				case 1:
+				case 1,16,17:
 					g.setColor(Color.GREEN);
 					break;
-				case 2:
-					g.setColor(Color.GREEN.darker());
+				case 2,5:
+					g.setColor(Color.ORANGE.brighter());
 					break;
-				case 20:
+				case 4:
+					g.setColor(Color.BLUE.brighter());
+					break;
+				case 6:
+					g.setColor(Color.RED);
+					break;
+				case 7:
+					g.setColor(Color.RED.darker());
+					break;
+				case 0,8:
+					g.setColor(Color.GRAY);
+					break;
+				case 9:
+					g.setColor(Color.BLACK);
+					break;
+				case 10,11,12,13:
+					g.setColor(Color.PINK);
+					break;
+				case 14:
+					g.setColor(Color.RED.brighter());
+					break;
+				case 20,21,22,23,24:
 					g.setColor(Color.YELLOW);
 					break;
-				default:
-					g.setColor(Color.GRAY);
+				case 30,31,32,33,35,36,37,38,39,40,41,42,43,44,45,46:
+					g.setColor(Color.ORANGE.darker());
 					break;
 				}
 				g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
@@ -169,7 +191,7 @@ public class Mapa {
 		}
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
-			cargarCelda("src/tutorial.txt", numCelda);
+			cargarCelda(jugador.getArchivoACargar(), numCelda);
 		}
 	}
 }

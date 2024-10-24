@@ -12,8 +12,10 @@ public class Jugador extends Personaje{
 	GamePanel gp;
 	ManejoTeclado maneT;
 	private boolean estaDentroDeMazmorra=true;
+	private String archivoACargar="src/tutorial.txt";
 	//en caso de que se quieran añadir más números que tengan colision, se añaden a esta lista
-	private List<Integer> zonasConColision = List.of(1);
+	private List<Integer> zonasConColision = List.of(1,4,6,7,9,10,11,12,13,14,15,16,17,30,31,32,33,35,36,37,38,39,40,
+			41,42,43,44,45,46);
 
 	public Jugador(GamePanel gp, ManejoTeclado maneT) {
 		
@@ -211,15 +213,18 @@ public class Jugador extends Personaje{
 						if(celdaX==i && celdaY==j) {
 							System.out.println("dentro");
 							if (this.estaDentroDeMazmorra) {
-								
-								mapa.cargarCelda("src/mapa.txt", 1);
+								mapa.setNumcelda(1);
+								archivoACargar = "src/mapa.txt";
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								
 								this.estaDentroDeMazmorra = false;
 								//POSICIONES NUEVAS PARA DESPUES CARGAR EL MAPA
 								x=450;
 								y=300;
 							}	else {
-								mapa.cargarCelda("src/tutorial.txt", 4);
+								mapa.setNumcelda(4);
+								archivoACargar ="src/tutorial.txt";
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								x=705;
 								y=241;
 								this.estaDentroDeMazmorra = true;
@@ -231,11 +236,14 @@ public class Jugador extends Personaje{
 
 					case 21:
 						if (!estaDentroDeMazmorra) {
-							mapa.cargarCelda("src/dungeon1.txt", 1);
+							
+							archivoACargar = "src/dungeon1.txt";
+							mapa.cargarCelda(archivoACargar, 1);
 							
 							estaDentroDeMazmorra = true;
 						}	else {
-							mapa.cargarCelda("src/tutorial.txt", 1);
+							archivoACargar = "src/mapa.txt";
+							mapa.cargarCelda(archivoACargar, 1);
 							
 							estaDentroDeMazmorra = false;
 						}
@@ -243,33 +251,39 @@ public class Jugador extends Personaje{
 					
 					case 22: 
 						if (!estaDentroDeMazmorra) {
-							mapa.cargarCelda("src/dungeon2.txt", 1);
+							archivoACargar = "src/dungeon2.txt";
+							mapa.cargarCelda(archivoACargar, 1);
 							
 							estaDentroDeMazmorra = true;
 						}	else {
-							mapa.cargarCelda("src/tutorial.txt", 1);
+							archivoACargar= "src/mapa.txt";
+							mapa.cargarCelda(archivoACargar, 1);
 							
 							estaDentroDeMazmorra = false;
 						}
 						break;
 					case 23:
 						if (!estaDentroDeMazmorra) {
-							mapa.cargarCelda("src/casa.txt", 1);
+							archivoACargar = "src/casa.txt";
+							mapa.cargarCelda(archivoACargar, 1);
 						
 							estaDentroDeMazmorra = true;
 						}	else {
-							mapa.cargarCelda("src/tutorial.txt", 1);
+							archivoACargar="src/mapa.txt";
+							mapa.cargarCelda(archivoACargar, 1);
 							
 							estaDentroDeMazmorra = false;
 						}
 						break;
 					case 24:
 						if (!estaDentroDeMazmorra) {
-							mapa.cargarCelda("src/dungeon3.txt", 1);
+							archivoACargar = "src/dungeon3.txt";
+							mapa.cargarCelda(archivoACargar, 1);
 							
 						  estaDentroDeMazmorra= true;
 						}	else {
-							mapa.cargarCelda("src/tutorial.txt", 1);
+							archivoACargar = "src/mapa.txt";
+							mapa.cargarCelda(archivoACargar, 1);
 							
 							estaDentroDeMazmorra = false;
 							
@@ -284,6 +298,14 @@ public class Jugador extends Personaje{
 
 	
 		return false;
+	}
+
+	public String getArchivoACargar() {
+		return archivoACargar;
+	}
+
+	public void setArchivoACargar(String archivoACargar) {
+		this.archivoACargar = archivoACargar;
 	}
 }
 	
