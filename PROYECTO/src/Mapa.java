@@ -80,7 +80,7 @@ public class Mapa {
 			Scanner sc = new Scanner(new FileInputStream(celda));
 			while (sc.hasNextLine()) {
 				
-				// Si la linea actual contiene el indice que busco, la escaneo
+				// Si la linea actual equivale al indice que busco, la escaneo
 				if (sc.nextLine().equals("-"+num+"-")) {
 
 					for (int i = 0; i < 12; i++) {
@@ -192,7 +192,6 @@ public class Mapa {
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
 			cargarCelda(jugador.getArchivoACargar(), numCelda);
-			System.out.println(numCelda);
 		}
 	}
 }
