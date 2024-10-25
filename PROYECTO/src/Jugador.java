@@ -110,6 +110,9 @@ public class Jugador extends Personaje{
 					numSprite = 2;
 				}
 				else if(numSprite == 2) {
+					numSprite = 3;
+				}
+				else if(numSprite == 3) {
 					numSprite = 1;
 				}
 				contadorSprites = 0;
@@ -130,17 +133,23 @@ public class Jugador extends Personaje{
 			if (numSprite == 1) {
 				imagen = arriba1;
 			}
-			if (numSprite == 2) {
+			else if (numSprite == 2) {
 				imagen = arriba2;
+				
+			} else if(numSprite == 3) {
 				imagen = arriba3;
+				
 			}
 			break;
 		case "abajo":
 			if (numSprite == 1) {
 				imagen = abajo1;
 			}
-			if(numSprite == 2) {
+			else if(numSprite == 2) {
 				imagen = abajo2;
+			
+			}
+			else if (numSprite == 3) {
 				imagen = abajo3;
 			}
 			break;
@@ -148,8 +157,11 @@ public class Jugador extends Personaje{
 			if (numSprite == 1) {
 				imagen = izquierda1;
 			}
-			if(numSprite == 2) {
+			else if(numSprite == 2) {
 				imagen = izquierda2;
+			
+			} 
+			else if (numSprite == 3) {
 				imagen = izquierda3;
 			}
 			break;
@@ -157,8 +169,11 @@ public class Jugador extends Personaje{
 			if (numSprite == 1) {
 				imagen = derecha1;
 			}
-			if (numSprite == 2) {
+			else if (numSprite == 2) {
 				imagen = derecha2;
+		
+			}
+			else if(numSprite == 3) {
 				imagen = derecha3;
 			}
 			break;
