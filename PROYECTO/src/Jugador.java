@@ -69,9 +69,12 @@ public class Jugador extends Personaje{
 		// Después compruebo si hay colisión con el mapa, y en ese caso revierto el
 		// movimiento lo que haga falta
 		// para corregirla.
+		//También compruebo si se aprieta shift para aplicar un sprint
 		
 		if(tecladoM.arribaPulsado == true || tecladoM.abajoPulsado == true || tecladoM.izquierdaPulsado == true || tecladoM.derechaPulsado == true) {
-			
+			if (tecladoM.shiftPulsado == true) {
+				velocidad +=2;
+			}
 			if (tecladoM.arribaPulsado == true) {
 				direccion = "arriba";
 				y -= velocidad;
@@ -96,6 +99,9 @@ public class Jugador extends Personaje{
 				while (detectaColision(mapa, tamanoBaldosa)) {
 					x -= 1;
 				}
+			}
+			if (tecladoM.shiftPulsado == true) {
+				velocidad -=2;
 			}
 			
 			contadorSprites++;
