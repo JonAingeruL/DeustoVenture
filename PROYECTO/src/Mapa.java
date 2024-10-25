@@ -82,7 +82,6 @@ public class Mapa {
 				
 				// Si la linea actual equivale al indice que busco, la escaneo
 				if (sc.nextLine().equals("-"+num+"-")) {
-
 					for (int i = 0; i < 12; i++) {
 						String linea = new String(sc.nextLine());
 						// Divido cada linea en sus números y los voy metiendo al array
