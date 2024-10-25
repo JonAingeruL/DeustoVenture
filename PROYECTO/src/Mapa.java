@@ -156,7 +156,7 @@ public class Mapa {
 				}
 				g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 				g.setColor(Color.WHITE);
-				g.drawString(""+numCelda, 40, 50);
+				g.drawString(""+numCelda, 40, 40);
 			}
 		}
 	}
