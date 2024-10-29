@@ -79,9 +79,8 @@ public class Mapa {
 			// Leo el fichero
 			Scanner sc = new Scanner(new FileInputStream(celda));
 			while (sc.hasNextLine()) {
-				
 				// Si la linea actual equivale al indice que busco, la escaneo
-				if (sc.nextLine().equals("-"+num+"-")) {
+				if (sc.nextLine().strip().equals("-"+num+"-")) {
 					for (int i = 0; i < 12; i++) {
 						String linea = new String(sc.nextLine());
 						// Divido cada linea en sus números y los voy metiendo al array
@@ -98,6 +97,7 @@ public class Mapa {
 				}
 			}
 			sc.close();
+			System.out.println(celda);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
