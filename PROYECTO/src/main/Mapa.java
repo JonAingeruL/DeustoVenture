@@ -1,9 +1,12 @@
+package main;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+
+import entidades.Jugador;
 
 public class Mapa {
 	private int[][] celda;

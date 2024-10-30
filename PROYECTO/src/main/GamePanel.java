@@ -1,9 +1,13 @@
+package main;
 import java.awt.Color;
+import entidades.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
+
+import entidades.Jugador;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -15,7 +19,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// Como el tamaño es muy pequeño para las pantallas actuales hay que escalarlo
 	final int escala = 4; // De esta manera escalara en x3 los 16 pixeles, para que se vea mas grande
 
-	final int tamañoBaldosa = tamañoOriginalBaldosa * escala; // Con esto escalamos el tamaño original a 64x64 y es lo
+	public final int tamañoBaldosa = tamañoOriginalBaldosa * escala; // Con esto escalamos el tamaño original a 64x64 y es lo
 																// que aparecera en pantalla
 
 	// Para ajustar el tamaño de la pantalla tenemos quen saber cuantas baldosas
