@@ -1,5 +1,8 @@
 package entidades;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import main.*;
 import java.awt.image.BufferedImage;
@@ -7,6 +10,9 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import main.GamePanel;
 import main.ManejoTeclado;
@@ -15,6 +21,7 @@ public class Jugador extends Personaje {
 	GamePanel gp;
 	ManejoTeclado maneT;
 	private boolean estaDentroDeMazmorra = true;
+	private JPanel panelVida;
 	private String archivoACargar = "src/tutorial.txt";
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
@@ -322,4 +329,36 @@ public class Jugador extends Personaje {
 	public void setArchivoACargar(String archivoACargar) {
 		this.archivoACargar = archivoACargar;
 	}
+	
+	public JPanel vidaJugador(Boolean vida1,Boolean vida2, Boolean vida3) {
+		panelVida = new JPanel(new BorderLayout());
+		boolean[] vidas = {vida1, vida2, vida3}; //para poder hacer un for y que el codigo sea mas optimo
+        JPanel panelDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Uso FlowLayout para poder alinear los corazones en la derecha
+        panelDerecho.setPreferredSize(new Dimension(150, 50)); // Tamaño del panel
+
+        // Cargar imágenes de los corazones
+        ImageIcon corazonIconoConVida = new ImageIcon("/texturas/vida/corazonConVida.png"); // el corazon con vida y su ruta
+        ImageIcon corazonIconoSinVida = new ImageIcon("/texturas/vida/CorazonSinVida.png"); // el corazon sin vida y su ruta
+
+        JLabel corazonVida = new JLabel(corazonIconoConVida); //creo los Jlabel para meter las imagenes en el panel
+        JLabel corazonSinVida = new JLabel(corazonIconoSinVida);
+        
+        for (boolean vida : vidas) {
+            if (vida) {
+                panelDerecho.add(corazonVida);
+            } else {
+                panelDerecho.add(corazonSinVida);
+            }
+        }
+
+        // Agrega el panelDerecho al panel principal en la posición derecha
+        panelVida.add(panelDerecho, BorderLayout.EAST);
+        
+        return panelVida;
+	}
+	
+	public JPanel getPanelVidas(Graphics2D g2) {
+		return panelVida;
+	}
 }
+	

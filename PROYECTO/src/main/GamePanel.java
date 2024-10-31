@@ -1,4 +1,5 @@
 package main;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import entidades.*;
 import java.awt.Dimension;
@@ -199,6 +200,9 @@ public class GamePanel extends JPanel implements Runnable {
 		//Antes de dibujar al personaje, dibujamos el mapa para que el personaje siempre se pinte encima
 		mapa.dibujarCelda(g2, tamañoBaldosa);
 		jugador.dibujarPer(g2);
+		
+		jugador.vidaJugador(true, true, true);
+		jugador.getPanelVidas(g2);
 		
 		g2.dispose(); // Esto sirve para ahorrar memoria en el dibujado
 	}
