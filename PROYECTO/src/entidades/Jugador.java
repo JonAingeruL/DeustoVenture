@@ -23,6 +23,8 @@ public class Jugador extends Personaje {
 	private boolean estaDentroDeMazmorra = true;
 	private JPanel panelVida;
 	private String archivoACargar = "src/tutorial.txt";
+	private BufferedImage corazonVida, corazonSinVida;
+	private boolean[] vidas = { true, true, false };
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
 	private List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
@@ -60,6 +62,11 @@ public class Jugador extends Personaje {
 			izquierda1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers1.png"));
 			izquierda2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers2.png"));
 			izquierda3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers3.png"));
+			corazonVida = ImageIO.read(getClass().getResourceAsStream("/vida/corazonConVida.png")); // el corazon con
+																									// vida y su ruta
+			corazonSinVida = ImageIO.read(getClass().getResourceAsStream("/vida/CorazonSinVida.png")); // el corazon sin
+																										// vida y su
+																										// ruta
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -183,6 +190,60 @@ public class Jugador extends Personaje {
 		}
 		g2.drawImage(imagen, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
 	}
+	/**
+	 * Dibuja las vidas como corazones en pantalla
+	 * @param g2 El objeto graphics 2d a utilizar
+	 */
+	public void dibujarVidas(Graphics2D g2) {
+		for (int i = 0; i < vidas.length; i++) {
+			if (vidas[i]) {
+				g2.drawImage(corazonVida, 80 + 35 * i, 60, 40, 40, null);
+			} else {
+				// TODO: Aparentemente, el sprite de corazon sin vida no está bien alineado
+				// (está más
+				// a la derecha que el sprite de corazón con vida). Estaría bien alinearlo
+				// correctamente
+				g2.drawImage(corazonSinVida, 80 + 38 * i, 60, 40, 40, null);
+			}
+		}
+	}
+
+	public boolean[] getVidas() {
+		return vidas;
+	}
+
+	public void setVidas(boolean[] vidas) {
+		this.vidas = vidas;
+	}
+	/**
+	 * Este método aumenta o reduce el número de vidas según el entero que recibe 
+	 * (Positivo aumenta negativo disminuye)
+	 * @param value El entero que indica si aumentar o reducir las vidas
+	 */
+	public void cambiarVidas(int value) {
+		if (value < 0) {
+			for (int i = vidas.length - 1; i >= 0; i--) {
+				if (vidas[i]) {
+					vidas[i] = false;
+					value += 1;
+				}
+				if (value == 0) {
+					break;
+				}
+			}
+		} else if (value > 0) {
+			for (int i = 0; i < vidas.length; i++) {
+				if (!vidas[i]) {
+					vidas[i] = true;
+					value -= 1;
+				}
+				if (value == 0) {
+					break;
+				}
+			}
+		}
+
+	}
 
 	/**
 	 * Este método detecta colisiones entre el personaje y el mapa. También se ocupa
@@ -227,7 +288,7 @@ public class Jugador extends Personaje {
 					// portal
 					// puesto en guia.txt NO ESTÁ COMPLETO, SOLO EL DE DEL TUTORIAL AL MAPA
 					// PRINCIPAL
-					//TODO Completar este código
+					// TODO Completar este código
 					if (celdaX == i && celdaY == j) {
 						switch (mapa.getCelda()[i][j]) {
 
@@ -237,23 +298,22 @@ public class Jugador extends Personaje {
 
 						case 20:
 							System.out.println("20");
-								if (this.estaDentroDeMazmorra) {
-									mapa.setNumcelda(1);
-									archivoACargar = "src/mapa.txt";
-									mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+							if (this.estaDentroDeMazmorra) {
+								mapa.setNumcelda(1);
+								archivoACargar = "src/mapa.txt";
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 
-									this.estaDentroDeMazmorra = false;
-									// POSICIONES NUEVAS PARA DESPUES CARGAR EL MAPA
-									x = 450;
-									y = 300;
-								} else {
-									mapa.setNumcelda(4);
-									archivoACargar = "src/tutorial.txt";
-									mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-									x = 705;
-									y = 241;
-									this.estaDentroDeMazmorra = true;
-
+								this.estaDentroDeMazmorra = false;
+								// POSICIONES NUEVAS PARA DESPUES CARGAR EL MAPA
+								x = 450;
+								y = 300;
+							} else {
+								mapa.setNumcelda(4);
+								archivoACargar = "src/tutorial.txt";
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								x = 705;
+								y = 241;
+								this.estaDentroDeMazmorra = true;
 
 							}
 							break;
@@ -329,36 +389,35 @@ public class Jugador extends Personaje {
 	public void setArchivoACargar(String archivoACargar) {
 		this.archivoACargar = archivoACargar;
 	}
-	
-	public JPanel vidaJugador(Boolean vida1,Boolean vida2, Boolean vida3) {
-		panelVida = new JPanel(new BorderLayout());
-		boolean[] vidas = {vida1, vida2, vida3}; //para poder hacer un for y que el codigo sea mas optimo
-        JPanel panelDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Uso FlowLayout para poder alinear los corazones en la derecha
-        panelDerecho.setPreferredSize(new Dimension(150, 50)); // Tamaño del panel
 
-        // Cargar imágenes de los corazones
-        ImageIcon corazonIconoConVida = new ImageIcon("/texturas/vida/corazonConVida.png"); // el corazon con vida y su ruta
-        ImageIcon corazonIconoSinVida = new ImageIcon("/texturas/vida/CorazonSinVida.png"); // el corazon sin vida y su ruta
-
-        JLabel corazonVida = new JLabel(corazonIconoConVida); //creo los Jlabel para meter las imagenes en el panel
-        JLabel corazonSinVida = new JLabel(corazonIconoSinVida);
-        
-        for (boolean vida : vidas) {
-            if (vida) {
-                panelDerecho.add(corazonVida);
-            } else {
-                panelDerecho.add(corazonSinVida);
-            }
-        }
-
-        // Agrega el panelDerecho al panel principal en la posición derecha
-        panelVida.add(panelDerecho, BorderLayout.EAST);
-        
-        return panelVida;
-	}
-	
-	public JPanel getPanelVidas(Graphics2D g2) {
-		return panelVida;
-	}
+//	public JPanel vidaJugador(Boolean vida1,Boolean vida2, Boolean vida3) {
+//		panelVida = new JPanel(new BorderLayout());
+//		boolean[] vidas = {vida1, vida2, vida3}; //para poder hacer un for y que el codigo sea mas optimo
+//        JPanel panelDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Uso FlowLayout para poder alinear los corazones en la derecha
+//        panelDerecho.setPreferredSize(new Dimension(150, 50)); // Tamaño del panel
+//
+//        // Cargar imágenes de los corazones
+//        ImageIcon corazonIconoConVida = new ImageIcon("/texturas/vida/corazonConVida.png"); // el corazon con vida y su ruta
+//        ImageIcon corazonIconoSinVida = new ImageIcon("/texturas/vida/CorazonSinVida.png"); // el corazon sin vida y su ruta
+//
+//        JLabel corazonVida = new JLabel(corazonIconoConVida); //creo los Jlabel para meter las imagenes en el panel
+//        JLabel corazonSinVida = new JLabel(corazonIconoSinVida);
+//        
+//        for (boolean vida : vidas) {
+//            if (vida) {
+//                panelDerecho.add(corazonVida);
+//            } else {
+//                panelDerecho.add(corazonSinVida);
+//            }
+//        }
+//
+//        // Agrega el panelDerecho al panel principal en la posición derecha
+//        panelVida.add(panelDerecho, BorderLayout.EAST);
+//        
+//        return panelVida;
+//	}
+//	
+//	public JPanel getPanelVidas(Graphics2D g2) {
+//		return panelVida;
+//	}
 }
-	
