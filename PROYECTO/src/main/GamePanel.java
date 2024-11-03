@@ -2,6 +2,8 @@ package main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import entidades.*;
+import gui.Inventario;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
