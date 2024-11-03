@@ -11,7 +11,7 @@ import entidades.Inventario;
 public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz necesaria para recibir los eventos de teclado, tambien se llaman keystrokes
 	
 	//Despuesd de la asignacion de botones creamos unas variables booleanas para saber si estan siendo pulsados o no
-	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado;
+	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, hablarNPCPulsado;
 
 	//Estos tres metodos se generan automaticamente cunado implementas en KeyListener
 	@Override
@@ -42,6 +42,9 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if (code == KeyEvent.VK_ESCAPE) { //Esto quiere decir que si el usuario pulsa la tecla ESC haga lo que pone en el if
 			escPulsado = true;
 		}
+		if(code == KeyEvent.VK_E) {
+			hablarNPCPulsado =true;
+		}
 		
 	}
 
@@ -67,6 +70,9 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		}
 		if (code == KeyEvent.VK_ESCAPE) { //Esto quiere decir que si el usuario pulsa la tecla ESC haga lo que pone en el if
 			escPulsado = false;
+		}
+		if(code == KeyEvent.VK_E) {
+			hablarNPCPulsado = false;
 		}
 		
 	} 

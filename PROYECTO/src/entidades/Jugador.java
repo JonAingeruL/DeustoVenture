@@ -21,14 +21,13 @@ public class Jugador extends Personaje {
 	GamePanel gp;
 	ManejoTeclado maneT;
 	private boolean estaDentroDeMazmorra = true;
-	private JPanel panelVida;
 	private String archivoACargar = "src/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida;
 	private boolean[] vidas = { true, true, false };
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
 	private List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
-			37, 38, 39, 40, 41, 42, 43, 44, 45, 46);
+			37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 60);
 
 	public Jugador(GamePanel gp, ManejoTeclado maneT) {
 
@@ -44,6 +43,8 @@ public class Jugador extends Personaje {
 		y = 400;
 		velocidad = 4;
 		direccion = "abajo";
+		hablarNPC = false;
+		
 	}
 
 	public void conseguirImagenJugador() {
@@ -389,6 +390,7 @@ public class Jugador extends Personaje {
 	public void setArchivoACargar(String archivoACargar) {
 		this.archivoACargar = archivoACargar;
 	}
+	
 
 //	public JPanel vidaJugador(Boolean vida1,Boolean vida2, Boolean vida3) {
 //		panelVida = new JPanel(new BorderLayout());
