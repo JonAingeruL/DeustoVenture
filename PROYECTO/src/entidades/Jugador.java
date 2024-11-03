@@ -137,6 +137,8 @@ public class Jugador extends Personaje {
 		}
 
 	}
+	
+
 
 	public void dibujarPer(Graphics2D g2) {
 		// g2.setColor(Color.white);

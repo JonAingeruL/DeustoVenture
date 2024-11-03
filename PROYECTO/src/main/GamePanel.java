@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import entidades.Jugador;
-
 public class GamePanel extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
@@ -32,7 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
 	// pantalla
 	final int pantallaAnchuta = maxPantallaColu * tamañoBaldosa; // 1024 pixeles de ancho
 	final int pantallaAltura = maxPantallaFila * tamañoBaldosa; // 768 pixeles de alto
-
+	
+	private Inventario inventarioJugador;
 	// establecemos los fps como variable
 	// FPS
 	int FPS = 60;
@@ -175,6 +174,14 @@ public class GamePanel extends JPanel implements Runnable {
 	public void update() {
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa);
+		
+		//controla si el inventario se puede abrir o no, para que no se abran mas de un inventario (controla que también se le haya dado a la I para abrirlo)
+		if(tecladoM.iPulsado && !tecladoM.abrirInventario) {
+			tecladoM.abrirInventario = true;
+			inventarioJugador = new Inventario(tecladoM);
+			//Se para el update mientras el inventario está abierto, el cerrar el inventario con la tecla ESC está dentro de Inventario.java
+		}
+		
 		//Después comprobamos si el personaje ha cambiado de celda
 		mapa.detectarCambio(jugador);
 

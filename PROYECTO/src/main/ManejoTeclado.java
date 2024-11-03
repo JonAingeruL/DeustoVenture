@@ -11,7 +11,8 @@ import entidades.Inventario;
 public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz necesaria para recibir los eventos de teclado, tambien se llaman keystrokes
 	
 	//Despuesd de la asignacion de botones creamos unas variables booleanas para saber si estan siendo pulsados o no
-	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado;
+	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado;
+	public boolean abrirInventario = false;
 
 	//Estos tres metodos se generan automaticamente cunado implementas en KeyListener
 	@Override
@@ -39,9 +40,11 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if (code == KeyEvent.VK_SHIFT) { //Esto quiere decir que si el usuario pulsa la tecla SHIFT haga lo que pone en el if
 			shiftPulsado = true;
 		}
-		if (code == KeyEvent.VK_ESCAPE) { //Esto quiere decir que si el usuario pulsa la tecla ESC haga lo que pone en el if
-			escPulsado = true;
+		
+		if (code == KeyEvent.VK_I ) {
+			iPulsado = true;
 		}
+		
 		
 	}
 
@@ -65,19 +68,15 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if (code == KeyEvent.VK_SHIFT) { //Esto quiere decir que si el usuario no pulsa la tecla SHIFT haga lo que pone en el if
 			shiftPulsado = false;
 		}
-		if (code == KeyEvent.VK_ESCAPE) { //Esto quiere decir que si el usuario pulsa la tecla ESC haga lo que pone en el if
-			escPulsado = false;
+		if (code == KeyEvent.VK_I) {
+			iPulsado = false;
 		}
-		
-	} 
-	public void abrirInventario(KeyEvent e) {
 
-		int code = e.getKeyCode();
-		
-		if (code == KeyEvent.VK_I) { //Esto quiere decir que si el usuario no pulsa la letra W haga lo que pone en el if
-			new Inventario();
-		}
-	}
+
+
+	
+	} 
+
 
 	
 }

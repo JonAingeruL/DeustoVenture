@@ -3,6 +3,8 @@ package entidades;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -19,6 +21,8 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
+import main.ManejoTeclado;
+
 public class Inventario extends JFrame{
 
 	/**
@@ -26,10 +30,13 @@ public class Inventario extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable tabla;
-
-    public Inventario() {
+	private ManejoTeclado tecladoM;
+	
+    public Inventario(ManejoTeclado tecladoM) {
+    	this.tecladoM =tecladoM;
         setTitle("Tu inventario");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //Esto no es necesario, ya que está creado un windowListener que hace lo mismo
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
         
@@ -40,6 +47,8 @@ public class Inventario extends JFrame{
     	panelBotones.add(botonUsar);
     	panelBotones.add(botonSalir);
     	getContentPane().add(panelBotones, BorderLayout.SOUTH);
+    	//Esto hace que que se pueda escuchar el evento de tecla esc añadido abajo
+    	setFocusable(true);
 
         // Nombres de las columnas
         String[] columnaNombres = {"Objeto", "Cantidad"};
@@ -68,17 +77,37 @@ public class Inventario extends JFrame{
     	botonSalir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.exit(0);	
+				// reinicia ambas variables a false, para que no se vuelva a abrir hasta que se vuelva a pulsar la tecla I
+				cerrarInventario();
 			}
     	});
-	// Manejador de cerrar la ventana con la X
+    	// Manejador de cerrar la ventana con la X
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				System.exit(0);
+				cerrarInventario();
 			}
 		});
+		
+		addKeyListener(new KeyListener() {		
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int code = e.getKeyCode();
+				if (code == KeyEvent.VK_ESCAPE) { //Esto quiere decir que si el usuario pulsa la tecla ESC se cierra el inventario
+					cerrarInventario();
+				} 
+			}
+		});
+		
+		
+		setVisible(true);
 
     }
   // Lee el fichero y carga los datos en el inventario
@@ -101,16 +130,13 @@ public class Inventario extends JFrame{
 		}
     }
     
+    public void cerrarInventario() {
+    	tecladoM.abrirInventario =false;
+		tecladoM.iPulsado = false;
+		dispose();
+    }
+    
 
-        public static void main(String[] args) {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    Inventario programa = new Inventario();
-                    programa.setVisible(true);
-                }
-            });
-        }
      
 }
 
