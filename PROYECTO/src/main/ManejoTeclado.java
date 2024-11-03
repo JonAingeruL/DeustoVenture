@@ -3,7 +3,6 @@ import java.awt.event.KeyEvent;
 
 import java.awt.event.KeyListener;
 
-import entidades.Inventario;
 
 //Esta clase se va a utilizar para leer los inputs del teclado, basicamente que si tocas algo del teclado en el juego pase algo o no
 //Por ejemplo si pulsas la letra w el personaje suba para arriba, o que si pulsas la flecha haga lo mismo
@@ -11,8 +10,10 @@ import entidades.Inventario;
 public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz necesaria para recibir los eventos de teclado, tambien se llaman keystrokes
 	
 	//Despuesd de la asignacion de botones creamos unas variables booleanas para saber si estan siendo pulsados o no
-	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado;
+
+	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado,hablarNPCPulsado;
 	public boolean abrirInventario = false;
+
 
 	//Estos tres metodos se generan automaticamente cunado implementas en KeyListener
 	@Override
@@ -44,6 +45,9 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if (code == KeyEvent.VK_I ) {
 			iPulsado = true;
 		}
+		if(code == KeyEvent.VK_E) {
+			hablarNPCPulsado =true;
+		}
 		
 		
 	}
@@ -71,6 +75,12 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if (code == KeyEvent.VK_I) {
 			iPulsado = false;
 		}
+		if(code == KeyEvent.VK_E) {
+			hablarNPCPulsado = false;
+		}
+		
+	} 
+
 
 
 
@@ -79,4 +89,4 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 
 
 	
-}
+

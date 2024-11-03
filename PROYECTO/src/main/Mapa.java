@@ -156,6 +156,9 @@ public class Mapa {
 				case 30,31,32,33,35,36,37,38,39,40,41,42,43,44,45,46:
 					g.setColor(Color.ORANGE.darker());
 					break;
+				case 60:
+					g.setColor(Color.white);
+					break;
 				}
 				g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 				g.setColor(Color.WHITE);
