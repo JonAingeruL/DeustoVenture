@@ -12,7 +12,7 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 	//Despuesd de la asignacion de botones creamos unas variables booleanas para saber si estan siendo pulsados o no
 
 	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado,hablarNPCPulsado;
-	public boolean abrirInventario = false;
+	public boolean abrirInventario, abrirPausa = false;
 
 
 	//Estos tres metodos se generan automaticamente cunado implementas en KeyListener
@@ -41,7 +41,9 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if (code == KeyEvent.VK_SHIFT) { //Esto quiere decir que si el usuario pulsa la tecla SHIFT haga lo que pone en el if
 			shiftPulsado = true;
 		}
-		
+		if (code == KeyEvent.VK_ESCAPE) { //Esto quiere decir que si el usuario pulsa la tecla ESC haga lo que pone en el if
+			escPulsado = true;
+		}
 		if (code == KeyEvent.VK_I ) {
 			iPulsado = true;
 		}
@@ -68,6 +70,9 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		}
 		if (code == KeyEvent.VK_D) { //Esto quiere decir que si el usuario no pulsa la letra D haga lo que pone en el if
 			derechaPulsado = false;
+		}
+		if (code == KeyEvent.VK_ESCAPE) { //Esto quiere decir que si el usuario pulsa la tecla ESC haga lo que pone en el if
+			escPulsado = false;
 		}
 		if (code == KeyEvent.VK_SHIFT) { //Esto quiere decir que si el usuario no pulsa la tecla SHIFT haga lo que pone en el if
 			shiftPulsado = false;

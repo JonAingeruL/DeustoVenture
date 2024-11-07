@@ -19,8 +19,10 @@ public class MenuPausa extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private ManejoTeclado mt;
-	public MenuPausa() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	private boolean isOpen = true;
+	public MenuPausa(ManejoTeclado mt) {
+		this.mt = mt;
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Menu pausa");
 		setSize(300, 400);
 		setResizable(false);
@@ -33,6 +35,7 @@ public class MenuPausa extends JFrame {
 		informacion.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
 		
 		JButton reanudar = new JButton("Reanudar partida");
+		reanudar.addActionListener(e -> {setOpen(false); dispose(); });
 		//Placeholder podría ser un menú de instrucciones, un menú de opciones o incluso un diario de objetivos 
 		JButton placeholder1 = new JButton("Placeholder");
 		JButton salir = new JButton("Salir del juego");
@@ -52,6 +55,9 @@ public class MenuPausa extends JFrame {
 		
 		setVisible(true);
 		
+	}
+	public boolean isOpen() {
+		return isOpen;
 	}
 
 	

@@ -1,8 +1,9 @@
 package main;
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import entidades.*;
-import gui.Inventario;
+import gui.*;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -182,6 +183,26 @@ public class GamePanel extends JPanel implements Runnable {
 			tecladoM.abrirInventario = true;
 			inventarioJugador = new Inventario(tecladoM);
 			//Se para el update mientras el inventario está abierto, el cerrar el inventario con la tecla ESC está dentro de Inventario.java
+		}
+		//La idea con este código es que el botón esc sea una pausa real en el juego.
+		//De esta manera, cuando implementemos enemigos también se pararán
+		if(tecladoM.escPulsado && !tecladoM.abrirPausa) {
+			tecladoM.abrirPausa = true;
+			tecladoM.abajoPulsado = false;
+			tecladoM.derechaPulsado = false;
+			tecladoM.izquierdaPulsado = false;
+			tecladoM.arribaPulsado = false;
+			tecladoM.escPulsado  = false;
+			MenuPausa pausa = new MenuPausa(tecladoM);
+			while (pausa.isOpen()==true) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			tecladoM.abrirPausa = false;
 		}
 		
 		//Después comprobamos si el personaje ha cambiado de celda
