@@ -18,10 +18,8 @@ public class MenuPausa extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private ManejoTeclado mt;
 	private boolean isOpen = true;
-	public MenuPausa(ManejoTeclado mt) {
-		this.mt = mt;
+	public MenuPausa() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Menu pausa");
 		setSize(300, 400);

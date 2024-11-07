@@ -193,7 +193,7 @@ public class GamePanel extends JPanel implements Runnable {
 			tecladoM.izquierdaPulsado = false;
 			tecladoM.arribaPulsado = false;
 			tecladoM.escPulsado  = false;
-			MenuPausa pausa = new MenuPausa(tecladoM);
+			MenuPausa pausa = new MenuPausa();
 			while (pausa.isOpen()==true) {
 				try {
 					Thread.sleep(1);
