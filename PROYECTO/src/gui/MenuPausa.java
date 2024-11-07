@@ -59,6 +59,10 @@ public class MenuPausa extends JFrame {
 	public boolean isOpen() {
 		return isOpen;
 	}
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+	
 
 	
 	
