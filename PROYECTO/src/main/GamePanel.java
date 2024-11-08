@@ -1,6 +1,4 @@
 package main;
-import java.awt.BorderLayout;
-
 import java.awt.Color;
 import entidades.*;
 import gui.*;
@@ -181,18 +179,17 @@ public class GamePanel extends JPanel implements Runnable {
 		//controla si el inventario se puede abrir o no, para que no se abran mas de un inventario (controla que también se le haya dado a la I para abrirlo)
 		if(tecladoM.iPulsado && !tecladoM.abrirInventario) {
 			tecladoM.abrirInventario = true;
+			pararMovimiento();
 			inventarioJugador = new Inventario(tecladoM);
 			//Se para el update mientras el inventario está abierto, el cerrar el inventario con la tecla ESC está dentro de Inventario.java
 		}
 		//La idea con este código es que el botón esc sea una pausa real en el juego.
 		//De esta manera, cuando implementemos enemigos también se pararán
 		if(tecladoM.escPulsado && !tecladoM.abrirPausa) {
-			tecladoM.abrirPausa = true;
-			tecladoM.abajoPulsado = false;
-			tecladoM.derechaPulsado = false;
-			tecladoM.izquierdaPulsado = false;
-			tecladoM.arribaPulsado = false;
+			pararMovimiento();
 			tecladoM.escPulsado  = false;
+			tecladoM.abrirPausa = true;
+
 			MenuPausa pausa = new MenuPausa();
 			while (pausa.isOpen()==true) {
 				try {
@@ -233,5 +230,13 @@ public class GamePanel extends JPanel implements Runnable {
 		jugador.dibujarVidas(g2);
 		
 		g2.dispose(); // Esto sirve para ahorrar memoria en el dibujado
+	}
+	//metodo que para todo el movimiento, de esta manera "pausando" el juego
+	public void pararMovimiento() {
+		tecladoM.abajoPulsado = false;
+		tecladoM.derechaPulsado = false;
+		tecladoM.izquierdaPulsado = false;
+		tecladoM.arribaPulsado = false;
+		
 	}
 }

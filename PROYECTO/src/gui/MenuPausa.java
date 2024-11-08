@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import main.ManejoTeclado;
 
 public class MenuPausa extends JFrame {
 

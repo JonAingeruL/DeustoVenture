@@ -54,7 +54,16 @@ public class Inventario extends JFrame{
         String[] columnaNombres = {"Objeto", "Cantidad"};
 
         // Crear el modelo de la tabla
-        DefaultTableModel model = new DefaultTableModel(columnaNombres,0);
+        DefaultTableModel model = new DefaultTableModel(columnaNombres,0) {
+        	//añadiendo las 4 lineas de abajo, puedo hacer que toda la tabla se vuelva 
+        	//no editable
+			private static final long serialVersionUID = 1L;
+			@Override
+        	public boolean isCellEditable(int row, int column) {
+        		return false;
+        	}
+        };
+        
         
         String nombreFich = "src/inventario.txt";
         leerFichero(nombreFich, model);
@@ -129,7 +138,7 @@ public class Inventario extends JFrame{
 			e.printStackTrace();
 		}
     }
-    
+ 
     public void cerrarInventario() {
     	tecladoM.abrirInventario =false;
 		tecladoM.iPulsado = false;
