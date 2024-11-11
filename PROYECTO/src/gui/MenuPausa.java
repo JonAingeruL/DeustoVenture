@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 
@@ -49,7 +50,7 @@ public class MenuPausa extends JFrame {
 		// incluso un diario de objetivos
 		JButton placeholder1 = new JButton("Placeholder");
 		JButton salir = new JButton("Salir del juego");
-		salir.addActionListener(e -> System.exit(0));
+		salir.addActionListener(e -> salir());
 		salir.setBackground(Color.RED);
 		// Ayuda a que la parte de abajo no parezca muy vacía y puede ser interesante.
 		JLabel hora = new JLabel("" + LocalDate.now());
@@ -76,6 +77,12 @@ public class MenuPausa extends JFrame {
 	public void reanudar() {
 		setOpen(false);
 		dispose();
+	}
+	public void salir() {
+		int choice = JOptionPane.showConfirmDialog(this,"¿Está seguro de que desea salir del juego?","Salir del juego", JOptionPane.YES_OPTION);
+		if (choice == 0) {
+				System.exit(0);
+		}
 	}
 
 //	public static void main(String[] args) {
