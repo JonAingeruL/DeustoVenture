@@ -11,7 +11,7 @@ import entidades.Jugador;
 public class Mapa {
 	private int[][] celda;
 	private int numCelda;
-	private String archivoACargar="src/tutorial.txt";
+	private String archivoACargar="Resources/mapas/tutorial.txt";
 
 	public Mapa(int[][] celda, int numCelda) {
 		super();

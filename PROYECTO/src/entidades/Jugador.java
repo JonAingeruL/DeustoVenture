@@ -21,7 +21,7 @@ public class Jugador extends Personaje {
 	GamePanel gp;
 	ManejoTeclado maneT;
 	private boolean estaDentroDeMazmorra = true;
-	private String archivoACargar = "src/tutorial.txt";
+	private String archivoACargar = "Resources/mapas/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida;
 	private boolean[] vidas = { true, true, false };
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
@@ -51,21 +51,21 @@ public class Jugador extends Personaje {
 
 		try {
 
-			arriba1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/arribaPers1.png"));
-			arriba2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/arribaPers2.png"));
-			arriba3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/arribaPers3.png"));
-			abajo1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/abajoPers1.png"));
-			abajo2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/abajoPers2.png"));
-			abajo3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/abajoPers3.png"));
-			derecha1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/derechaPers1.png"));
-			derecha2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/derechaPers2.png"));
-			derecha3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/derechaPers3.png"));
-			izquierda1 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers1.png"));
-			izquierda2 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers2.png"));
-			izquierda3 = ImageIO.read(getClass().getResourceAsStream("/texJugador/izquierdaPers3.png"));
-			corazonVida = ImageIO.read(getClass().getResourceAsStream("/vida/corazonConVida.png")); // el corazon con
+			arriba1 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/arribaPers1.png"));
+			arriba2 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/arribaPers2.png"));
+			arriba3 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/arribaPers3.png"));
+			abajo1 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/abajoPers1.png"));
+			abajo2 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/abajoPers2.png"));
+			abajo3 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/abajoPers3.png"));
+			derecha1 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/derechaPers1.png"));
+			derecha2 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/derechaPers2.png"));
+			derecha3 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/derechaPers3.png"));
+			izquierda1 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/izquierdaPers1.png"));
+			izquierda2 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/izquierdaPers2.png"));
+			izquierda3 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/izquierdaPers3.png"));
+			corazonVida = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/corazonConVida.png")); // el corazon con
 																									// vida y su ruta
-			corazonSinVida = ImageIO.read(getClass().getResourceAsStream("/vida/CorazonSinVida.png")); // el corazon sin
+			corazonSinVida = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonSinVida.png")); // el corazon sin
 																										// vida y su
 																										// ruta
 
@@ -303,7 +303,7 @@ public class Jugador extends Personaje {
 							System.out.println("20");
 							if (this.estaDentroDeMazmorra) {
 								mapa.setNumcelda(1);
-								archivoACargar = "src/mapa.txt";
+								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 
 								this.estaDentroDeMazmorra = false;
@@ -312,7 +312,7 @@ public class Jugador extends Personaje {
 								y = 300;
 							} else {
 								mapa.setNumcelda(4);
-								archivoACargar = "src/tutorial.txt";
+								archivoACargar = "Resources/mapas/tutorial.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								x = 705;
 								y = 241;
@@ -324,12 +324,12 @@ public class Jugador extends Personaje {
 						case 21:
 							if (!estaDentroDeMazmorra) {
 
-								archivoACargar = "src/dungeon1.txt";
+								archivoACargar = "Resources/dungeon1.txt";
 								mapa.cargarCelda(archivoACargar, 1);
 
 								estaDentroDeMazmorra = true;
 							} else {
-								archivoACargar = "src/mapa.txt";
+								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
 
 								estaDentroDeMazmorra = false;
@@ -338,12 +338,12 @@ public class Jugador extends Personaje {
 
 						case 22:
 							if (!estaDentroDeMazmorra) {
-								archivoACargar = "src/dungeon2.txt";
+								archivoACargar = "Resources/mapas/dungeon2.txt";
 								mapa.cargarCelda(archivoACargar, 1);
 
 								estaDentroDeMazmorra = true;
 							} else {
-								archivoACargar = "src/mapa.txt";
+								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
 
 								estaDentroDeMazmorra = false;
@@ -351,12 +351,12 @@ public class Jugador extends Personaje {
 							break;
 						case 23:
 							if (!estaDentroDeMazmorra) {
-								archivoACargar = "src/casa.txt";
+								archivoACargar = "Resources/mapas/casa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
 
 								estaDentroDeMazmorra = true;
 							} else {
-								archivoACargar = "src/mapa.txt";
+								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
 
 								estaDentroDeMazmorra = false;
@@ -364,12 +364,12 @@ public class Jugador extends Personaje {
 							break;
 						case 24:
 							if (!estaDentroDeMazmorra) {
-								archivoACargar = "src/dungeon3.txt";
+								archivoACargar = "Resources/mapas/dungeon3.txt";
 								mapa.cargarCelda(archivoACargar, 1);
 
 								estaDentroDeMazmorra = true;
 							} else {
-								archivoACargar = "src/mapa.txt";
+								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
 
 								estaDentroDeMazmorra = false;
