@@ -57,7 +57,7 @@ public class MenuPausa extends JFrame {
 		JButton salir = new JButton("Salir del juego");
 		salir.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		salir.addActionListener(e -> salir());
-		salir.setBackground(Color.RED);
+		salir.setForeground(Color.RED);
 		// Ayuda a que la parte de abajo no parezca muy vacía y puede ser interesante.
 		JLabel hora = new JLabel("" + LocalDate.now());
 		
@@ -79,6 +79,7 @@ public class MenuPausa extends JFrame {
 		add(Box.createVerticalGlue());
 		add(hora);
 		hora.setAlignmentX(CENTER_ALIGNMENT);
+		add(Box.createVerticalGlue());
 		setBackground(Color.BLACK);
 		setVisible(true);
 
