@@ -1,11 +1,15 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,13 +31,12 @@ public class MenuPausa extends JFrame {
 		setTitle("Menu pausa");
 		setSize(300, 400);
 		setResizable(false);
-		setLayout(new GridLayout(5, 1, 0, 50));
+		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setLocationRelativeTo(null);
 		// En el futuro, información puede contener información útil, como la celda
 		// actual, las coordenadas del jugador
 		// o incluso el objetivo principal actual
 		JLabel informacion = new JLabel("Información");
-		informacion.setHorizontalAlignment(SwingConstants.CENTER);
 		informacion.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
 		addWindowListener(new WindowAdapter() {
 
@@ -45,23 +48,38 @@ public class MenuPausa extends JFrame {
 		});
 
 		JButton reanudar = new JButton("Reanudar partida");
+		reanudar.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		reanudar.addActionListener(e -> reanudar());
 		// Placeholder podría ser un menú de instrucciones, un menú de opciones o
 		// incluso un diario de objetivos
 		JButton placeholder1 = new JButton("Placeholder");
+		placeholder1.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		JButton salir = new JButton("Salir del juego");
+		salir.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		salir.addActionListener(e -> salir());
 		salir.setBackground(Color.RED);
 		// Ayuda a que la parte de abajo no parezca muy vacía y puede ser interesante.
 		JLabel hora = new JLabel("" + LocalDate.now());
-		hora.setHorizontalAlignment(SwingConstants.CENTER);
-
+		
+		add(Box.createVerticalGlue());
 		add(informacion);
+		informacion.setAlignmentX(CENTER_ALIGNMENT);
+		add(Box.createVerticalGlue());
 		add(reanudar);
+		reanudar.setAlignmentX(CENTER_ALIGNMENT);
+		reanudar.setPreferredSize(new Dimension(100, 50));
+		add(Box.createVerticalGlue());
 		add(placeholder1);
+		placeholder1.setAlignmentX(CENTER_ALIGNMENT);
+		placeholder1.setPreferredSize(new Dimension(100, 50));
+		add(Box.createVerticalGlue());
 		add(salir);
+		salir.setAlignmentX(CENTER_ALIGNMENT);
+		salir.setPreferredSize(new Dimension(100, 50));
+		add(Box.createVerticalGlue());
 		add(hora);
-
+		hora.setAlignmentX(CENTER_ALIGNMENT);
+		setBackground(Color.BLACK);
 		setVisible(true);
 
 	}

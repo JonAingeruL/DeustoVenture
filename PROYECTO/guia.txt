@@ -67,7 +67,7 @@ Antes de dibujar más mapa, es importante mirar el javadoc y entender cómo func
 
 -----Colisiones Mapa-Jugador------Ángel
 
-Para resolver las colisiones jugador mapa, lo primero que necesito hacer es detectarlas.
+Para resolver las colisiones jugador-mapa, lo primero que necesito hacer es detectarlas.
 Utilizo para esto el método detectaColisión que, aunque es realmente lioso, lo único que hace
 es comprobar si hay alguna superposición jugador-mapa en cualquier dirección posible (Explicado en detalle en el método).
 Una vez detectada cualquier colisión, se devuelve true.
