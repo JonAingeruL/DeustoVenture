@@ -22,8 +22,9 @@ public class Jugador extends Personaje {
 	ManejoTeclado maneT;
 	private boolean estaDentroDeMazmorra = true;
 	private String archivoACargar = "Resources/mapas/tutorial.txt";
-	private BufferedImage corazonVida, corazonSinVida;
-	private boolean[] vidas = { true, true, false };
+	private BufferedImage corazonVida, corazonSinVida, corazonAMedias;
+	//TODO Cambiar boolean a int. Seguramente tenga más sentido...
+	private boolean[] vidas = { true, true, true, false, false, false  };
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
 	private List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
@@ -68,6 +69,7 @@ public class Jugador extends Personaje {
 			corazonSinVida = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonSinVida.png")); // el corazon sin
 																										// vida y su
 																										// ruta
+			corazonAMedias = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonAMedias.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -198,15 +200,17 @@ public class Jugador extends Personaje {
 	 * @param g2 El objeto graphics 2d a utilizar
 	 */
 	public void dibujarVidas(Graphics2D g2) {
-		for (int i = 0; i < vidas.length; i++) {
-			if (vidas[i]) {
-				g2.drawImage(corazonVida, 80 + 35 * i, 60, 40, 40, null);
-			} else {
+		for (int i = 0; i < vidas.length; i+=2) {
+			if (vidas[i] && vidas[i+1]) {
+				g2.drawImage(corazonVida, 80 + 35 * i/2, 60, 40, 40, null);
+			} else if(vidas[i] && !vidas[i+1]) {
+				g2.drawImage(corazonAMedias, 80 + 35 * i/2, 60, 40, 40, null);
+			}else {
 				// TODO: Aparentemente, el sprite de corazon sin vida no está bien alineado
 				// (está más
 				// a la derecha que el sprite de corazón con vida). Estaría bien alinearlo
 				// correctamente
-				g2.drawImage(corazonSinVida, 80 + 38 * i, 60, 40, 40, null);
+				g2.drawImage(corazonSinVida, 80 + 38 * i/2, 60, 40, 40, null);
 			}
 		}
 	}
