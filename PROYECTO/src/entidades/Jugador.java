@@ -23,7 +23,6 @@ public class Jugador extends Personaje {
 	private boolean estaDentroDeMazmorra = true;
 	private String archivoACargar = "Resources/mapas/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida, corazonAMedias;
-	//TODO Cambiar boolean a int. Seguramente tenga más sentido...
 	private boolean[] vidas = { true, true, true, false, false, false  };
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
@@ -69,7 +68,7 @@ public class Jugador extends Personaje {
 			corazonSinVida = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonSinVida.png")); // el corazon sin
 																										// vida y su
 																										// ruta
-			corazonAMedias = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonAMedias.png"));
+			corazonAMedias = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonAMedias.png")); //El corazón a medias
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -218,9 +217,22 @@ public class Jugador extends Personaje {
 	public boolean[] getVidas() {
 		return vidas;
 	}
-
+/**
+ * Establece el número de vidas y su estado.
+ * AVISO: Es preferible utilizar el método cambiarVidas para asegurar
+ * que el dibujado sea correcto.
+ * Utilizar este método sólo para alterar vidas máximas
+ * @param vidas Un array booleano que representa la cantidad de corazones y su estado
+ */
 	public void setVidas(boolean[] vidas) {
+		if (!((vidas.length)%2==0)){
+			boolean[] vidasCorregido = new boolean[vidas.length+1];
+			vidasCorregido[vidasCorregido.length-1] = false;
+			System.arraycopy(vidas, 0, vidasCorregido, 0, vidas.length);
+			this.vidas = vidasCorregido;
+		}else {
 		this.vidas = vidas;
+		}
 	}
 	/**
 	 * Este método aumenta o reduce el número de vidas según el entero que recibe 
