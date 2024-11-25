@@ -321,7 +321,6 @@ public class Jugador extends Personaje {
 								mapa.setNumcelda(1);
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-
 								this.estaDentroDeMazmorra = false;
 								// POSICIONES NUEVAS PARA DESPUES CARGAR EL MAPA
 								x = 450;

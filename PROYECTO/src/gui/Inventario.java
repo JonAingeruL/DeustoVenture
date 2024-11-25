@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
+import main.AudioPlayer;
 import main.ManejoTeclado;
 
 public class Inventario extends JFrame{
@@ -33,6 +34,8 @@ public class Inventario extends JFrame{
 	private ManejoTeclado tecladoM;
 	
     public Inventario(ManejoTeclado tecladoM) {
+    	AudioPlayer audio = new AudioPlayer("Resources/audio/InvSound.wav");
+    	audio.playClip();
     	this.tecladoM =tecladoM;
         setTitle("Tu inventario");
         //Esto no es necesario, ya que está creado un windowListener que hace lo mismo
@@ -94,6 +97,7 @@ public class Inventario extends JFrame{
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
+				audio.closeClip();
 				cerrarInventario();
 			}
 		});
