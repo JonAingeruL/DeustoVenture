@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -61,6 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
 	// TODO Pensar el esquema de herencias de la clase personaje y crear una clase
 	// personajeJugable (PJ) que sea la que controla el jugador
 	Jugador jugador = new Jugador(this, tecladoM);
+	
+	private JLabel dialogoJL;
 	
 
 	// Creamos un constructor de este GamePanel
@@ -237,6 +240,17 @@ public class GamePanel extends JPanel implements Runnable {
 		tecladoM.derechaPulsado = false;
 		tecladoM.izquierdaPulsado = false;
 		tecladoM.arribaPulsado = false;
+		
+	}
+	
+	public void mostrarDialogo(String dialogo) {
+		dialogoJL.setText(dialogo);
+		dialogoJL.setVisible(true);
+	}
+	
+	public void ocultarDialogo() {
+		dialogoJL.setVisible(false);
+		dialogoJL.setText("");
 		
 	}
 }

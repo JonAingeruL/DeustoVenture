@@ -3,15 +3,19 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import entidades.Jugador;
+import entidades.NPC;
 
 public class Mapa {
 	private int[][] celda;
 	private int numCelda;
 	private String archivoACargar="Resources/mapas/tutorial.txt";
+	private List<NPC> npcs;
 
 	public Mapa(int[][] celda, int numCelda) {
 		super();
@@ -28,6 +32,7 @@ public class Mapa {
 	public Mapa(int numCelda) {
 		super();
 		this.numCelda = numCelda;
+		this.npcs = new ArrayList<NPC>();
 		cargarCelda(archivoACargar, numCelda);
 	}
 
@@ -158,6 +163,10 @@ public class Mapa {
 					break;
 				case 60:
 					g.setColor(Color.white);
+					npcs.add(new NPC(i, j, new String[] {
+							"hola soy un NPC",
+							"bienvenido al juego "
+					}));
 					break;
 				}
 				g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
@@ -203,5 +212,8 @@ public class Mapa {
 		if (hayCambio) {
 			cargarCelda(jugador.getArchivoACargar(), numCelda);
 		}
+	}
+	public List<NPC> getNpcs(){
+		return npcs;
 	}
 }
