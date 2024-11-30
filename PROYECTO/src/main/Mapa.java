@@ -152,7 +152,7 @@ public class Mapa {
 							}));
 							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 							g.setColor(Color.WHITE);
-							g.drawString(""+numCelda, 40, 40);
+							
 							break;
 						}
 					}
@@ -207,6 +207,7 @@ public class Mapa {
 		Graphics2D g = i.createGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		dibujarCelda(g, tamanoBaldosa);
+		g.drawString(""+numCelda, 40, 40);
 	}
 	public void dibujarImagen(Graphics2D g, int tamanoBaldosa){
 		//g.drawImage(i,0,0, tamanoBaldosa*16,tamanoBaldosa*12,null);
