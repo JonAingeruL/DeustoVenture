@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public final int tamañoBaldosa = tamañoOriginalBaldosa * escala; // Con esto escalamos el tamaño original a 64x64 y es lo
 																// que aparecera en pantalla
+	
 
 	// Para ajustar el tamaño de la pantalla tenemos quen saber cuantas baldosas
 	// pueden entrar horizontal y verticalmente
@@ -85,7 +86,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// vamos a crear un nuevo metodo para iniciar el juego
 	public void iniciarJuegoHilo() {
-
+		
+		//cargamos el primer mapa XD
+		mapa.updateMapa(tamañoBaldosa);
 		// Vamos a instanciar el gameThread
 		gameThread = new Thread(this); // Cuando ponemos this nos referimos a esta clase (GamePanel), basicamente
 										// estamos pasando la clase GamePanel a este constructor de hilo para
@@ -127,7 +130,8 @@ public class GamePanel extends JPanel implements Runnable {
 			// comprobar la hora del sistema con exactitud
 			// Ahora toca establecer los fps, asi que hacemos una variable
 			// Despues de las variables hay que crear otras variables fuera del bucle
-
+			
+			
 			// Ahora vamos a hacer dos cosas en el bucle
 
 			// 1 ACTUALIZACION: actualizar informacion como la posicion del personaje (Si el
@@ -206,13 +210,14 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		
 		//Después comprobamos si el personaje ha cambiado de celda
-		mapa.detectarCambio(jugador);
+		mapa.detectarCambio(jugador, tamañoBaldosa);
 
 	}
 
 	// Esto es un metodo ya establecido en java en el JPanel
 	public void paintComponent(Graphics g) { // Graphics es una clase que tiene muchas funciones para pintar objetos en
-												// pantalla
+										// pantalla
+		
 
 		super.paintComponent(g); // Esto es un formato que tiene java, cada vez que usemos el painComponent hay
 									// que poner esto
@@ -228,12 +233,14 @@ public class GamePanel extends JPanel implements Runnable {
 		// Este metodo dibuja un triangulo con el color que has puesto antes y puedes
 		// ponerle el tamaño que quieras
 		//Antes de dibujar al personaje, dibujamos el mapa para que el personaje siempre se pinte encima
-		mapa.dibujarCelda(g2, tamañoBaldosa);
+	
+		mapa.dibujarImagen(g2, tamañoBaldosa);
 		jugador.dibujarPer(g2);
 		jugador.dibujarVidas(g2);
 		
 		g2.dispose(); // Esto sirve para ahorrar memoria en el dibujado
 	}
+	
 	//metodo que para todo el movimiento, de esta manera "pausando" el juego
 	public void pararMovimiento() {
 		tecladoM.abajoPulsado = false;

@@ -1,13 +1,15 @@
 package main;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
+import javax.imageio.ImageIO;
 import entidades.Jugador;
 import entidades.NPC;
 
@@ -16,6 +18,7 @@ public class Mapa {
 	private int numCelda;
 	private String archivoACargar="Resources/mapas/tutorial.txt";
 	private List<NPC> npcs;
+	private BufferedImage i = new BufferedImage(1024,768, BufferedImage.TYPE_INT_ARGB);
 
 	public Mapa(int[][] celda, int numCelda) {
 		super();
@@ -120,61 +123,46 @@ public class Mapa {
 	 */
 	public void dibujarCelda(Graphics2D g, int tamanoBaldosa) {
 		// Recorro todo el array que contienen la celda
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 16; j++) {
-				switch (celda[j][i]) {
-				// Por cada celda, dependiendo de su número, voy dibujando bloques donde
-				// corresponde
-				case 1,16,17:
-					g.setColor(Color.GREEN);
-					break;
-				case 2,5:
-					g.setColor(Color.ORANGE.brighter());
-					break;
-				case 4:
-					g.setColor(Color.BLUE.brighter());
-					break;
-				case 6:
-					g.setColor(Color.RED);
-					break;
-				case 7:
-					g.setColor(Color.RED.darker());
-					break;
-				case 0,8:
-					g.setColor(Color.GRAY);
-					break;
-				case 9:
-					g.setColor(Color.BLACK);
-					break;
-				case 10,11,12,13:
-					g.setColor(Color.PINK);
-					break;
-				case 14:
-					g.setColor(Color.RED.brighter());
-					break;
-				case 15:
-					g.setColor(Color.GRAY.darker());
-					break;
-				case 20,21,22,23,24:
-					g.setColor(Color.MAGENTA);
-					break;
-				case 30,31,32,33,35,36,37,38,39,40,41,42,43,44,45,46:
-					g.setColor(Color.ORANGE.darker());
-					break;
-				case 60:
-					g.setColor(Color.white);
-					npcs.add(new NPC(i, j, new String[] {
-							"hola soy un NPC",
-							"bienvenido al juego "
-					}));
-					break;
+		
+			for (int i = 0; i < 12; i++) {
+				for (int j = 0; j < 16; j++) {
+					if (celda[j][i]<=15) {
+						try {
+							BufferedImage texturaCasilla = ImageIO.read(getClass().getResourceAsStream("/texturas/texMapa/"+celda[j][i]+".png"));
+							g.drawImage(texturaCasilla,j*tamanoBaldosa,i*tamanoBaldosa, tamanoBaldosa,tamanoBaldosa,null);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						switch (celda[j][i]) {
+						// Por cada celda, dependiendo de su número, voy dibujando bloques donde
+						// corresponde
+						
+						case 20,21,22,23,24:
+							g.setColor(Color.MAGENTA);
+							break;
+						case 30,31,32,33,35,36,37,38,39,40,41,42,43,44,45,46:
+							g.setColor(Color.ORANGE.darker());
+							break;
+						case 60:
+							g.setColor(Color.white);
+							npcs.add(new NPC(i, j, new String[] {
+									"hola soy un NPC",
+									"bienvenido al juego "
+							}));
+							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
+							g.setColor(Color.WHITE);
+							g.drawString(""+numCelda, 40, 40);
+							break;
+						}
+					}
+					
+					
+					
 				}
-				g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
-				g.setColor(Color.WHITE);
-				g.drawString(""+numCelda, 40, 40);
 			}
-		}
 	}
+		
 
 	/**
 	 * Este método detecta cuando un jugador se sale de la celda actual y lo
@@ -184,7 +172,7 @@ public class Mapa {
 	 * 
 	 * @param personaje El personaje para el que se va a detectar el cambio de celda
 	 */
-	public void detectarCambio(Jugador jugador) {
+	public void detectarCambio(Jugador jugador, int tamanoBaldosa) {
 		boolean hayCambio = false;
 		// Se intenta que cuando el jugador sale de una celda siempre quede
 		// la mitad del personaje fuera y la mitad dentro (IMPORTANTE tener en cuenta
@@ -211,9 +199,24 @@ public class Mapa {
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
 			cargarCelda(jugador.getArchivoACargar(), numCelda);
+			updateMapa(tamanoBaldosa);
 		}
 	}
+	
+	public void updateMapa(int tamanoBaldosa) {
+		Graphics2D g = i.createGraphics();
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		dibujarCelda(g, tamanoBaldosa);
+	}
+	public void dibujarImagen(Graphics2D g, int tamanoBaldosa){
+		//g.drawImage(i,0,0, tamanoBaldosa*16,tamanoBaldosa*12,null);
+		g.drawImage(i, 0, 0, null);
+	}
+	
 	public List<NPC> getNpcs(){
 		return npcs;
 	}
+	
+	
+
 }

@@ -1,18 +1,11 @@
 package entidades;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import main.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 
 public class Jugador extends Personaje {
 	GamePanel gp;
@@ -318,6 +311,7 @@ public class Jugador extends Personaje {
 								mapa.setNumcelda(1);
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
 								this.estaDentroDeMazmorra = false;
 								// POSICIONES NUEVAS PARA DESPUES CARGAR EL MAPA
 								x = 450;
@@ -326,6 +320,7 @@ public class Jugador extends Personaje {
 								mapa.setNumcelda(4);
 								archivoACargar = "Resources/mapas/tutorial.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
 								x = 705;
 								y = 241;
 								this.estaDentroDeMazmorra = true;
