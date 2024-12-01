@@ -1,4 +1,4 @@
-package Usuario;
+package main;
 
 public class Usuario {
 

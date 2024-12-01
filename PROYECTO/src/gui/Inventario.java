@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.table.TableCellRenderer;
 import main.AudioPlayer;
 import main.ManejoTeclado;
 
@@ -74,6 +74,16 @@ public class Inventario extends JFrame{
         tabla = new JTable(model);
         getContentPane().add(new JScrollPane(tabla), BorderLayout.CENTER);
         
+        //Asignar el renderer de cuerpo y el de Head
+        TableCellRenderer bodyRendererInventario = new InventarioBodyRender();
+        TableCellRenderer headRendererInventario = new InventarioHeadRenderer();
+        tabla.setDefaultRenderer(Object.class, bodyRendererInventario);
+        tabla.getTableHeader().setDefaultRenderer(headRendererInventario);
+        tabla.setRowHeight(24);
+        tabla.getTableHeader().setAlignmentX(CENTER_ALIGNMENT);
+
+        
+        
      // Manejador de eventos para el botón "Usar"
     	botonUsar.addActionListener(new ActionListener() {
 			@Override
@@ -118,7 +128,7 @@ public class Inventario extends JFrame{
 			}
 		});
 		
-		
+		setResizable(false);
 		setVisible(true);
 
     }
@@ -148,7 +158,6 @@ public class Inventario extends JFrame{
 		dispose();
     }
     
-
      
 }
 
