@@ -121,10 +121,12 @@ public class Mapa {
 
 	/**
 	 * Este metodo se ocupa de dibujar la celda actual del mapa.
+	 * También gira de forma aleatoria las texturas que se pueden girar para evitar homogeneidad
 	 * @param g             El objeto Graphics2D que se va a utilizar.
 	 * @param tamanoBaldosa El tamaño de cada baldosa del juego.
 	 */
 	public void dibujarCelda(Graphics2D g, int tamanoBaldosa) {
+		//En estas listas metemos las texturas que se puedan rotar en el eje x o en el x e y.
 		List<Integer> flipeableX = Arrays.asList(0,1,2,4,5,6,7,8,14,15);
 		List<Integer> flipeableY = Arrays.asList(0,4,5,7,8,14,15);
 		// Recorro todo el array que contienen la celda
@@ -133,8 +135,12 @@ public class Mapa {
 					//Dibujamos las texturas que ya tenemos
 					if (celda[j][i]<=15 && !(celda[j][i]==3)) {
 						try {
+							//Creo un randomizador
 							Random rand = new Random();
 							BufferedImage texturaCasilla = ImageIO.read(getClass().getResourceAsStream("/texturas/texMapa/"+celda[j][i]+".png"));
+							//Dibujo la imagen girada, dependiendo de en qué ejes hemos establecido que se puede girar
+							//Si el random da = 0, no se gira, y si da = 1 se gira.
+							//hago esto moviendo la imagen una baldosa en el eje que se va a girar e invirtiendo el dibujado (tamaño del eje en negativo)
 							if (flipeableX.contains(celda[j][i])) {
 								int flipX = rand.nextInt(0, 2);
 								if (flipeableY.contains(celda[j][i])) {
@@ -144,6 +150,7 @@ public class Mapa {
 									g.drawImage(texturaCasilla,j*tamanoBaldosa+tamanoBaldosa*flipX,i*tamanoBaldosa, tamanoBaldosa-tamanoBaldosa*2*flipX,tamanoBaldosa,null);
 									}
 								}else {
+									//Si la textura no se puede girar en ningún eje, la dibujo sin transformaciones de posición o tamaño.
 									g.drawImage(texturaCasilla,j*tamanoBaldosa,i*tamanoBaldosa, tamanoBaldosa,tamanoBaldosa,null);
 								}
 						} catch (Exception e) {
@@ -153,6 +160,7 @@ public class Mapa {
 						switch (celda[j][i]) {
 						// Por cada celda, dependiendo de su número, voy dibujando bloques donde
 						// corresponde
+						//Estos dibujos son la representación temporal de los materiales que todavía no tienen textura
 						case 3, 16,17,18,19:
 							g.setColor(Color.GREEN);
 							break;
@@ -219,6 +227,7 @@ public class Mapa {
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
 			cargarCelda(jugador.getArchivoACargar(), numCelda);
+			//Se actualiza también la imagen a dibujar del mapa para que coincida con la celda actual
 			updateMapa(tamanoBaldosa);
 		}
 	}
