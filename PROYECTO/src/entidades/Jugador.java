@@ -1,4 +1,5 @@
 package entidades;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import main.*;
 import java.awt.image.BufferedImage;
@@ -425,6 +426,28 @@ public class Jugador extends Personaje {
 		this.archivoACargar = archivoACargar;
 	}
 	
+	public void AccionAtacar(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel, Graphics g) {
+		while (tecladoM.fPulsado == true) {
+			if(direccion == "arriba") {
+				//añadir la imagen de ataque con la espada arriba
+				
+			}
+			if(direccion == "derecha") {
+				//añadir la imagen de ataque con la espada derecha
+				
+			}
+			if(direccion == "izquierda") {
+				//añadir la imagen de ataque con la espada izquierda
+	
+			}
+			if(direccion == "abajo") {
+				//añadir la imagen de ataque con la espada abajo
+				
+			}
+			
+		}
+		
+	}
 
 //	public JPanel vidaJugador(Boolean vida1,Boolean vida2, Boolean vida3) {
 //		panelVida = new JPanel(new BorderLayout());

@@ -11,7 +11,7 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 	
 	//Despuesd de la asignacion de botones creamos unas variables booleanas para saber si estan siendo pulsados o no
 
-	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado,hablarNPCPulsado;
+	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado,hablarNPCPulsado, fPulsado;
 	public boolean abrirInventario, abrirPausa = false;
 
 
@@ -50,6 +50,9 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if(code == KeyEvent.VK_E) {
 			hablarNPCPulsado =true;
 		}
+		if(code == KeyEvent.VK_F) {
+			fPulsado = true;
+		}
 		
 		
 	}
@@ -83,8 +86,12 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if(code == KeyEvent.VK_E) {
 			hablarNPCPulsado = false;
 		}
+		if(code == KeyEvent.VK_F) {
+			fPulsado = false;
+		}
 		
 	} 
+	
 
 
 
