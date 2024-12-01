@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
@@ -52,8 +54,8 @@ public class MenuPausa extends JFrame {
 		reanudar.addActionListener(e -> reanudar());
 		// Placeholder podría ser un menú de instrucciones, un menú de opciones o
 		// incluso un diario de objetivos
-		JButton placeholder1 = new JButton("Placeholder");
-		placeholder1.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+		JButton botonConfiguracion = new JButton("Configuracion");
+		botonConfiguracion.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		JButton salir = new JButton("Salir del juego");
 		salir.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		salir.addActionListener(e -> salir());
@@ -69,9 +71,21 @@ public class MenuPausa extends JFrame {
 		reanudar.setAlignmentX(CENTER_ALIGNMENT);
 		reanudar.setPreferredSize(new Dimension(100, 50));
 		add(Box.createVerticalGlue());
-		add(placeholder1);
-		placeholder1.setAlignmentX(CENTER_ALIGNMENT);
-		placeholder1.setPreferredSize(new Dimension(100, 50));
+		add(botonConfiguracion);
+		botonConfiguracion.setAlignmentX(CENTER_ALIGNMENT);
+		botonConfiguracion.setPreferredSize(new Dimension(100, 50));
+		//actionListener creado para poder abrir el menu de configuración desde el menú de opciones
+		botonConfiguracion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MenuConfiguracion();
+				
+			}
+		});
+		
+		
+		
 		add(Box.createVerticalGlue());
 		add(salir);
 		salir.setAlignmentX(CENTER_ALIGNMENT);
