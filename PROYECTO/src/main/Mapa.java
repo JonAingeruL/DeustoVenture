@@ -116,8 +116,7 @@ public class Mapa {
 	}
 
 	/**
-	 * Este metodo se ocupa de dibujar la celda actual del mapa en pantalla.
-	 * 
+	 * Este metodo se ocupa de dibujar la celda actual del mapa.
 	 * @param g             El objeto Graphics2D que se va a utilizar.
 	 * @param tamanoBaldosa El tamaño de cada baldosa del juego.
 	 */
@@ -126,7 +125,8 @@ public class Mapa {
 		
 			for (int i = 0; i < 12; i++) {
 				for (int j = 0; j < 16; j++) {
-					if (celda[j][i]<=15) {
+					//Dibujamos las texturas que ya tenemos
+					if (celda[j][i]<=15 && !(celda[j][i]==3)) {
 						try {
 							BufferedImage texturaCasilla = ImageIO.read(getClass().getResourceAsStream("/texturas/texMapa/"+celda[j][i]+".png"));
 							g.drawImage(texturaCasilla,j*tamanoBaldosa,i*tamanoBaldosa, tamanoBaldosa,tamanoBaldosa,null);
@@ -137,12 +137,18 @@ public class Mapa {
 						switch (celda[j][i]) {
 						// Por cada celda, dependiendo de su número, voy dibujando bloques donde
 						// corresponde
+						case 3, 16,17,18,19:
+							g.setColor(Color.GREEN);
+							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
+							break;
 						
 						case 20,21,22,23,24:
 							g.setColor(Color.MAGENTA);
+							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 							break;
 						case 30,31,32,33,35,36,37,38,39,40,41,42,43,44,45,46:
 							g.setColor(Color.ORANGE.darker());
+							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 							break;
 						case 60:
 							g.setColor(Color.white);
@@ -202,15 +208,21 @@ public class Mapa {
 			updateMapa(tamanoBaldosa);
 		}
 	}
-	
+	/**
+	 * Este método se ocupa de actualizar la imágen del mapa que se dibuja en pantalla según la celda actual.
+	 * @param tamanoBaldosa El tamaño que tendrá cada baldosa del mapa.
+	 */
 	public void updateMapa(int tamanoBaldosa) {
 		Graphics2D g = i.createGraphics();
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		dibujarCelda(g, tamanoBaldosa);
+		g.setColor(Color.WHITE);
 		g.drawString(""+numCelda, 40, 40);
 	}
-	public void dibujarImagen(Graphics2D g, int tamanoBaldosa){
-		//g.drawImage(i,0,0, tamanoBaldosa*16,tamanoBaldosa*12,null);
+	/**
+	 * Este método dibuja la imagen del mapa en pantalla.
+	 * @param g Graphics2d a utilizar.
+	 */
+	public void dibujarImagen(Graphics2D g){
 		g.drawImage(i, 0, 0, null);
 	}
 	

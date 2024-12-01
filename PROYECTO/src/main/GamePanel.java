@@ -234,7 +234,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// ponerle el tamaño que quieras
 		//Antes de dibujar al personaje, dibujamos el mapa para que el personaje siempre se pinte encima
 	
-		mapa.dibujarImagen(g2, tamañoBaldosa);
+		mapa.dibujarImagen(g2);
 		jugador.dibujarPer(g2);
 		jugador.dibujarVidas(g2);
 		
