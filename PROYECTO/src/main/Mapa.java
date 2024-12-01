@@ -1,4 +1,5 @@
 package main;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -6,7 +7,10 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
@@ -16,9 +20,9 @@ import entidades.NPC;
 public class Mapa {
 	private int[][] celda;
 	private int numCelda;
-	private String archivoACargar="Resources/mapas/tutorial.txt";
+	private String archivoACargar = "Resources/mapas/tutorial.txt";
 	private List<NPC> npcs;
-	private BufferedImage i = new BufferedImage(1024,768, BufferedImage.TYPE_INT_ARGB);
+	private BufferedImage i = new BufferedImage(1024, 768, BufferedImage.TYPE_INT_ARGB);
 
 	public Mapa(int[][] celda, int numCelda) {
 		super();
@@ -91,7 +95,7 @@ public class Mapa {
 			Scanner sc = new Scanner(new FileInputStream(celda));
 			while (sc.hasNextLine()) {
 				// Si la linea actual equivale al indice que busco, la escaneo
-				if (sc.nextLine().strip().equals("-"+num+"-")) {
+				if (sc.nextLine().strip().equals("-" + num + "-")) {
 					for (int i = 0; i < 12; i++) {
 						String linea = new String(sc.nextLine());
 						// Divido cada linea en sus números y los voy metiendo al array
@@ -121,15 +125,27 @@ public class Mapa {
 	 * @param tamanoBaldosa El tamaño de cada baldosa del juego.
 	 */
 	public void dibujarCelda(Graphics2D g, int tamanoBaldosa) {
+		List<Integer> flipeableX = Arrays.asList(0,1,2,4,5,6,7,8,14,15);
+		List<Integer> flipeableY = Arrays.asList(0,4,5,7,8,14,15);
 		// Recorro todo el array que contienen la celda
-		
 			for (int i = 0; i < 12; i++) {
 				for (int j = 0; j < 16; j++) {
 					//Dibujamos las texturas que ya tenemos
 					if (celda[j][i]<=15 && !(celda[j][i]==3)) {
 						try {
+							Random rand = new Random();
 							BufferedImage texturaCasilla = ImageIO.read(getClass().getResourceAsStream("/texturas/texMapa/"+celda[j][i]+".png"));
-							g.drawImage(texturaCasilla,j*tamanoBaldosa,i*tamanoBaldosa, tamanoBaldosa,tamanoBaldosa,null);
+							if (flipeableX.contains(celda[j][i])) {
+								int flipX = rand.nextInt(0, 2);
+								if (flipeableY.contains(celda[j][i])) {
+									int flipY = rand.nextInt(0, 2);
+									g.drawImage(texturaCasilla,j*tamanoBaldosa+tamanoBaldosa*flipX,i*tamanoBaldosa+tamanoBaldosa*flipY, tamanoBaldosa-tamanoBaldosa*2*flipX,tamanoBaldosa-tamanoBaldosa*2*flipY,null);
+								}else {
+									g.drawImage(texturaCasilla,j*tamanoBaldosa+tamanoBaldosa*flipX,i*tamanoBaldosa, tamanoBaldosa-tamanoBaldosa*2*flipX,tamanoBaldosa,null);
+									}
+								}else {
+									g.drawImage(texturaCasilla,j*tamanoBaldosa,i*tamanoBaldosa, tamanoBaldosa,tamanoBaldosa,null);
+								}
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -139,16 +155,13 @@ public class Mapa {
 						// corresponde
 						case 3, 16,17,18,19:
 							g.setColor(Color.GREEN);
-							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 							break;
 						
 						case 20,21,22,23,24:
 							g.setColor(Color.MAGENTA);
-							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 							break;
 						case 30,31,32,33,35,36,37,38,39,40,41,42,43,44,45,46:
 							g.setColor(Color.ORANGE.darker());
-							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 							break;
 						case 60:
 							g.setColor(Color.white);
@@ -156,11 +169,11 @@ public class Mapa {
 									"hola soy un NPC",
 									"bienvenido al juego "
 							}));
-							g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 							g.setColor(Color.WHITE);
 							
 							break;
 						}
+						g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 					}
 					
 					
@@ -168,7 +181,6 @@ public class Mapa {
 				}
 			}
 	}
-		
 
 	/**
 	 * Este método detecta cuando un jugador se sale de la celda actual y lo
@@ -182,8 +194,10 @@ public class Mapa {
 		boolean hayCambio = false;
 		// Se intenta que cuando el jugador sale de una celda siempre quede
 		// la mitad del personaje fuera y la mitad dentro (IMPORTANTE tener en cuenta
-		// que ni las coordenadas del mapa ni las del jugador tienen el 0,0 en el centro)
-		// Si el jugador se sale por el eje X se suma/resta al numCelda 1, y en el caso del eje Y,
+		// que ni las coordenadas del mapa ni las del jugador tienen el 0,0 en el
+		// centro)
+		// Si el jugador se sale por el eje X se suma/resta al numCelda 1, y en el caso
+		// del eje Y,
 		// 10.
 		if (jugador.getX() > 992) {
 			numCelda = numCelda + 10;
@@ -208,28 +222,31 @@ public class Mapa {
 			updateMapa(tamanoBaldosa);
 		}
 	}
+
 	/**
-	 * Este método se ocupa de actualizar la imágen del mapa que se dibuja en pantalla según la celda actual.
+	 * Este método se ocupa de actualizar la imágen del mapa que se dibuja en
+	 * pantalla según la celda actual.
+	 * 
 	 * @param tamanoBaldosa El tamaño que tendrá cada baldosa del mapa.
 	 */
 	public void updateMapa(int tamanoBaldosa) {
 		Graphics2D g = i.createGraphics();
 		dibujarCelda(g, tamanoBaldosa);
 		g.setColor(Color.WHITE);
-		g.drawString(""+numCelda, 40, 40);
+		g.drawString("" + numCelda, 40, 40);
 	}
+
 	/**
 	 * Este método dibuja la imagen del mapa en pantalla.
+	 * 
 	 * @param g Graphics2d a utilizar.
 	 */
-	public void dibujarImagen(Graphics2D g){
+	public void dibujarImagen(Graphics2D g) {
 		g.drawImage(i, 0, 0, null);
 	}
-	
-	public List<NPC> getNpcs(){
+
+	public List<NPC> getNpcs() {
 		return npcs;
 	}
-	
-	
 
 }
