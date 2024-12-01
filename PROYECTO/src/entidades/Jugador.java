@@ -479,7 +479,9 @@ public void InteractuarNPC(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM)
 	}
 	
 	public void AccionAtacar(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel, Graphics g) {
+		AudioPlayer sword = new AudioPlayer("Resources/audio/Sword.wav");
 		while (tecladoM.fPulsado == true) {
+			sword.playClip();
 			if(direccion == "arriba") {
 				//añadir la imagen de ataque con la espada arriba
 				
@@ -498,6 +500,7 @@ public void InteractuarNPC(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM)
 			}
 			
 		}
+		sword.closeClip();
 		
 	}
 
