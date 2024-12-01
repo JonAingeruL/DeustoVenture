@@ -10,7 +10,6 @@ public class Personaje {
 	
 	public BufferedImage arriba1, arriba2, arriba3,  abajo1, abajo2, abajo3, derecha1, derecha2, derecha3, izquierda1, izquierda2, izquierda3;
 	public String direccion;
-	public boolean hablarNPC;
 	
 	public int contadorSprites = 0;
 	public int numSprite = 1;
@@ -32,12 +31,6 @@ public class Personaje {
 	}
 	public void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
-	}
-	public boolean getHablarNPC() {
-		return hablarNPC;
-	}
-	public void setHablarNPC() {
-		this.hablarNPC = hablarNPC;
 	}
 
 }

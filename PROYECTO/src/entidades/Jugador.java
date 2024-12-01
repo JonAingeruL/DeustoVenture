@@ -1,4 +1,7 @@
 package entidades;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import main.*;
@@ -15,6 +18,7 @@ public class Jugador extends Personaje {
 	private String archivoACargar = "Resources/mapas/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida, corazonAMedias;
 	private boolean[] vidas = { true, true, true, false, false, false  };
+	boolean teclaProcesadaNPC = false;
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
 	private List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
@@ -34,7 +38,6 @@ public class Jugador extends Personaje {
 		y = 400;
 		velocidad = 4;
 		direccion = "abajo";
-		hablarNPC = false;
 		
 	}
 
@@ -393,30 +396,79 @@ public class Jugador extends Personaje {
 		return false;
 	}
 	
-	public void InteracctuarNPC(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel) {
-		int celdaX = (x + 32) / tamanobaldosa;
-		if (x < -32) {
-			celdaX = mapa.getCelda().length - 1;
-		}
-		int celdaY = (y + 32) / tamanobaldosa;
-		if (y < -32) {
-			celdaY = mapa.getCelda()[0].length - 1;
-		}
+	public void dibujarDialogoPantalla(Graphics2D g2, Mapa mapa) {//hago 2 metodos pq hay diferentes npcs
+//      dialogoJL.setBounds(0, maxPantallaFila - maxPantallaFila/3, maxPantallaColu, maxPantallaFila/3); // Ajustar posición y tamaño.
 		
+//		el panel de texto lo coloco abajo en el centro
+		
+//		int x = 15; 
+//		int y = (gp.maxPantallaFila - gp.maxPantallaFila/3) * gp.tamañoBaldosa - 15; //hay q * para pasarlo a la unidad correcta
+//		int ancho = gp.maxPantallaColu * (gp.tamañoBaldosa -2); 
+//		int largo = gp.maxPantallaFila/3 * gp.tamañoBaldosa; 
+//		
+//		//llama al metodo de abajo y le t¡mete los datos para q haga el rectangulo, lo hago en 2 metodo pq hay varios npcs
+//		dibujarSubPantalla(x, y, ancho, largo, g2); 
+//		
+//		x+= gp.maxPantallaFila;
+//		y+= gp.maxPantallaColu + 20; //para que el texto encaje bien
+//		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F)); //poner la fuente de la letra
+//		// esto lo uso para hacer pruebas, no es correcto ya que hace un buble infito pero es una forma de ver que el texto se muestra
+//		for(NPC npc: mapa.getNpcs()) { 
+//			g2.drawString(npc.hablar(), x, y);
+//			
+//		//hay q hecer un for q interprete el salto de linea pq en este caso no lo hace automatico		
+//			for(String linea: npc.hablar().split("\n")) { 
+//				g2.drawString(npc.hablar(), x, y);
+//				y += 40;
+//			}
+//			
+//		}
+	}
+	
+	public void dibujarSubPantalla(int x, int y, int ancho, int largo, Graphics2D g2) {
+			Color c = new Color(0,0,0,200); // el 200 le aporta transparencia, cuanto mas bajo mas transparencia, va del 0 al 255
+			g2.setColor(c);
+			g2.fillRoundRect(x, y, ancho, largo, 20, 20);//dibujamos un recatangulo el 20 es para cambiar la redondez del rectangulo
+			
+			c = new Color(255,255,255,200); // el 200 le aporta transparencia
+			g2.setStroke(new BasicStroke(5)); // para hecerle un reborde 5 es su anchura
+			g2.setColor(c);
+			g2.drawRoundRect(x+ 5, y+ 5, ancho -10, largo -10, 10, 10); //saca el reboerde
+			
+		}
+
+	
+	
+public void InteractuarNPC(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM) {
+		
+//		int celdaX = (x + 32) / tamanobaldosa;
+//		if (x < -32) {
+//			celdaX = mapa.getCelda().length - 1;
+//		}
+//		int celdaY = (y + 32) / tamanobaldosa;
+//		if (y < -32) {
+//			celdaY = mapa.getCelda()[0].length - 1;
+//		}
 		for(NPC npc: mapa.getNpcs()) {
-			if(Math.abs(celdaX - npc.getX()) < 1 && Math.abs(celdaY - npc.getY()) <1 ) {
-				if(tecladoM.hablarNPCPulsado == true) { //interactua con la tecla E
-					String textoDialogo =  npc.hablar(); // Imprime en consola y obtiene el texto.
-					gamePanel.mostrarDialogo(textoDialogo);// Enseña el texto en el JLabel.
-					break;
+//			if(Math.abs(celdaX - npc.getX()) <= 1 && Math.abs(celdaY - npc.getY()) <= 1 ) { //no funciona por que hay algo que lo pisa, pero el calculo esta bien
+//				System.out.println("deberia funcionar");
+				
+				if(tecladoM.hablarNPCPulsado ) { //interactua con la tecla E
+					if(!teclaProcesadaNPC) {
+						teclaProcesadaNPC = true;
+						npc.hablar();
+					}
 				}else {
-					gamePanel.ocultarDialogo(); //se oculta el JLabel
+					teclaProcesadaNPC = false;
 					break;
 				}
 			}
+//			}else {
+//				System.out.println("coordenada x " + npc.getX() +" coordenada y "+ npc.getY());
+//			}
 		}
-		
-	}
+
+	
 
 	public String getArchivoACargar() {
 		return archivoACargar;
@@ -449,34 +501,5 @@ public class Jugador extends Personaje {
 		
 	}
 
-//	public JPanel vidaJugador(Boolean vida1,Boolean vida2, Boolean vida3) {
-//		panelVida = new JPanel(new BorderLayout());
-//		boolean[] vidas = {vida1, vida2, vida3}; //para poder hacer un for y que el codigo sea mas optimo
-//        JPanel panelDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Uso FlowLayout para poder alinear los corazones en la derecha
-//        panelDerecho.setPreferredSize(new Dimension(150, 50)); // Tamaño del panel
-//
-//        // Cargar imágenes de los corazones
-//        ImageIcon corazonIconoConVida = new ImageIcon("/texturas/vida/corazonConVida.png"); // el corazon con vida y su ruta
-//        ImageIcon corazonIconoSinVida = new ImageIcon("/texturas/vida/CorazonSinVida.png"); // el corazon sin vida y su ruta
-//
-//        JLabel corazonVida = new JLabel(corazonIconoConVida); //creo los Jlabel para meter las imagenes en el panel
-//        JLabel corazonSinVida = new JLabel(corazonIconoSinVida);
-//        
-//        for (boolean vida : vidas) {
-//            if (vida) {
-//                panelDerecho.add(corazonVida);
-//            } else {
-//                panelDerecho.add(corazonSinVida);
-//            }
-//        }
-//
-//        // Agrega el panelDerecho al panel principal en la posición derecha
-//        panelVida.add(panelDerecho, BorderLayout.EAST);
-//        
-//        return panelVida;
-//	}
-//	
-//	public JPanel getPanelVidas(Graphics2D g2) {
-//		return panelVida;
-//	}
+
 }
