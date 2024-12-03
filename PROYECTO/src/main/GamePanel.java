@@ -181,7 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa);
 		jugador.InteractuarNPC(mapa, tamañoBaldosa, tecladoM);
-		
+		jugador.AccionAtacar(mapa, tamañoBaldosa, tecladoM, null, (Graphics2D) getGraphics());
 		//controla si el inventario se puede abrir o no, para que no se abran mas de un inventario (controla que también se le haya dado a la I para abrirlo)
 		if(tecladoM.iPulsado && !tecladoM.abrirInventario) {
 			tecladoM.abrirInventario = true;
@@ -227,10 +227,6 @@ public class GamePanel extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D) g; // La clase Graphics2D extiende de la clase Graphics para proporcionar un
 										// control mas sofisticado sobre la geometria, transformacion de coordenadas,
 										// manejo del color y el layout de los textos
-		
-		// Vamos a probar dibujando un cuadrado como personaje en la pantalla
-		// Este metodo dibuja un triangulo con el color que has puesto antes y puedes
-		// ponerle el tamaño que quieras
 		//Antes de dibujar al personaje, dibujamos el mapa para que el personaje siempre se pinte encima
 	
 		mapa.dibujarImagen(g2);

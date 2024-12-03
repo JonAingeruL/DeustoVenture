@@ -1,8 +1,6 @@
 package entidades;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import main.*;
 import java.awt.image.BufferedImage;
@@ -16,9 +14,10 @@ public class Jugador extends Personaje {
 	ManejoTeclado maneT;
 	private boolean estaDentroDeMazmorra = true;
 	private String archivoACargar = "Resources/mapas/tutorial.txt";
-	private BufferedImage corazonVida, corazonSinVida, corazonAMedias;
+	private BufferedImage corazonVida, corazonSinVida, corazonAMedias,espada;
 	private boolean[] vidas = { true, true, true, false, false, false  };
 	boolean teclaProcesadaNPC = false;
+	boolean atacando = false;
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
 	private List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
@@ -63,6 +62,7 @@ public class Jugador extends Personaje {
 																										// vida y su
 																										// ruta
 			corazonAMedias = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonAMedias.png")); //El corazón a medias
+			espada = ImageIO.read(getClass().getResourceAsStream("/texturas/texInventario/espada.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -142,7 +142,7 @@ public class Jugador extends Personaje {
 		// g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
 
 		BufferedImage imagen = null;
-
+		
 		switch (direccion) {
 		case "arriba":
 			if (numSprite == 1) {
@@ -154,6 +154,8 @@ public class Jugador extends Personaje {
 				imagen = arriba3;
 
 			}
+			if(atacando) {g2.drawImage(espada,x, y-20,20 ,60,null );
+			}
 			break;
 		case "abajo":
 			if (numSprite == 1) {
@@ -164,6 +166,8 @@ public class Jugador extends Personaje {
 			} else if (numSprite == 3) {
 				imagen = abajo3;
 			}
+		if(atacando) {g2.drawImage(espada,x+40, y+100,20 ,-60,null );
+		}
 			break;
 		case "izquierda":
 			if (numSprite == 1) {
@@ -173,7 +177,9 @@ public class Jugador extends Personaje {
 
 			} else if (numSprite == 3) {
 				imagen = izquierda3;
-			}
+			}if(atacando) {
+			g2.drawImage(espada, x+10, y+25, -60, 20, null);
+		}
 			break;
 		case "derecha":
 			if (numSprite == 1) {
@@ -183,6 +189,8 @@ public class Jugador extends Personaje {
 
 			} else if (numSprite == 3) {
 				imagen = derecha3;
+			}
+			if(atacando) {g2.drawImage(espada, x+40, y+25,60 ,20, null );
 			}
 			break;
 		}
@@ -478,30 +486,25 @@ public void InteractuarNPC(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM)
 		this.archivoACargar = archivoACargar;
 	}
 	
-	public void AccionAtacar(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel, Graphics g) {
-		AudioPlayer sword = new AudioPlayer("Resources/audio/Sword.wav");
-		while (tecladoM.fPulsado == true) {
-			sword.playClip();
-			if(direccion == "arriba") {
-				//añadir la imagen de ataque con la espada arriba
-				
-			}
-			if(direccion == "derecha") {
-				//añadir la imagen de ataque con la espada derecha
-				
-			}
-			if(direccion == "izquierda") {
-				//añadir la imagen de ataque con la espada izquierda
-	
-			}
-			if(direccion == "abajo") {
-				//añadir la imagen de ataque con la espada abajo
-				
-			}
+	public void AccionAtacar(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel, Graphics2D g) {
+		Thread t = new Thread(new Runnable() {
 			
+			@Override
+			public void run() {
+				while(!Thread.interrupted()) {
+				AudioPlayer sword = new AudioPlayer("Resources/audio/Sword.wav");
+				sword.playClip();
+			}
+			}
+		});
+		if (tecladoM.fPulsado == true) {
+			t.start();
+			System.out.println("Sword");
+			atacando=true;
+			}else {
+			atacando = false;
+			t.interrupt();
 		}
-		sword.closeClip();
-		
 	}
 
 
