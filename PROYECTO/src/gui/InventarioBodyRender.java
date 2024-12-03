@@ -5,6 +5,7 @@ import java.awt.Component;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 
 public class InventarioBodyRender implements TableCellRenderer{
@@ -18,9 +19,14 @@ public class InventarioBodyRender implements TableCellRenderer{
 			l.setText(texto);
 		}
 		if (row%2 ==0) {
-			l.setBackground(isSelected ? table.getSelectionBackground():new Color(202, 243, 242));
+			l.setBackground(new Color(202, 243, 242 ));
 		} else {
-			l.setBackground(isSelected ? table.getSelectionBackground():new Color(255, 255, 255 ));
+			l.setBackground(new Color(255, 255, 255 ));
+		}
+		
+		int filaSeleccionada = table.getSelectedRow();
+		if (row == filaSeleccionada) {
+			l.setBackground(new Color(248, 156, 156));
 		}
 		l.setOpaque(true);
 		return l;

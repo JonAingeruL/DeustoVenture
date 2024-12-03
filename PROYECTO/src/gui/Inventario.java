@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import main.AudioPlayer;
@@ -81,7 +82,8 @@ public class Inventario extends JFrame{
         tabla.getTableHeader().setDefaultRenderer(headRendererInventario);
         tabla.setRowHeight(24);
         tabla.getTableHeader().setAlignmentX(CENTER_ALIGNMENT);
-
+        tabla.setCellSelectionEnabled(true);
+        tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         
      // Manejador de eventos para el botón "Usar"
