@@ -345,11 +345,13 @@ public class Jugador extends Personaje {
 
 								archivoACargar = "Resources/dungeon1.txt";
 								mapa.cargarCelda(archivoACargar, 1);
+								mapa.updateMapa(tamanobaldosa);
 
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
+								mapa.updateMapa(tamanobaldosa);
 
 								estaDentroDeMazmorra = false;
 							}
@@ -359,11 +361,13 @@ public class Jugador extends Personaje {
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/dungeon2.txt";
 								mapa.cargarCelda(archivoACargar, 1);
+								mapa.updateMapa(tamanobaldosa);
 
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
+								mapa.updateMapa(tamanobaldosa);
 
 								estaDentroDeMazmorra = false;
 							}
@@ -377,6 +381,7 @@ public class Jugador extends Personaje {
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
+								mapa.updateMapa(tamanobaldosa);
 
 								estaDentroDeMazmorra = false;
 							}
@@ -385,11 +390,13 @@ public class Jugador extends Personaje {
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/dungeon3.txt";
 								mapa.cargarCelda(archivoACargar, 1);
+								mapa.updateMapa(tamanobaldosa);
 
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, 1);
+								mapa.updateMapa(tamanobaldosa);
 
 								estaDentroDeMazmorra = false;
 
