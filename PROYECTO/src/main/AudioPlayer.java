@@ -34,6 +34,7 @@ public class AudioPlayer {
  */
 	public void playClip() {
 		this.clip.start();
+		this.clip.setFramePosition(0);
 	}
 /**
  * Cierra el clip de audio

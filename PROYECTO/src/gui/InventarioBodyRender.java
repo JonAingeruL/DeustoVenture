@@ -18,9 +18,9 @@ public class InventarioBodyRender implements TableCellRenderer{
 			l.setText(texto);
 		}
 		if (row%2 ==0) {
-			l.setBackground(new Color(202, 243, 242 ));
+			l.setBackground(isSelected ? table.getSelectionBackground():new Color(202, 243, 242));
 		} else {
-			l.setBackground(new Color(255, 255, 255 ));
+			l.setBackground(isSelected ? table.getSelectionBackground():new Color(255, 255, 255 ));
 		}
 		l.setOpaque(true);
 		return l;

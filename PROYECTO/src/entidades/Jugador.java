@@ -18,6 +18,11 @@ public class Jugador extends Personaje {
 	private boolean[] vidas = { true, true, true, false, false, false  };
 	boolean teclaProcesadaNPC = false;
 	boolean atacando = false;
+	long cooldownAtaque = 0; //De momento, cooldown servirá para almacenar en qué momento
+	//e ataca. Con esto se puede calcular cuanto tiempo ha pasado
+	//TODO Método que cierre todo lo que se abra al cerrar el juego, tanto en
+	//esta clase como en las demás.
+	AudioPlayer sword = new AudioPlayer("Resources/audio/Sword.wav");
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
 	private List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
@@ -344,15 +349,9 @@ public class Jugador extends Personaje {
 							if (!estaDentroDeMazmorra) {
 
 								archivoACargar = "Resources/dungeon1.txt";
-								mapa.cargarCelda(archivoACargar, 1);
-								mapa.updateMapa(tamanobaldosa);
-
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
-								mapa.cargarCelda(archivoACargar, 1);
-								mapa.updateMapa(tamanobaldosa);
-
 								estaDentroDeMazmorra = false;
 							}
 							break;
@@ -360,47 +359,32 @@ public class Jugador extends Personaje {
 						case 22:
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/dungeon2.txt";
-								mapa.cargarCelda(archivoACargar, 1);
-								mapa.updateMapa(tamanobaldosa);
-
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
-								mapa.cargarCelda(archivoACargar, 1);
-								mapa.updateMapa(tamanobaldosa);
-
 								estaDentroDeMazmorra = false;
 							}
 							break;
 						case 23:
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/casa.txt";
-								mapa.cargarCelda(archivoACargar, 1);
-
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
-								mapa.cargarCelda(archivoACargar, 1);
-								mapa.updateMapa(tamanobaldosa);
-
 								estaDentroDeMazmorra = false;
 							}
 							break;
 						case 24:
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/dungeon3.txt";
-								mapa.cargarCelda(archivoACargar, 1);
-								mapa.updateMapa(tamanobaldosa);
-
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
-								mapa.cargarCelda(archivoACargar, 1);
-								mapa.updateMapa(tamanobaldosa);
-
 								estaDentroDeMazmorra = false;
 
 							}
+							mapa.cargarCelda(archivoACargar, 1);
+							mapa.updateMapa(tamanobaldosa);
 							break;
 						}
 					}
@@ -494,25 +478,20 @@ public void InteractuarNPC(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM)
 	}
 	
 	public void AccionAtacar(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel, Graphics2D g) {
-		Thread t = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				while(!Thread.interrupted()) {
-				AudioPlayer sword = new AudioPlayer("Resources/audio/Sword.wav");
-				sword.playClip();
-			}
-			}
-		});
-		if (tecladoM.fPulsado == true) {
-			t.start();
+		if ((tecladoM.fPulsado == true)&& (atacando==false)) {
+			//Establecemos en qué mopmento hemos atacado
+			cooldownAtaque = System.currentTimeMillis();
+			sword.playClip();
 			System.out.println("Sword");
 			atacando=true;
 			}else {
-			atacando = false;
-			t.interrupt();
-		}
+				//Si se estaba esperando al cooldown y ya ha pasado. Se pasa el cooldown (1) de segundos a milis
+			if((cooldownAtaque!=0) && (System.currentTimeMillis()-cooldownAtaque>1*1000)) {
+				System.out.println("Fin ataque");
+				//Dejamos de atacar
+				cooldownAtaque=0;
+				atacando=false;
+			}
+			}
 	}
-
-
-}
+	}
