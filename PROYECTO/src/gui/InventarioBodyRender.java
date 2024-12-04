@@ -2,10 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 
 public class InventarioBodyRender implements TableCellRenderer{

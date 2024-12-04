@@ -40,7 +40,7 @@ public class Jugador extends Personaje {
 	public void valoresDefault() {
 		x = 475;
 		y = 400;
-		velocidad = 4;
+		velocidad = 10;
 		direccion = "abajo";
 		
 	}
@@ -348,12 +348,20 @@ public class Jugador extends Personaje {
 						case 21:
 							if (!estaDentroDeMazmorra) {
 
-								archivoACargar = "Resources/dungeon1.txt";
+								archivoACargar = "Resources/mapas/dungeon1.txt";
+								mapa.setNumcelda(1);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
+								x = 450;
+								y = 300;
 								estaDentroDeMazmorra = true;
 							} else {
+								mapa.setNumcelda(34);
 								archivoACargar = "Resources/mapas/mapa.txt";
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
+								x=450;
+								y=160;
 								estaDentroDeMazmorra = false;
 							}
 							break;
@@ -361,32 +369,61 @@ public class Jugador extends Personaje {
 						case 22:
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/dungeon2.txt";
+								mapa.setNumcelda(1);
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
+								x = 450;
+								y = 300;
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
+								mapa.setNumcelda(94);
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
+								x = 500;
+								y = 380;
 								estaDentroDeMazmorra = false;
 							}
 							break;
 						case 23:
 							if (!estaDentroDeMazmorra) {
-								archivoACargar = "Resources/mapas/casa.txt";
+								
+								archivoACargar = "Resources/mapas/dungeon3.txt";
+								mapa.setNumcelda(1);
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
+								x = 450;
+								y = 300;
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
+								mapa.setNumcelda(56);
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
+								x = 450;
+								y = 270;
 								estaDentroDeMazmorra = false;
 							}
 							break;
 						case 24:
 							if (!estaDentroDeMazmorra) {
-								archivoACargar = "Resources/mapas/dungeon3.txt";
+								archivoACargar = "Resources/mapas/casa.txt";
+								mapa.setNumcelda(1);
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
+								x = 450;
+								y = 300;
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
+								mapa.setNumcelda(87);
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
+								x = 780;
+								y = 370;
 								estaDentroDeMazmorra = false;
 
 							}
-							mapa.cargarCelda(archivoACargar, 1);
-							mapa.updateMapa(tamanobaldosa);
 							break;
 						}
 					}

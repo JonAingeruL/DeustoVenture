@@ -25,11 +25,11 @@ SIGNIFICADO DE NUMEROS:
 	17-> Hierba pueblo volcan
 	18->
 	19->
-	20-> Portal a tutorial (colision especial) (Color.YELLOW)
-	21-> Portal a mazmorra 1 (colision especial) (Color.YELLOW)
-	22-> Portal a mazmorra 2 (colision especial) (Color.YELLOW)
-	23-> Portal a mazmorra 3 (colision especial) (Color.YELLOW)
-	24-> Portal a casa (colision especial) (Color.YELLOW)
+	20-> Portal a tutorial (colision especial) (Color.PURPLE)
+	21-> Portal a mazmorra 1 (colision especial) (Color.PURPLE)
+	22-> Portal a mazmorra 2 (colision especial) (Color.PURPLE)
+	23-> Portal a mazmorra 3 (colision especial) (Color.PURPLE)
+	24-> Portal a casa (colision especial) (Color.PURPLE)
 	25->
 	26->
 	27->
