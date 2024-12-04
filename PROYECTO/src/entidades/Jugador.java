@@ -349,6 +349,8 @@ public class Jugador extends Personaje {
 							if (!estaDentroDeMazmorra) {
 
 								archivoACargar = "Resources/dungeon1.txt";
+								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+								mapa.updateMapa(tamanobaldosa);
 								estaDentroDeMazmorra = true;
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
