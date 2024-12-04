@@ -21,6 +21,15 @@ public class Mapa {
 	private String archivoACargar = "Resources/mapas/tutorial.txt";
 	private List<NPC> npcs;
 	private BufferedImage i = new BufferedImage(1024, 768, BufferedImage.TYPE_INT_ARGB);
+	// en caso de que se quieran añadir más números que tengan colision, se añaden a
+	// esta lista
+	public static List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
+			37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 60);
+	
+	//Esta variable sirve para controlar el nº de mapa AL CARGAR ENEMIGOS
+	//valor 0 = tutorial.txt, valor 1 = mapa.txt, valor 2 = dungeon1.txt, valor 3 = dungeon2.txt, valor 4= dungeon3.txt
+	//valor 5 = casa.txt
+	private int numeroMapa;
 
 	public Mapa(int[][] celda, int numCelda) {
 		super();
@@ -116,7 +125,9 @@ public class Mapa {
 		}
 		setCelda(map);
 	}
-
+	
+	
+	
 	/**
 	 * Este metodo se ocupa de dibujar la celda actual del mapa.
 	 * También gira de forma aleatoria las texturas que se pueden girar para evitar homogeneidad
@@ -260,5 +271,13 @@ public class Mapa {
 	public List<NPC> getNpcs() {
 		return npcs;
 	}
+	
+	public int getNumeroMapa() {
+		return numeroMapa;
+	}
 
+	public void setNumeroMapa(int numeroMapa) {
+		this.numeroMapa = numeroMapa;
+	}
+	
 }

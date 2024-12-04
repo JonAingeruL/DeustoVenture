@@ -15,18 +15,16 @@ public class Jugador extends Personaje {
 	private boolean estaDentroDeMazmorra = true;
 	private String archivoACargar = "Resources/mapas/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida, corazonAMedias,espada;
-	private boolean[] vidas = { true, true, true, false, false, false  };
+	private boolean[] vidas = { true, true, true, false, false, false };
 	boolean teclaProcesadaNPC = false;
 	boolean atacando = false;
+
 	long cooldownAtaque = 0; //De momento, cooldown servirá para almacenar en qué momento
 	//e ataca. Con esto se puede calcular cuanto tiempo ha pasado
 	//TODO Método que cierre todo lo que se abra al cerrar el juego, tanto en
 	//esta clase como en las demás.
 	AudioPlayer sword = new AudioPlayer("Resources/audio/Sword.wav");
-	// en caso de que se quieran añadir más números que tengan colision, se añaden a
-	// esta lista
-	private List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
-			37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 60);
+
 
 	public Jugador(GamePanel gp, ManejoTeclado maneT) {
 
@@ -296,7 +294,7 @@ public class Jugador extends Personaje {
 			for (int j = 0; j < mapa.getCelda()[i].length; j++) {
 				// Por cada baldosa no vacía, calcula si está colisionando de algún modo con el
 				// personaje, USANDO LA LISTA QUE TENEMOS DE NUMEROS COLISIONABLES
-				if (zonasConColision.contains(mapa.getCelda()[i][j])) {
+				if (Mapa.zonasConColision.contains(mapa.getCelda()[i][j])) {
 					if (((((x <= (i * tamanobaldosa) + tamanobaldosa) && (x >= i * tamanobaldosa))
 							// Compruebo si hay colisión en X con la esquina derecha
 							|| ((x + tamanobaldosa <= (i * tamanobaldosa) + tamanobaldosa)
@@ -326,6 +324,7 @@ public class Jugador extends Personaje {
 							System.out.println("20");
 							if (this.estaDentroDeMazmorra) {
 								mapa.setNumcelda(1);
+								mapa.setNumeroMapa(1);
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
@@ -335,6 +334,7 @@ public class Jugador extends Personaje {
 								y = 300;
 							} else {
 								mapa.setNumcelda(4);
+								mapa.setNumeroMapa(0);
 								archivoACargar = "Resources/mapas/tutorial.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
@@ -350,6 +350,7 @@ public class Jugador extends Personaje {
 
 								archivoACargar = "Resources/mapas/dungeon1.txt";
 								mapa.setNumcelda(1);
+								mapa.setNumeroMapa(2);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 450;
@@ -357,6 +358,7 @@ public class Jugador extends Personaje {
 								estaDentroDeMazmorra = true;
 							} else {
 								mapa.setNumcelda(34);
+								mapa.setNumeroMapa(1);
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
@@ -369,7 +371,7 @@ public class Jugador extends Personaje {
 						case 22:
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/dungeon2.txt";
-								mapa.setNumcelda(1);
+								mapa.setNumcelda(3);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 450;
@@ -378,6 +380,7 @@ public class Jugador extends Personaje {
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.setNumcelda(94);
+								mapa.setNumeroMapa(1);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 500;
@@ -390,6 +393,7 @@ public class Jugador extends Personaje {
 								
 								archivoACargar = "Resources/mapas/dungeon3.txt";
 								mapa.setNumcelda(1);
+								mapa.setNumeroMapa(4);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 450;
@@ -398,6 +402,7 @@ public class Jugador extends Personaje {
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.setNumcelda(56);
+								mapa.setNumeroMapa(1);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 450;
@@ -409,6 +414,7 @@ public class Jugador extends Personaje {
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/casa.txt";
 								mapa.setNumcelda(1);
+								mapa.setNumeroMapa(5);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 450;
@@ -417,6 +423,7 @@ public class Jugador extends Personaje {
 							} else {
 								archivoACargar = "Resources/mapas/mapa.txt";
 								mapa.setNumcelda(87);
+								mapa.setNumeroMapa(1);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 780;
@@ -533,4 +540,8 @@ public void InteractuarNPC(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM)
 			}
 			}
 	}
-	}
+
+
+	
+}
+

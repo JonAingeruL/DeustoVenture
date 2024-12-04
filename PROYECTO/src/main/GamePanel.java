@@ -6,8 +6,12 @@ import gui.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
 
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -33,7 +37,6 @@ public class GamePanel extends JPanel implements Runnable {
 	// pantalla
 	final int pantallaAnchuta = maxPantallaColu * tamañoBaldosa; // 1024 pixeles de ancho
 	final int pantallaAltura = maxPantallaFila * tamañoBaldosa; // 768 pixeles de alto
-	
 	private Inventario inventarioJugador;
 	// establecemos los fps como variable
 	// FPS
@@ -63,7 +66,8 @@ public class GamePanel extends JPanel implements Runnable {
 	// TODO Pensar el esquema de herencias de la clase personaje y crear una clase
 	// personajeJugable (PJ) que sea la que controla el jugador
 	Jugador jugador = new Jugador(this, tecladoM);
-
+	HashMap<String,ArrayList<Enemigo>> enemigos;
+	
 	// Creamos un constructor de este GamePanel
 	public GamePanel() {
 
@@ -79,12 +83,16 @@ public class GamePanel extends JPanel implements Runnable {
 		// Y vamos a añadir esto para que el GamePanel este "centrado" en recibir
 		// entrada de teclado
 		this.setFocusable(true);
+		
 
 	}
 
 	// vamos a crear un nuevo metodo para iniciar el juego
 	public void iniciarJuegoHilo() {
 		
+		
+		//Cargamos un txt de enemigos ya hecho
+		cargarEmemigos();
 		//cargamos el primer mapa XD
 		mapa.updateMapa(tamañoBaldosa);
 		// Vamos a instanciar el gameThread
@@ -182,6 +190,13 @@ public class GamePanel extends JPanel implements Runnable {
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa);
 		jugador.InteractuarNPC(mapa, tamañoBaldosa, tecladoM);
 		jugador.AccionAtacar(mapa, tamañoBaldosa, tecladoM, null, (Graphics2D) getGraphics());
+		
+		//detectamos el cambio de movimiento de cada Enemigo
+		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
+			for (Enemigo enemigo : enemigos.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
+				enemigo.movimiento(mapa,tamañoBaldosa);
+			}
+		}
 		//controla si el inventario se puede abrir o no, para que no se abran mas de un inventario (controla que también se le haya dado a la I para abrirlo)
 		if(tecladoM.iPulsado && !tecladoM.abrirInventario) {
 			tecladoM.abrirInventario = true;
@@ -228,12 +243,17 @@ public class GamePanel extends JPanel implements Runnable {
 										// control mas sofisticado sobre la geometria, transformacion de coordenadas,
 										// manejo del color y el layout de los textos
 		//Antes de dibujar al personaje, dibujamos el mapa para que el personaje siempre se pinte encima
-	
+		
 		mapa.dibujarImagen(g2);
 		jugador.dibujarPer(g2);
 		jugador.dibujarVidas(g2);
 		jugador.dibujarDialogoPantalla(g2, mapa); //de momento no lo uso por que no consigo relacionar los metodos
-		
+		//vamos a pintar todos los enemigos
+		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
+			for (Enemigo enemigo : enemigos.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
+				enemigo.dibujarEnemigo(g2);
+			}
+		}
 		g2.dispose(); // Esto sirve para ahorrar memoria en el dibujado
 	}
 	
@@ -246,5 +266,38 @@ public class GamePanel extends JPanel implements Runnable {
 		
 	}
 	
+	private void cargarEmemigos() {
+		enemigos = new HashMap<String, ArrayList<Enemigo>>();
+		try (Scanner sc = new Scanner(new FileInputStream("Resources/mapas/mapaEnemigos.txt"))) {
+			while (sc.hasNextLine()) {
+				String linea = sc.nextLine();
+				if (!linea.trim().startsWith("//")) {
+					String[] campos = linea.split(";");
+					String numMapa = campos[0];
+					String numCelda = campos[1];
+					String clave = numMapa+","+numCelda;
+					int posXEnemigo = Integer.parseInt(campos[3])*tamañoBaldosa;
+					int posYEnemigo = Integer.parseInt(campos[4])*tamañoBaldosa;
+					Enemigo e;
+					switch (campos[2]) {
+					//al añadir un enemigo nuevo, se tiene que meter a este dentro del case
+					case "Slime": e = new Slime(posXEnemigo,posYEnemigo,this);
+					break;
+					default: e= new Slime(posXEnemigo, posYEnemigo, this);
+					}
+					if (!enemigos.containsKey(clave)) {
+						enemigos.put(clave, new ArrayList<Enemigo>());
+					}
+					enemigos.get(clave).add(e);
+					
+			
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	}
 
 }

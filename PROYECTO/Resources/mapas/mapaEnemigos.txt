@@ -1,0 +1,3 @@
+//FORMATO: Num mapa; num celda; Tipo enemigo (EJ Slime); posicion X (del 1 al 16); posicion Y (del 1 al 12);
+0;3;Slime;3;1;
+1;1;Slime;10;5;
