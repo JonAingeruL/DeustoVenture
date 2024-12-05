@@ -144,8 +144,8 @@ public class MenuConfiguracion extends JFrame {
 				if (response ==JOptionPane.YES_OPTION) {
 					guardarCambios();
 					dispose();
-				}	
-			}		
+				}
+			}	
 		});
 		
 		setResizable(true);

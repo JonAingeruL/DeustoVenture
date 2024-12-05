@@ -371,7 +371,8 @@ public class Jugador extends Personaje {
 						case 22:
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "Resources/mapas/dungeon2.txt";
-								mapa.setNumcelda(3);
+								mapa.setNumcelda(1);
+								mapa.setNumeroMapa(3);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 450;
