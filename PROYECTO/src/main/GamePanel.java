@@ -187,7 +187,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// Para hacer las dos cosas dentro del bucle tenemos que crear dos metodos
 	public void update() {
 		// El personaje tiene una función movimiento a la que llamamos ahora
-		jugador.movimiento(tecladoM, mapa, tamañoBaldosa);
+		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos);
 		jugador.InteractuarNPC(mapa, tamañoBaldosa, tecladoM);
 		jugador.AccionAtacar(mapa, tamañoBaldosa, tecladoM, null, (Graphics2D) getGraphics());
 		
@@ -195,6 +195,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
 			for (Enemigo enemigo : enemigos.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
 				enemigo.movimiento(mapa,tamañoBaldosa);
+				enemigo.detectaColisionJugador(mapa, jugador, tamañoBaldosa);
 			}
 		}
 		//controla si el inventario se puede abrir o no, para que no se abran mas de un inventario (controla que también se le haya dado a la I para abrirlo)

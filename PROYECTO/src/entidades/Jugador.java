@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import main.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.imageio.ImageIO;
 
@@ -80,7 +82,7 @@ public class Jugador extends Personaje {
 	 * 
 	 * @param tecladoM El objeto manejoTeclado a utilizar
 	 */
-	public void movimiento(ManejoTeclado tecladoM, Mapa mapa, int tamanoBaldosa) {
+	public void movimiento(ManejoTeclado tecladoM, Mapa mapa, int tamanoBaldosa, HashMap<String,ArrayList<Enemigo>> enemigos ) {
 		// Dependiendo de la tecla pulsada, muevo al jugador en la dirección
 		// correspondiente.
 		// Después compruebo si hay colisión con el mapa, y en ese caso revierto el
@@ -440,6 +442,27 @@ public class Jugador extends Personaje {
 		}
 
 		return false;
+	}
+	
+	public boolean detectaColisionEnemigos(HashMap<String,ArrayList<Enemigo>> enemigos,int tamanobaldosa, Mapa mapa) {
+		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
+		for (Enemigo enemigo : enemigos.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
+			if (((((enemigo.getX() <= (this.getX()) + tamanobaldosa) && (enemigo.getX() >= this.getX()))
+					// Compruebo si hay colisión en X con la esquina derecha
+					|| ((enemigo.getX() + tamanobaldosa <= this.getX() + tamanobaldosa)
+							&& (enemigo.getX() + tamanobaldosa >= this.getX())))
+					// Compruebo si hay colisión en Y por arriba
+					&& (((enemigo.getY() <= this.getY() + tamanobaldosa) && (enemigo.getY() >= this.getY()))
+							// Compruebo si hay colisión en Y por abajo
+							|| ((enemigo.getY() + tamanobaldosa <= this.getY() + tamanobaldosa)
+									&& (enemigo.getY() + tamanobaldosa >= this.getY()))))) {
+				return true;
+			}
+		}
+		return false;
+		}
+		return false;
+		
 	}
 	
 	public void dibujarDialogoPantalla(Graphics2D g2, Mapa mapa) {//hago 2 metodos pq hay diferentes npcs

@@ -32,5 +32,8 @@ public class Personaje {
 	public void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}
+	public String getDireccion() {
+		return direccion;
+	}
 
 }
