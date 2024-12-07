@@ -41,15 +41,39 @@ public abstract class Enemigo extends Personaje{
 	}
 	//generador aleatorio de movimiento, mediante una Random que genera un numero del 1 al 4
 	//Dependiendo del numero, se moverá en un eje, y en caso de que haya colisión, el jugador se moverá al lado contrario
-	public void movimiento(Mapa mapa, int tamanoBaldosa) {
+	public void movimiento(Mapa mapa, int tamanoBaldosa, Jugador jugador) {
 		switch(this.direccion) {
 		case 1: x+=velocidad;
+		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			jugador.cambiarVidas(-1);
+		}
+		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			x-=1;
+		}
 		break;
 		case 2: x-=velocidad;
+		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			jugador.cambiarVidas(-1);
+		}
+		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			x+=1;
+		}
 		break;
 		case 3: y+=velocidad;
+		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			jugador.cambiarVidas(-1);
+		}
+		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			y-=1;
+		}
 		break;
 		case 4: y-=velocidad;
+		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			jugador.cambiarVidas(-1);
+		}
+		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			y+=1;
+		}
 		break;
 		}
 		if (detectaColision(mapa,tamanoBaldosa) || x<0 || x>16*tamanoBaldosa || y> 12*tamanoBaldosa || y<0) {
@@ -103,7 +127,7 @@ public abstract class Enemigo extends Personaje{
 		}
 		return false;
 	}
-	public void detectaColisionJugador(Mapa mapa,Jugador jugador, int tamanobaldosa) {
+	public boolean detectaColisionJugador(Mapa mapa,Jugador jugador, int tamanobaldosa) {
 		if (((((x <= (jugador.getX()) + tamanobaldosa) && (x >= jugador.getX()))
 				// Compruebo si hay colisión en X con la esquina derecha
 				|| ((x + tamanobaldosa <= jugador.getX() + tamanobaldosa)
@@ -115,44 +139,11 @@ public abstract class Enemigo extends Personaje{
 								&& (y + tamanobaldosa >= jugador.getY()))))) {
 			//El jugador es empujado en la dirección opuesta al movimiento.
 			//Si se choca con alguna pared, el enemigo cambia de dirección para evitar entrar en bucle
-				switch (this.direccion) {
-				case 1:
-					jugador.setX(jugador.getX()+5);
-					if(jugador.detectaColision(mapa, tamanobaldosa)) {
-						jugador.setX(jugador.getX()-5);
-						Random r = new Random();
-						direccion = r.nextInt(1, 5);
-					}
-					break;
-				case 2:
-					jugador.setX(jugador.getX()-5);
-					if(jugador.detectaColision(mapa, tamanobaldosa)) {
-						jugador.setX(jugador.getX()+5);
-						Random r = new Random();
-						direccion = r.nextInt(1, 5);
-					}
-					break;
-				case 3:
-					jugador.setY(jugador.getY()+5);
-					if(jugador.detectaColision(mapa, tamanobaldosa)) {
-						jugador.setY(jugador.getY()-5);
-						Random r = new Random();
-						direccion = r.nextInt(1, 5);
-					}
-					break;
-				case 4:
-					jugador.setY(jugador.getY()-5);
-					if(jugador.detectaColision(mapa, tamanobaldosa)) {
-						jugador.setY(jugador.getY()+5);
-						Random r = new Random();
-						direccion = r.nextInt(1, 5);
-					}
-					break;
-				}
-				//Se disminuye la vida del jugador en 1.
-				//TODO Cooldown daño colisión
-			jugador.cambiarVidas(-1);
+				Random r = new Random();
+				direccion = r.nextInt(1, 5);
+			return true;
 		}
+		return false;
 		
 	}
 }

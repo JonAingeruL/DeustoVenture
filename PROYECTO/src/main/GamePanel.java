@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
 	final int pantallaAnchuta = maxPantallaColu * tamañoBaldosa; // 1024 pixeles de ancho
 	final int pantallaAltura = maxPantallaFila * tamañoBaldosa; // 768 pixeles de alto
 	private Inventario inventarioJugador;
+	private float volumen = 1;
 	// establecemos los fps como variable
 	// FPS
 	int FPS = 60;
@@ -101,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
 										// instanciarlo.
 		// Ahora vamos a iniciar el hilo
 		gameThread.start(); // Esto automaticamente llamara al metodo run() que nos puso auto el Runnable
+		MusicPlayer.playMusic("Resources/musica/1.mp3");
 	}
 
 	// Despues de implementar Runnable automaticamente nos metera este metodo
@@ -194,8 +196,7 @@ public class GamePanel extends JPanel implements Runnable {
 		//detectamos el cambio de movimiento de cada Enemigo
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
 			for (Enemigo enemigo : enemigos.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
-				enemigo.movimiento(mapa,tamañoBaldosa);
-				enemigo.detectaColisionJugador(mapa, jugador, tamañoBaldosa);
+				enemigo.movimiento(mapa,tamañoBaldosa, jugador);
 			}
 		}
 		//controla si el inventario se puede abrir o no, para que no se abran mas de un inventario (controla que también se le haya dado a la I para abrirlo)
@@ -220,6 +221,7 @@ public class GamePanel extends JPanel implements Runnable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 			}
 			tecladoM.abrirPausa = false;
 		}

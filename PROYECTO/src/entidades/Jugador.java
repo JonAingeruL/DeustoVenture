@@ -17,7 +17,7 @@ public class Jugador extends Personaje {
 	private boolean estaDentroDeMazmorra = true;
 	private String archivoACargar = "Resources/mapas/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida, corazonAMedias,espada;
-	private boolean[] vidas = { true, true, true, false, false, false };
+	private boolean[] vidas = { true, true, true, true, true, true };
 	boolean teclaProcesadaNPC = false;
 	boolean atacando = false;
 
@@ -40,7 +40,7 @@ public class Jugador extends Personaje {
 	public void valoresDefault() {
 		x = 475;
 		y = 400;
-		velocidad = 10;
+		velocidad = 5;
 		direccion = "abajo";
 		
 	}
@@ -98,25 +98,25 @@ public class Jugador extends Personaje {
 			if (tecladoM.arribaPulsado == true) {
 				direccion = "arriba";
 				y -= velocidad;
-				while (detectaColision(mapa, tamanoBaldosa)) {
+				while (detectaColision(mapa, tamanoBaldosa)||detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)) {
 					y += 1;
 				}
 			} else if (tecladoM.abajoPulsado == true) {
 				direccion = "abajo";
 				y += velocidad;
-				while (detectaColision(mapa, tamanoBaldosa)) {
+				while (detectaColision(mapa, tamanoBaldosa)||detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)) {
 					y -= 1;
 				}
 			} else if (tecladoM.izquierdaPulsado == true) {
 				direccion = "izquierda";
 				x -= velocidad;
-				while (detectaColision(mapa, tamanoBaldosa)) {
+				while (detectaColision(mapa, tamanoBaldosa)||detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)) {
 					x += 1;
 				}
 			} else if (tecladoM.derechaPulsado == true) {
 				direccion = "derecha";
 				x += velocidad;
-				while (detectaColision(mapa, tamanoBaldosa)) {
+				while (detectaColision(mapa, tamanoBaldosa)||detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)) {
 					x -= 1;
 				}
 			}
