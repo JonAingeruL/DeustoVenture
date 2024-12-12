@@ -191,7 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos);
 		jugador.InteractuarNPC(mapa, tamañoBaldosa, tecladoM);
-		jugador.AccionAtacar(mapa, tamañoBaldosa, tecladoM, null, (Graphics2D) getGraphics());
+		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null);
 		
 		//detectamos el cambio de movimiento de cada Enemigo
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {

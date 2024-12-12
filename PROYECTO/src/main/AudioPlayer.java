@@ -48,6 +48,7 @@ public class AudioPlayer {
 	public void closeClip() {
 		this.clip.close();
 	}
+	//Código basado en hilo de StackOverflow
 	public float getVolume() {
 	    FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);        
 	    return (float) Math.pow(10f, gainControl.getValue() / 20f);

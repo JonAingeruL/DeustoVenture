@@ -25,12 +25,15 @@ public abstract class Enemigo extends Personaje{
 	}
 
 	public void setVida(int vida) {
+		if(vida<0) {
+			vida=0;
+		}
 		this.vida = vida;
 	}
 	
 	
 	public void dibujarEnemigo(Graphics2D g2) {
-		g2.setColor(Color.red);
+		g2.setColor(new Color(50*getVida(),0,0));
 
 		g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
 
@@ -102,7 +105,7 @@ public abstract class Enemigo extends Personaje{
 		if (y < -32) {
 			celdaY = mapa.getCelda()[0].length - 1;
 		}
-		System.out.println("Posicionjugador:" + celdaX + "," + celdaY + ", Posicion coords: " + x + "," + y);
+		//System.out.println("Posicionjugador:" + celdaX + "," + celdaY + ", Posicion coords: " + x + "," + y);
 		// Recorro el array celda completo
 
 		for (int i = 0; i < mapa.getCelda().length; i++) {
