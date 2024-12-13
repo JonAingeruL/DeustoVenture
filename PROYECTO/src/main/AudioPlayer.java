@@ -55,6 +55,7 @@ public class AudioPlayer {
 	}
 	/**
 	 * Ajusta el volumen del clip de audio con valores de 0 a 1
+	 * Basado en hilo de StackOverflow
 	 * @param volume El volumen entre 0 y 1
 	 * @Throws IllegalArgumentException Si el volumen dado no está entre 0 y 1.
 	 */

@@ -121,7 +121,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// En este metodo vamos a crear un gameLoop que va a ser el nucleo de nuestro
 		// juego
-		while (gameThread != null) { // Esto significa que mientras el hilo exista se va a repetir el proceso que
+		while (!gameThread.isInterrupted()) { // Esto significa que mientras el hilo exista se va a repetir el proceso que
 										// este escrito en este bucle
 //			System.out.println("El bucle se esta ejecurando"); //esto lo usamos para comprobar si estamos en el bucle
 
@@ -179,8 +179,8 @@ public class GamePanel extends JPanel implements Runnable {
 				tiempoDibujadoSiguiente += dibujarIntervalo; // 0.016 segundos despues del dibujado hara el siguiente
 
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				Thread.currentThread().interrupt();
 			}
 
 		}
@@ -188,6 +188,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// Para hacer las dos cosas dentro del bucle tenemos que crear dos metodos
 	public void update() {
+		// Recomiendo comentar jugador.muerte para debugging
+		jugador.muerte(this, gameThread);
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos);
 		jugador.InteractuarNPC(mapa, tamañoBaldosa, tecladoM);
@@ -220,6 +222,7 @@ public class GamePanel extends JPanel implements Runnable {
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 				
 			}

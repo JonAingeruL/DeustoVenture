@@ -8,8 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import javax.imageio.ImageIO;
+
+import gui.GameOverScreen;
 
 public class Jugador extends Personaje {
 	GamePanel gp;
@@ -20,7 +21,15 @@ public class Jugador extends Personaje {
 	private boolean[] vidas = { true, true, true, true, true, true };
 	boolean teclaProcesadaNPC = false;
 	boolean atacando = false;
+	private int enemigosDerrotados = 0;
 
+	public int getEnemigosDerrotados() {
+		return enemigosDerrotados;
+	}
+
+	public void setEnemigosDerrotados(int enemigosDerrotados) {
+		this.enemigosDerrotados = enemigosDerrotados;
+	}
 	long cooldownAtaque = 0; // De momento, cooldown servirá para almacenar en qué momento
 	// e ataca. Con esto se puede calcular cuanto tiempo ha pasado
 	// TODO Método que cierre todo lo que se abra al cerrar el juego, tanto en
@@ -627,6 +636,7 @@ public class Jugador extends Personaje {
 				for (Enemigo enemigo : enemigosAElim) {
 					enemigo.setVida(enemigoAElim.getVida()-1);
 					if(enemigo.getVida()<=0) {
+						this.setEnemigosDerrotados(this.getEnemigosDerrotados()+1);
 						enemigos.get(mapa.getNumeroMapa() + "," + mapa.getNumcelda()).remove(enemigo);
 					}
 				}
@@ -635,6 +645,13 @@ public class Jugador extends Personaje {
 			}
 		}
 
+	}
+	public void muerte(GamePanel gp, Thread t) {
+		if(vidas[0] == false) {
+			MusicPlayer.stopMusic();
+			t.interrupt();
+			new GameOverScreen(getEnemigosDerrotados());
+		}
 	}
 
 }

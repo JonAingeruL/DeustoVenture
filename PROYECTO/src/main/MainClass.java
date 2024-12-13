@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.JFrame;
 
+
 public class MainClass {
 
 	public static void main(String[] args) {
@@ -23,6 +24,6 @@ public class MainClass {
 		window.setVisible(true); //Para poder ver la pantalla
 		
 		gamePanel.iniciarJuegoHilo(); //Iniciamos el hilo para iniciar el bucle
-		}
-
+		
+	}
 }

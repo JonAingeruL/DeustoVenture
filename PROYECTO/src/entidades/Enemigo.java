@@ -122,7 +122,7 @@ public abstract class Enemigo extends Personaje{
 									// Compruebo si hay colisión en Y por abajo
 									|| ((y + tamanobaldosa <= (j * tamanobaldosa) + tamanobaldosa)
 											&& (y + tamanobaldosa >= j * tamanobaldosa))))) {
-						System.out.println("Hay colision");
+						//System.out.println("Hay colision");
 						return true;
 					}
 				}
@@ -140,10 +140,13 @@ public abstract class Enemigo extends Personaje{
 						// Compruebo si hay colisión en Y por abajo
 						|| ((y + tamanobaldosa <= jugador.getY() + tamanobaldosa)
 								&& (y + tamanobaldosa >= jugador.getY()))))) {
-			//El jugador es empujado en la dirección opuesta al movimiento.
-			//Si se choca con alguna pared, el enemigo cambia de dirección para evitar entrar en bucle
 				Random r = new Random();
-				direccion = r.nextInt(1, 5);
+				int randomD = r.nextInt(1, 5);
+				//Evito que al cambiar la dirección escoja la misma en la que ya estaba yendo
+				while (randomD == direccion) {
+					randomD = r.nextInt(1, 5);
+				}
+				direccion = randomD;
 			return true;
 		}
 		return false;
