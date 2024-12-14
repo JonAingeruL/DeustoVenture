@@ -44,7 +44,7 @@ SIGNIFICADO DE NUMEROS:
 	|43 |44 |45 |46 |
 	|42 |41 |40 |39 |   
 	|35 |36 |37 |38 |   
-	
+	50-> Cofre
 	
 	Para probar si el mapeado funciona, se le puede asignar un color a cada número
 	(EJ: Verde claro al arbol, verde oscuro al arbol gigante y carne al camino)

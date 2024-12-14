@@ -24,7 +24,7 @@ public class Mapa {
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
 	public static List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
-			37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 60);
+			37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 50, 60);
 	
 	//Esta variable sirve para controlar el nº de mapa AL CARGAR ENEMIGOS
 	//valor 0 = tutorial.txt, valor 1 = mapa.txt, valor 2 = dungeon1.txt, valor 3 = dungeon2.txt, valor 4= dungeon3.txt
@@ -179,6 +179,9 @@ public class Mapa {
 							break;
 						case 30,31,32,33,35,36,37,38,39,40,41,42,43,44,45,46:
 							g.setColor(Color.ORANGE.darker());
+							break;
+						case 50:
+							g.setColor(Color.WHITE.darker());
 							break;
 						case 60:
 							g.setColor(Color.white);

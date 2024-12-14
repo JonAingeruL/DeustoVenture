@@ -192,6 +192,7 @@ public class GamePanel extends JPanel implements Runnable {
 		jugador.muerte(this, gameThread);
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos);
+		jugador.interaccion(tecladoM);
 		jugador.InteractuarNPC(mapa, tamañoBaldosa, tecladoM);
 		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null);
 		
@@ -253,6 +254,7 @@ public class GamePanel extends JPanel implements Runnable {
 		mapa.dibujarImagen(g2);
 		jugador.dibujarPer(g2);
 		jugador.dibujarVidas(g2);
+		jugador.dibujarInteraccion(g2);
 		jugador.dibujarDialogoPantalla(g2, mapa); //de momento no lo uso por que no consigo relacionar los metodos
 		//vamos a pintar todos los enemigos
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {

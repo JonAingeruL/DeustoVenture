@@ -2,6 +2,7 @@ package entidades;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import main.*;
 import java.awt.image.BufferedImage;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import gui.GameOverScreen;
+import gui.InventarioCofre;
 
 public class Jugador extends Personaje {
 	GamePanel gp;
@@ -21,6 +23,7 @@ public class Jugador extends Personaje {
 	private boolean[] vidas = { true, true, true, true, true, true };
 	boolean teclaProcesadaNPC = false;
 	boolean atacando = false;
+	boolean interaccionDisponible = false;
 	private int enemigosDerrotados = 0;
 
 	public int getEnemigosDerrotados() {
@@ -105,9 +108,11 @@ public class Jugador extends Personaje {
 		// movimiento lo que haga falta
 		// para corregirla.
 		// También compruebo si se aprieta shift para aplicar un sprint
+		
 
 		if (tecladoM.arribaPulsado == true || tecladoM.abajoPulsado == true || tecladoM.izquierdaPulsado == true
 				|| tecladoM.derechaPulsado == true) {
+			interaccionDisponible = false;
 			if (tecladoM.shiftPulsado == true) {
 				velocidad += 2;
 			}
@@ -244,6 +249,15 @@ public class Jugador extends Personaje {
 			}
 		}
 	}
+	
+	public void dibujarInteraccion(Graphics2D g2) {
+		if(interaccionDisponible) {
+			g2.fillRoundRect(150, 650, 75, 60, 10, 10);
+			g2.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
+			g2.setColor(Color.WHITE);
+			g2.drawString("E", 175, 690);
+		}
+	}
 
 	public boolean[] getVidas() {
 		return vidas;
@@ -335,6 +349,11 @@ public class Jugador extends Personaje {
 									|| ((y + tamanobaldosa <= (j * tamanobaldosa) + tamanobaldosa)
 											&& (y + tamanobaldosa >= j * tamanobaldosa))))) {
 						System.out.println("Hay colision");
+						if(mapa.getCelda()[i][j] == 50) {
+							interaccionDisponible = true;
+						}else {
+							interaccionDisponible = false;
+						}
 						return true;
 					}
 				} else {
@@ -645,6 +664,17 @@ public class Jugador extends Personaje {
 			}
 		}
 
+	}
+	public void interaccion(ManejoTeclado mt) {
+		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
+			for (int i = 0; i < 20; i++) {
+				System.out.println("ATENCION: Este no es el inventario del jugador."
+						+ " Esto es un placeholder para la interfaz del inventario del cofre");
+			}
+			new InventarioCofre(mt);
+			mt.hablarNPCPulsado = false;
+
+		}
 	}
 	public void muerte(GamePanel gp, Thread t) {
 		if(vidas[0] == false) {
