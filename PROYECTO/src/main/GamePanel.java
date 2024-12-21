@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	
 	// AJUSTES DE PANTALLA
 	final int tamañoOriginalBaldosa = 16; // Una baldosa de 16x16 (una baldosa en la medida en pixeles para crear un
 											// personaje, ncp...)
@@ -192,7 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
 		jugador.muerte(this, gameThread);
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos);
-		jugador.interaccion(tecladoM);
+		jugador.interaccion(tecladoM,mapa);
 		jugador.InteractuarNPC(mapa, tamañoBaldosa, tecladoM);
 		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null);
 		

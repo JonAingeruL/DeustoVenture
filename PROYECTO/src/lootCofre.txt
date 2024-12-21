@@ -1,0 +1,8 @@
+-resources/mapas/tutorial.txt,1-
+Placeholder1;0
+Espada de hielo;1
+-resources/mapas/tutorial.txt,2-
+Hacha;1
+-resources/mapas/mapa.txt,1-
+Oro;500
+-

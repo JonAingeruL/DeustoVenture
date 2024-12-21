@@ -18,7 +18,7 @@ public class Jugador extends Personaje {
 	GamePanel gp;
 	ManejoTeclado maneT;
 	private boolean estaDentroDeMazmorra = true;
-	private String archivoACargar = "Resources/mapas/tutorial.txt";
+	private String archivoACargar = "resources/mapas/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida, corazonAMedias, espada;
 	private boolean[] vidas = { true, true, true, true, true, true };
 	boolean teclaProcesadaNPC = false;
@@ -37,7 +37,7 @@ public class Jugador extends Personaje {
 	// e ataca. Con esto se puede calcular cuanto tiempo ha pasado
 	// TODO Método que cierre todo lo que se abra al cerrar el juego, tanto en
 	// esta clase como en las demás.
-	AudioPlayer sword = new AudioPlayer("Resources/audio/Sword.wav");
+	AudioPlayer sword = new AudioPlayer("resources/audio/Sword.wav");
 
 	public Jugador(GamePanel gp, ManejoTeclado maneT) {
 
@@ -374,7 +374,7 @@ public class Jugador extends Personaje {
 							if (this.estaDentroDeMazmorra) {
 								mapa.setNumcelda(1);
 								mapa.setNumeroMapa(1);
-								archivoACargar = "Resources/mapas/mapa.txt";
+								archivoACargar = "resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								this.estaDentroDeMazmorra = false;
@@ -384,7 +384,7 @@ public class Jugador extends Personaje {
 							} else {
 								mapa.setNumcelda(4);
 								mapa.setNumeroMapa(0);
-								archivoACargar = "Resources/mapas/tutorial.txt";
+								archivoACargar = "resources/mapas/tutorial.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 705;
@@ -397,7 +397,7 @@ public class Jugador extends Personaje {
 						case 21:
 							if (!estaDentroDeMazmorra) {
 
-								archivoACargar = "Resources/mapas/dungeon1.txt";
+								archivoACargar = "resources/mapas/dungeon1.txt";
 								mapa.setNumcelda(1);
 								mapa.setNumeroMapa(2);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
@@ -408,7 +408,7 @@ public class Jugador extends Personaje {
 							} else {
 								mapa.setNumcelda(34);
 								mapa.setNumeroMapa(1);
-								archivoACargar = "Resources/mapas/mapa.txt";
+								archivoACargar = "resources/mapas/mapa.txt";
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
 								mapa.updateMapa(tamanobaldosa);
 								x = 450;
@@ -419,7 +419,7 @@ public class Jugador extends Personaje {
 
 						case 22:
 							if (!estaDentroDeMazmorra) {
-								archivoACargar = "Resources/mapas/dungeon2.txt";
+								archivoACargar = "resources/mapas/dungeon2.txt";
 								mapa.setNumcelda(1);
 								mapa.setNumeroMapa(3);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
@@ -428,7 +428,7 @@ public class Jugador extends Personaje {
 								y = 300;
 								estaDentroDeMazmorra = true;
 							} else {
-								archivoACargar = "Resources/mapas/mapa.txt";
+								archivoACargar = "resources/mapas/mapa.txt";
 								mapa.setNumcelda(94);
 								mapa.setNumeroMapa(1);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
@@ -441,7 +441,7 @@ public class Jugador extends Personaje {
 						case 23:
 							if (!estaDentroDeMazmorra) {
 
-								archivoACargar = "Resources/mapas/dungeon3.txt";
+								archivoACargar = "resources/mapas/dungeon3.txt";
 								mapa.setNumcelda(1);
 								mapa.setNumeroMapa(4);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
@@ -450,7 +450,7 @@ public class Jugador extends Personaje {
 								y = 300;
 								estaDentroDeMazmorra = true;
 							} else {
-								archivoACargar = "Resources/mapas/mapa.txt";
+								archivoACargar = "resources/mapas/mapa.txt";
 								mapa.setNumcelda(56);
 								mapa.setNumeroMapa(1);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
@@ -462,7 +462,7 @@ public class Jugador extends Personaje {
 							break;
 						case 24:
 							if (!estaDentroDeMazmorra) {
-								archivoACargar = "Resources/mapas/casa.txt";
+								archivoACargar = "resources/mapas/casa.txt";
 								mapa.setNumcelda(1);
 								mapa.setNumeroMapa(5);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
@@ -471,7 +471,7 @@ public class Jugador extends Personaje {
 								y = 300;
 								estaDentroDeMazmorra = true;
 							} else {
-								archivoACargar = "Resources/mapas/mapa.txt";
+								archivoACargar = "resources/mapas/mapa.txt";
 								mapa.setNumcelda(87);
 								mapa.setNumeroMapa(1);
 								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
@@ -665,13 +665,9 @@ public class Jugador extends Personaje {
 		}
 
 	}
-	public void interaccion(ManejoTeclado mt) {
+	public void interaccion(ManejoTeclado mt, Mapa mapa) {
 		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
-			for (int i = 0; i < 20; i++) {
-				System.out.println("ATENCION: Este no es el inventario del jugador."
-						+ " Esto es un placeholder para la interfaz del inventario del cofre");
-			}
-			new InventarioCofre(mt);
+			new InventarioCofre(mt,archivoACargar,mapa.getNumcelda());
 			mt.hablarNPCPulsado = false;
 
 		}

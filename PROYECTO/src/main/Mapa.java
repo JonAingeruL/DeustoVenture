@@ -18,7 +18,7 @@ import entidades.NPC;
 public class Mapa {
 	private int[][] celda;
 	private int numCelda;
-	private String archivoACargar = "Resources/mapas/tutorial.txt";
+	private String archivoACargar = "resources/mapas/tutorial.txt";
 	private List<NPC> npcs;
 	private BufferedImage i = new BufferedImage(1024, 768, BufferedImage.TYPE_INT_ARGB);
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
