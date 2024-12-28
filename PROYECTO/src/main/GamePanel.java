@@ -37,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 	final int pantallaAnchuta = maxPantallaColu * tamañoBaldosa; // 1024 pixeles de ancho
 	final int pantallaAltura = maxPantallaFila * tamañoBaldosa; // 768 pixeles de alto
 	private Inventario inventarioJugador;
+	private long tiempoPausa = 0;
 	private float volumenAudio = 1;
 	// establecemos los fps como variable
 	// FPS
@@ -165,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable {
 			try {
 				// Necesitamos saber cuanto tiempo nos queda despues de que se actualize y
 				// repinte el juego, por lo que vamos a comprobarlo
-				double tiempoRestante = tiempoDibujadoSiguiente - System.nanoTime();
+				double tiempoRestante = tiempoDibujadoSiguiente - System.nanoTime()+ tiempoPausa;
 				// Una putada es que hemos calculado todo en nanosegundos para mas precision,
 				// pero sleep solo detecta milisegundos por lo que hay que transformarlo
 				tiempoRestante = tiempoRestante / 1000000;
@@ -222,6 +223,7 @@ public class GamePanel extends JPanel implements Runnable {
 			pararMovimiento();
 			tecladoM.escPulsado  = false;
 			tecladoM.abrirPausa = true;
+			this.tiempoPausa = System.nanoTime();
 
 			MenuPausa pausa = new MenuPausa(this);
 			while (pausa.isOpen()==true) {
@@ -235,6 +237,7 @@ public class GamePanel extends JPanel implements Runnable {
 				
 			}
 			tecladoM.abrirPausa = false;
+			this.tiempoPausa = System.nanoTime()-tiempoPausa;
 		}
 		
 		//Después comprobamos si el personaje ha cambiado de celda
