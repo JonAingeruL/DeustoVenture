@@ -25,6 +25,8 @@ public class Jugador extends Personaje {
 	boolean atacando = false;
 	boolean interaccionDisponible = false;
 	private int enemigosDerrotados = 0;
+	public String objetoEnMano = "";
+	public int danoJugador = 0;
 
 	public int getEnemigosDerrotados() {
 		return enemigosDerrotados;
@@ -594,7 +596,7 @@ public class Jugador extends Personaje {
 
 	public void AccionAtacar(HashMap<String, ArrayList<Enemigo>> enemigos, Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel) {
 		//TODO que el enemigo reciba daño una sola vez
-		if ((tecladoM.fPulsado == true) && (atacando == false)) {
+		if ((tecladoM.fPulsado == true) && (atacando == false) && (objetoEnMano != "")) {
 			// Establecemos en qué mopmento hemos atacado
 			cooldownAtaque = System.currentTimeMillis();
 			sword.playClip(gp.getVolumenAudio());
@@ -653,7 +655,7 @@ public class Jugador extends Personaje {
 			}
 			if(null!=enemigoAElim) {
 				for (Enemigo enemigo : enemigosAElim) {
-					enemigo.setVida(enemigoAElim.getVida()-1);
+					enemigo.setVida(enemigoAElim.getVida()-danoJugador);
 					if(enemigo.getVida()<=0) {
 						this.setEnemigosDerrotados(this.getEnemigosDerrotados()+1);
 						enemigos.get(mapa.getNumeroMapa() + "," + mapa.getNumcelda()).remove(enemigo);

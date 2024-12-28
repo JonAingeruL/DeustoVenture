@@ -214,7 +214,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if(tecladoM.iPulsado && !tecladoM.abrirInventario) {
 			tecladoM.abrirInventario = true;
 			pararMovimiento();
-			inventarioJugador = new Inventario(tecladoM, this);
+			inventarioJugador = new Inventario(tecladoM, this, jugador);
 			//Se para el update mientras el inventario está abierto, el cerrar el inventario con la tecla ESC está dentro de Inventario.java
 		}
 		//La idea con este código es que el botón esc sea una pausa real en el juego.
@@ -300,6 +300,8 @@ public class GamePanel extends JPanel implements Runnable {
 					switch (campos[2]) {
 					//al añadir un enemigo nuevo, se tiene que meter a este dentro del case
 					case "Slime": e = new Slime(posXEnemigo,posYEnemigo,this);
+					break;
+					case "Dummy": e = new Dummy(posXEnemigo, posYEnemigo, this);
 					break;
 					default: e= new Slime(posXEnemigo, posYEnemigo, this);
 					}

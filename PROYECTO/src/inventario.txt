@@ -1,4 +1,3 @@
-Placeholder1;0
-Placeholder2;1
-Placeholder3;10
-Espada de fuego;1
+Espada de Madera;1
+Espada de Piedra;1
+Pocion de vida;1

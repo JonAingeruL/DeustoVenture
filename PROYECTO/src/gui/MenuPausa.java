@@ -8,14 +8,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import main.GamePanel;
 
 
@@ -44,14 +42,14 @@ public class MenuPausa extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				reanudar();
+				reanudar(gp);
 			}
 
 		});
 
 		JButton reanudar = new JButton("Reanudar partida");
 		reanudar.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
-		reanudar.addActionListener(e -> reanudar());
+		reanudar.addActionListener(e -> reanudar(gp));
 		// Placeholder podría ser un menú de instrucciones, un menú de opciones o
 		// incluso un diario de objetivos
 		JButton botonConfiguracion = new JButton("Configuracion");
@@ -107,7 +105,7 @@ public class MenuPausa extends JFrame {
 		this.isOpen = isOpen;
 	}
 
-	public void reanudar() {
+	public void reanudar(GamePanel gp) {
 		setOpen(false);
 		dispose();
 	}
@@ -116,6 +114,7 @@ public class MenuPausa extends JFrame {
 		if (choice == 0) {
 				System.exit(0);
 		}
+		
 	}
 
 //	public static void main(String[] args) {

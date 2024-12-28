@@ -33,7 +33,7 @@ public abstract class Enemigo extends Personaje{
 	
 	
 	public void dibujarEnemigo(Graphics2D g2) {
-		g2.setColor(new Color(50*getVida(),0,0));
+		g2.setColor(new Color(250,0,0));
 
 		g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
 
@@ -45,6 +45,7 @@ public abstract class Enemigo extends Personaje{
 	//generador aleatorio de movimiento, mediante una Random que genera un numero del 1 al 4
 	//Dependiendo del numero, se moverá en un eje, y en caso de que haya colisión, el jugador se moverá al lado contrario
 	public void movimiento(Mapa mapa, int tamanoBaldosa, Jugador jugador) {
+		
 		switch(this.direccion) {
 		case 1: x+=velocidad;
 		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
@@ -93,6 +94,7 @@ public abstract class Enemigo extends Personaje{
 			Random r = new Random();
 			direccion = r.nextInt(1, 5);
 		}
+	
 	}
 	//colisiones iguales a las del jugador (no detecta ni al jugador ni a la espada todavía, por lo cual la variable de vida no es utilizada)
 	public boolean detectaColision(Mapa mapa, int tamanobaldosa) {

@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +22,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import entidades.Jugador;
 import main.AudioPlayer;
 import main.GamePanel;
 import main.ManejoTeclado;
@@ -33,8 +36,13 @@ public class Inventario extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JTable tabla;
 	private ManejoTeclado tecladoM;
+	private HashMap<String, Integer> espadasDisponibles = new HashMap<String, Integer>(){
+		private static final long serialVersionUID = 1L;
+	{
+			put("Espada de Madera",1); put("Espada de Piedra", 2);
+	}};
 	
-    public Inventario(ManejoTeclado tecladoM, GamePanel gp) {
+    public Inventario(ManejoTeclado tecladoM, GamePanel gp, Jugador jugador) {
     	AudioPlayer audio = new AudioPlayer("Resources/audio/InvSound.wav");
     	audio.playClip(gp.getVolumenAudio());
     	this.tecladoM =tecladoM;
@@ -83,7 +91,7 @@ public class Inventario extends JFrame{
         tabla.getTableHeader().setDefaultRenderer(headRendererInventario);
         tabla.setRowHeight(24);
         tabla.getTableHeader().setAlignmentX(CENTER_ALIGNMENT);
-        tabla.setCellSelectionEnabled(true);
+        tabla.setRowSelectionAllowed(true);
         tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         
@@ -91,8 +99,19 @@ public class Inventario extends JFrame{
     	botonUsar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				String objetoSeleccionado = (String) tabla.getValueAt(tabla.getSelectedRow(), 0);
+				if (objetoSeleccionado.contains("Espada")) {
+					jugador.objetoEnMano = objetoSeleccionado;
+					jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
+
+
+				}
+				String numObjetosSeleccionados = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
+				if ( Integer.parseInt(numObjetosSeleccionados)-1==0) {
+					model.removeRow(tabla.getSelectedRow());
+					tabla = new JTable(model);
+					tabla.setRowSelectionAllowed(true);
+				}
 			}
         	
     	});
@@ -137,13 +156,12 @@ public class Inventario extends JFrame{
     }
   // Lee el fichero y carga los datos en el inventario
     public void leerFichero(String nombreFich, DefaultTableModel modeloDatos) {
-    	HashMap<String,String> mObjeto = new HashMap<>();
+    	//HashMap<String,String> mObjeto = new HashMap<>();
     	try(BufferedReader br = new BufferedReader(new FileReader(nombreFich))){
     		String linea;
-    		br.readLine();
     		while ((linea = br.readLine())!=null) {
     			String[] datos = linea.split(";");
-    			mObjeto.put(datos[1], datos[0]);
+    			//mObjeto.put(datos[1], datos[0]);
     			modeloDatos.addRow(datos);
     		}
     	} catch (FileNotFoundException e) {
@@ -154,12 +172,22 @@ public class Inventario extends JFrame{
 			e.printStackTrace();
 		}
     }
+    
+    
+   
  
     public void cerrarInventario() {
     	tecladoM.abrirInventario =false;
 		tecladoM.iPulsado = false;
 		dispose();
     }
+    
+	public HashMap<String, Integer> getEspadasDisponibles() {
+		return espadasDisponibles;
+	}
+	public void setEspadasDisponibles(HashMap<String, Integer> espadasDisponibles) {
+		this.espadasDisponibles = espadasDisponibles;
+	}
     
      
 }
