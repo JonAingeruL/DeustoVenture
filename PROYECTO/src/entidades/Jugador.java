@@ -597,7 +597,7 @@ public class Jugador extends Personaje {
 		if ((tecladoM.fPulsado == true) && (atacando == false)) {
 			// Establecemos en qué mopmento hemos atacado
 			cooldownAtaque = System.currentTimeMillis();
-			sword.playClip();
+			sword.playClip(gp.getVolumenAudio());
 			System.out.println("Sword");
 			atacando = true;
 			DanoAtaque(enemigos, tamanobaldosa, mapa);

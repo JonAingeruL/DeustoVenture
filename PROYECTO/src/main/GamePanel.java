@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 	final int pantallaAnchuta = maxPantallaColu * tamañoBaldosa; // 1024 pixeles de ancho
 	final int pantallaAltura = maxPantallaFila * tamañoBaldosa; // 768 pixeles de alto
 	private Inventario inventarioJugador;
-	private float volumen = 1;
+	private float volumenAudio = 1;
 	// establecemos los fps como variable
 	// FPS
 	int FPS = 60;
@@ -56,6 +56,14 @@ public class GamePanel extends JPanel implements Runnable {
 	// Una vez creada la clase ManejoTeclado y programar el movimineto AWSD hay que
 	// instanciar la clase
 	ManejoTeclado tecladoM = new ManejoTeclado();
+
+	public float getVolumenAudio() {
+		return volumenAudio;
+	}
+
+	public void setVolumenAudio(float volumen) {
+		this.volumenAudio = volumen;
+	}
 
 	// Despues de crear el ManejoTeclado y los controles de movimiento del juego y
 	// hacer que lo pueda leer el GamePanel, hay que crear el mapa y el jugador
@@ -205,7 +213,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if(tecladoM.iPulsado && !tecladoM.abrirInventario) {
 			tecladoM.abrirInventario = true;
 			pararMovimiento();
-			inventarioJugador = new Inventario(tecladoM);
+			inventarioJugador = new Inventario(tecladoM, this);
 			//Se para el update mientras el inventario está abierto, el cerrar el inventario con la tecla ESC está dentro de Inventario.java
 		}
 		//La idea con este código es que el botón esc sea una pausa real en el juego.
@@ -215,7 +223,7 @@ public class GamePanel extends JPanel implements Runnable {
 			tecladoM.escPulsado  = false;
 			tecladoM.abrirPausa = true;
 
-			MenuPausa pausa = new MenuPausa();
+			MenuPausa pausa = new MenuPausa(this);
 			while (pausa.isOpen()==true) {
 				try {
 					Thread.sleep(1);

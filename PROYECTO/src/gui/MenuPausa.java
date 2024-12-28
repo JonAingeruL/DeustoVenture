@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import main.GamePanel;
+
 
 public class MenuPausa extends JFrame {
 
@@ -26,7 +28,7 @@ public class MenuPausa extends JFrame {
 
 	private boolean isOpen = true;
 
-	public MenuPausa() {
+	public MenuPausa(GamePanel gp) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Menu pausa");
 		setSize(300, 400);
@@ -77,7 +79,7 @@ public class MenuPausa extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MenuConfiguracion();
+				new MenuConfiguracion(gp);
 				
 			}
 		});

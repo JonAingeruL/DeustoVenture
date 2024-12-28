@@ -15,22 +15,28 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
+import main.GamePanel;
+
 public class MenuConfiguracion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	public int volumenActualMusica;
+	public int volumenActualMusica=50;
 	public int volumenActualSonido;
 	//sliders utilizados para ajustar el sonido
-	public JSlider sliderVolumenMusica = new JSlider(0,100,volumenActualMusica);
-	public JSlider sliderVolumenSonido = new JSlider(0,100,volumenActualSonido);
+	public JSlider sliderVolumenSonido;
+	public JSlider sliderVolumenMusica;
 	
 	private Color colorFondo = new Color(206, 249, 249);
 	
-	public MenuConfiguracion() {
+	public MenuConfiguracion(GamePanel gp) {
 		//tamaño, metodo de cerrado y sitio de aparición de ventana
 		setSize(300, 400);
 		setTitle("Opciones");
 		setLocationRelativeTo(null);
+		volumenActualSonido = (int) Math.round(gp.getVolumenAudio()*100);
+		sliderVolumenSonido = new JSlider(0,100,volumenActualSonido);
+		sliderVolumenMusica = new JSlider(0,100,volumenActualSonido);
+		
 		
 		//panel de Opciones principal
 		JPanel panelOpciones = new JPanel();
@@ -127,7 +133,7 @@ public class MenuConfiguracion extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int response = JOptionPane.showConfirmDialog(MenuConfiguracion.this,"Quieres guardar los cambios?","Confirmar",JOptionPane.YES_NO_OPTION);
 				if (response ==JOptionPane.YES_OPTION) {
-					guardarCambios();
+					guardarCambios(gp);
 					dispose();
 				}
 			}
@@ -142,7 +148,7 @@ public class MenuConfiguracion extends JFrame {
 			public void windowClosing(WindowEvent e) {
 				int response = JOptionPane.showConfirmDialog(MenuConfiguracion.this,"Quieres guardar los cambios?","Confirmar",JOptionPane.YES_NO_OPTION);
 				if (response ==JOptionPane.YES_OPTION) {
-					guardarCambios();
+					guardarCambios(gp);
 					dispose();
 				}
 			}	
@@ -152,9 +158,16 @@ public class MenuConfiguracion extends JFrame {
 		setVisible(true);
 	}
 	
-	public void guardarCambios() {
-		volumenActualSonido=sliderVolumenSonido.getValue();
+	public void guardarCambios(GamePanel gp) {
+		
+		volumenActualSonido= sliderVolumenSonido.getValue();
 		volumenActualMusica= sliderVolumenMusica.getValue();
+		cambioVolumen(gp);
+	}
+	
+	public void cambioVolumen(GamePanel gp) {
+		gp.setVolumenAudio((float) volumenActualSonido/100);
+		
 	}
 	
 }

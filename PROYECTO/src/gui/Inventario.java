@@ -22,6 +22,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import main.AudioPlayer;
+import main.GamePanel;
 import main.ManejoTeclado;
 
 public class Inventario extends JFrame{
@@ -33,9 +34,9 @@ public class Inventario extends JFrame{
 	private JTable tabla;
 	private ManejoTeclado tecladoM;
 	
-    public Inventario(ManejoTeclado tecladoM) {
+    public Inventario(ManejoTeclado tecladoM, GamePanel gp) {
     	AudioPlayer audio = new AudioPlayer("Resources/audio/InvSound.wav");
-    	audio.playClip();
+    	audio.playClip(gp.getVolumenAudio());
     	this.tecladoM =tecladoM;
         setTitle("Tu inventario");
         //Esto no es necesario, ya que está creado un windowListener que hace lo mismo
