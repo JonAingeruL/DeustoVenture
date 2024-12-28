@@ -184,8 +184,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 				// Cuando se despierta el hilo, vamos a establecer un nuevo
 				// tiempoDibujadoSiguiente
-				tiempoDibujadoSiguiente += dibujarIntervalo; // 0.016 segundos despues del dibujado hara el siguiente
-
+				tiempoDibujadoSiguiente += dibujarIntervalo+tiempoPausa; // 0.016 segundos despues del dibujado hara el siguiente
+				tiempoPausa=0;
 			} catch (InterruptedException e) {
 				
 				Thread.currentThread().interrupt();
