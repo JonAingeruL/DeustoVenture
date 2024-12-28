@@ -41,9 +41,6 @@ public class GamePanel extends JPanel implements Runnable {
 	// establecemos los fps como variable
 	// FPS
 	int FPS = 60;
-	
-	// esta variable sirve para saber si el juego esta pausado y que los enemigos no se teletransporten al reanudar el juego
-	private boolean estaEnPausa = false;
 
 	// Ya tenemos la pantalla creada, pero todos los juegos 2d de aventuras tienen
 	// tiempo, hay enemigos que se mueven etc... por eso hay que hacer un reloj (los
@@ -70,10 +67,6 @@ public class GamePanel extends JPanel implements Runnable {
 	// personajeJugable (PJ) que sea la que controla el jugador
 	Jugador jugador = new Jugador(this, tecladoM);
 	HashMap<String,ArrayList<Enemigo>> enemigos;
-	
-	public boolean getPausa(){
-		return estaEnPausa;
-	}
 	
 	// Creamos un constructor de este GamePanel
 	public GamePanel() {
@@ -221,8 +214,7 @@ public class GamePanel extends JPanel implements Runnable {
 			pararMovimiento();
 			tecladoM.escPulsado  = false;
 			tecladoM.abrirPausa = true;
-			estaEnPausa = true;
-			
+
 			MenuPausa pausa = new MenuPausa();
 			while (pausa.isOpen()==true) {
 				try {
@@ -297,8 +289,6 @@ public class GamePanel extends JPanel implements Runnable {
 					switch (campos[2]) {
 					//al añadir un enemigo nuevo, se tiene que meter a este dentro del case
 					case "Slime": e = new Slime(posXEnemigo,posYEnemigo,this);
-					break;
-					case "Esqueleto": e = new Esqueleto(posXEnemigo,posYEnemigo,this);
 					break;
 					default: e= new Slime(posXEnemigo, posYEnemigo, this);
 					}

@@ -45,55 +45,53 @@ public abstract class Enemigo extends Personaje{
 	//generador aleatorio de movimiento, mediante una Random que genera un numero del 1 al 4
 	//Dependiendo del numero, se moverá en un eje, y en caso de que haya colisión, el jugador se moverá al lado contrario
 	public void movimiento(Mapa mapa, int tamanoBaldosa, Jugador jugador) {
-		while(gp.getPausa() != true) {
+		switch(this.direccion) {
+		case 1: x+=velocidad;
+		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			jugador.cambiarVidas(-1);
+		}
+		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			x-=1;
+		}
+		break;
+		case 2: x-=velocidad;
+		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			jugador.cambiarVidas(-1);
+		}
+		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			x+=1;
+		}
+		break;
+		case 3: y+=velocidad;
+		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			jugador.cambiarVidas(-1);
+		}
+		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			y-=1;
+		}
+		break;
+		case 4: y-=velocidad;
+		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			jugador.cambiarVidas(-1);
+		}
+		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+			y+=1;
+		}
+		break;
+		}
+		if (detectaColision(mapa,tamanoBaldosa) || x<0 || x>16*tamanoBaldosa || y> 12*tamanoBaldosa || y<0) {
 			switch(this.direccion) {
-			case 1: x+=velocidad;
-			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-				jugador.cambiarVidas(-1);
-			}
-			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-				x-=1;
-			}
+			case 1: x-=velocidad;
 			break;
-			case 2: x-=velocidad;
-			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-				jugador.cambiarVidas(-1);
-			}
-			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-				x+=1;
-			}
+			case 2: x+=velocidad;
 			break;
-			case 3: y+=velocidad;
-			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-				jugador.cambiarVidas(-1);
-			}
-			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-				y-=1;
-			}
+			case 3: y-=velocidad;
 			break;
-			case 4: y-=velocidad;
-			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-				jugador.cambiarVidas(-1);
-			}
-			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-				y+=1;
-			}
+			case 4: y+=velocidad;
 			break;
 			}
-			if (detectaColision(mapa,tamanoBaldosa) || x<0 || x>16*tamanoBaldosa || y> 12*tamanoBaldosa || y<0) {
-				switch(this.direccion) {
-				case 1: x-=velocidad;
-				break;
-				case 2: x+=velocidad;
-				break;
-				case 3: y-=velocidad;
-				break;
-				case 4: y+=velocidad;
-				break;
-				}
-				Random r = new Random();
-				direccion = r.nextInt(1, 5);
-			}
+			Random r = new Random();
+			direccion = r.nextInt(1, 5);
 		}
 	}
 	//colisiones iguales a las del jugador (no detecta ni al jugador ni a la espada todavía, por lo cual la variable de vida no es utilizada)
