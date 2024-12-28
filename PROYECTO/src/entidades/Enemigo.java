@@ -33,7 +33,7 @@ public abstract class Enemigo extends Personaje{
 	
 	
 	public void dibujarEnemigo(Graphics2D g2) {
-		g2.setColor(new Color(250,0,0));
+		g2.setColor(new Color(50*vida,0,0));
 
 		g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
 

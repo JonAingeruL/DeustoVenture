@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -100,17 +101,29 @@ public class Inventario extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String objetoSeleccionado = (String) tabla.getValueAt(tabla.getSelectedRow(), 0);
-				if (objetoSeleccionado.contains("Espada")) {
-					jugador.objetoEnMano = objetoSeleccionado;
-					jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
 
-
-				}
 				String numObjetosSeleccionados = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
 				if ( Integer.parseInt(numObjetosSeleccionados)-1==0) {
 					model.removeRow(tabla.getSelectedRow());
 					tabla = new JTable(model);
-					tabla.setRowSelectionAllowed(true);
+						
+				        try {
+				            PrintStream ps = new PrintStream("src/inventario.txt");
+				            for (int i = 0 ; i < model.getRowCount(); ++i) {
+				            	ps.println(model.getValueAt(i, 0)+";"+model.getValueAt(i, 1));
+				            }
+				            if(!jugador.objetoEnMano.equals(""))
+				            	ps.println(jugador.objetoEnMano+";1");
+				            ps.close();
+				        } catch (FileNotFoundException e2) {
+				        	e2.printStackTrace();
+				        }
+				        if (objetoSeleccionado.contains("Espada")) {
+							jugador.objetoEnMano = objetoSeleccionado;
+							jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
+				        }
+				        audio.closeClip();
+				        cerrarInventario();
 				}
 			}
         	

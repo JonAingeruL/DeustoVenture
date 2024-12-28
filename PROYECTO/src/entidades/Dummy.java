@@ -6,7 +6,7 @@ import main.Mapa;
 public class Dummy extends Enemigo{
 
 	public Dummy(int x, int y, GamePanel gp) {
-		super(1000, gp);
+		super(5, gp);
 		this.velocidad=0;
 		this.x = x;
 		this.y = y;
@@ -16,6 +16,11 @@ public class Dummy extends Enemigo{
 	public void movimiento(Mapa mapa, int tamanoBaldosa, Jugador jugador) {
 		return;
 	}
+
+	@Override
+	public void setVida(int vida) {
+	}
+	
 
 
 	
