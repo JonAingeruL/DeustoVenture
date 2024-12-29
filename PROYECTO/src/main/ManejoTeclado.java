@@ -12,7 +12,7 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 	//Despuesd de la asignacion de botones creamos unas variables booleanas para saber si estan siendo pulsados o no
 
 	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado,hablarNPCPulsado, fPulsado;
-	public boolean abrirInventario, abrirPausa = false;
+	public boolean abrirInventario, abrirPausa, empezarConversacion = false;
 
 
 	//Estos tres metodos se generan automaticamente cunado implementas en KeyListener
