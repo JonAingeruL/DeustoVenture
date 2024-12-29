@@ -42,6 +42,11 @@ public class Inventario extends JFrame{
 	{
 			put("Espada de Madera",1); put("Espada de Piedra", 2);
 	}};
+	private HashMap<String, Integer> objetosCurativos = new HashMap<String, Integer>(){
+		private static final long serialVersionUID = 1L;
+	{
+			put("Manzana",1); put("Pocion de salud", 6);
+	}};
 	
     public Inventario(ManejoTeclado tecladoM, GamePanel gp, Jugador jugador) {
     	AudioPlayer audio = new AudioPlayer("Resources/audio/InvSound.wav");
@@ -106,7 +111,6 @@ public class Inventario extends JFrame{
 				if ( Integer.parseInt(numObjetosSeleccionados)-1==0) {
 					model.removeRow(tabla.getSelectedRow());
 					tabla = new JTable(model);
-						
 				        try {
 				            PrintStream ps = new PrintStream("src/inventario.txt");
 				            for (int i = 0 ; i < model.getRowCount(); ++i) {
@@ -121,6 +125,11 @@ public class Inventario extends JFrame{
 				        if (objetoSeleccionado.contains("Espada")) {
 							jugador.objetoEnMano = objetoSeleccionado;
 							jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
+				        }else if(objetosCurativos.containsKey(objetoSeleccionado)){
+				        	jugador.cambiarVidas(objetosCurativos.get(objetoSeleccionado));
+				        	jugador.objetoEnMano = "";
+				        }else {
+				        	jugador.objetoEnMano = "";
 				        }
 				        audio.closeClip();
 				        cerrarInventario();
@@ -200,6 +209,19 @@ public class Inventario extends JFrame{
 	}
 	public void setEspadasDisponibles(HashMap<String, Integer> espadasDisponibles) {
 		this.espadasDisponibles = espadasDisponibles;
+	}
+	public static void inicializarInventarioPrueba() {
+		 try {
+	            PrintStream ps = new PrintStream("src/inventario.txt");
+	            ps.println("Espada de Madera;1");
+	            ps.println("Espada de Piedra;1");
+	            ps.println("Pocion de salud;1");
+	            ps.println("Manzana;1");
+	            ps.close();
+	        } catch (FileNotFoundException e) {
+	        	e.printStackTrace();
+	        	System.out.println("Error inicializando inventario prueba");
+	        }
 	}
     
      

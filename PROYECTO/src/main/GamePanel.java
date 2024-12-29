@@ -77,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
 	Jugador jugador = new Jugador(this, tecladoM);
 	HashMap<String,ArrayList<Enemigo>> enemigos;
 	
+	
 	// Creamos un constructor de este GamePanel
 	public GamePanel() {
 
@@ -98,8 +99,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// vamos a crear un nuevo metodo para iniciar el juego
 	public void iniciarJuegoHilo() {
-		
-		
+		//Inicializamos un inventario de prueba --DEBUG--
+		Inventario.inicializarInventarioPrueba();
 		//Cargamos un txt de enemigos ya hecho
 		cargarEmemigos();
 		//cargamos el primer mapa XD
@@ -117,7 +118,6 @@ public class GamePanel extends JPanel implements Runnable {
 	// Nada mas iniciemos el gameThread, llamara directamente a este metodo
 	@Override
 	public void run() {
-
 		// Primero creamos varibales fuera del bucle
 		double dibujarIntervalo = 1000000000 / FPS; // Ese numero esta en nanosegundos por lo que es 1seg, esto
 													// significa que vamos a dibujar la pantalla cada 0,016seg, por lo
@@ -263,7 +263,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		mapa.dibujarImagen(g2);
 		jugador.dibujarPer(g2);
-		jugador.dibujarVidas(g2);
+		jugador.dibujarInterfaz(g2);
 		jugador.dibujarInteraccion(g2);
 		jugador.dibujarDialogoPantalla(g2, mapa); //de momento no lo uso por que no consigo relacionar los metodos
 		//vamos a pintar todos los enemigos
