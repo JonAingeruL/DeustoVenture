@@ -99,8 +99,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// vamos a crear un nuevo metodo para iniciar el juego
 	public void iniciarJuegoHilo() {
-		//Inicializamos un inventario de prueba --DEBUG--
+		
 		Inventario.inicializarInventarioPrueba();
+		//AVISO: El loot de prueba todavía no hace nada en el inventario
+		InventarioCofre.inicializarLoot();
 		//Cargamos un txt de enemigos ya hecho
 		cargarEmemigos();
 		//cargamos el primer mapa XD

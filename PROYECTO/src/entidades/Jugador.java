@@ -677,7 +677,7 @@ public class Jugador extends Personaje {
 	}
 	public void interaccion(ManejoTeclado mt, Mapa mapa) {
 		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
-			new InventarioCofre(mt,archivoACargar,mapa.getNumcelda());
+			new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda());
 			mt.hablarNPCPulsado = false;
 
 		}

@@ -1,2 +1,4 @@
 Espada de Madera;1
 Espada de Piedra;1
+Pocion de salud;1
+Manzana;1
