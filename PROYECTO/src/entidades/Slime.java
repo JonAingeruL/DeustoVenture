@@ -1,5 +1,4 @@
 package entidades;
-
 import main.GamePanel;
 
 public class Slime extends Enemigo{
@@ -10,5 +9,8 @@ public class Slime extends Enemigo{
 		this.velocidad =2;
 		this.x = x;
 		this.y =y;
+		
+		
 	}
+
 }

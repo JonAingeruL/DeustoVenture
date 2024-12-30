@@ -1,9 +1,14 @@
 package entidades;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.HashMap;
 import java.util.Random;
+import javax.swing.table.DefaultTableModel;
 
+import gui.Inventario;
+import gui.Mensaje;
 import main.GamePanel;
 import main.Mapa;
 
@@ -11,6 +16,8 @@ public abstract class Enemigo extends Personaje{
 	GamePanel gp;
 	private int vida;
 	private int direccion;
+	private HashMap<String,Integer> objetosLooteados;
+	
 	public Enemigo(int vida, GamePanel gp) {
 		super();
 		this.vida = vida;
@@ -154,6 +161,67 @@ public abstract class Enemigo extends Personaje{
 		return false;
 		
 	}
+	//no se llama a este método, se llama al de el Slime, Esqueleto, etc
+	public void looteoEnemigo(Inventario inventario, Jugador jugador, GamePanel gp) {
+		//este hashMap vacío se va a llenar con {Nombre de item, Cantidad de item}
+		 objetosLooteados= new HashMap<String,Integer>();
+		Random r = new Random();
+		int oroRecibido = 0;
+		
+		//LOOT SLIME
+		if (this instanceof Slime) {
+			//el jugador recibirá entre 1 y 10 de oro por matar un Slime
+			oroRecibido+=r.nextInt(1, 11);
+			if (r.nextInt(1, 11)==1) {
+				//con un 10% de probabilidad suelta una manzana (la cantidad es 1)
+				objetosLooteados.put("Manzana", 1);
+				
+			}
+		}
+		//se añade el oro del enemigo eliminado
+		objetosLooteados.put("Oro",oroRecibido);
+		//actualizamos el inventario
+		actualizarInventario(inventario, objetosLooteados);
+		anadirMensajesLoot(objetosLooteados, gp);
+		
+	}
+	
+
+	
+	//se añaden los items al inventario
+	private void actualizarInventario(Inventario inventario,  HashMap<String, Integer> objetosLooteados) {
+		DefaultTableModel nuevoInventario = Inventario.leerFichero("src/inventario.txt");
+		for (String clave : objetosLooteados.keySet()) {
+			boolean elementoEncontrado = false;
+				for (int row = 0; row < nuevoInventario.getRowCount(); row++) {
+					String elemento = (String) nuevoInventario.getValueAt(row, 1);
+					if (nuevoInventario.getValueAt(row, 0).equals(clave)) {
+						elementoEncontrado = true;
+						int elementoASumar = Integer.parseInt(elemento);
+						elementoASumar += objetosLooteados.get(clave);
+						nuevoInventario.setValueAt(String.valueOf(elementoASumar), row, 1);		
+					} 
+				
+				}	
+				if (!elementoEncontrado) {
+					String[] nuevaFila = {clave, objetosLooteados.get(clave).toString()};
+					nuevoInventario.addRow(nuevaFila);
+				}
+				
+				
+		}
+		Inventario.cargarFichero(nuevoInventario);
+	}
+	
+	private void anadirMensajesLoot(HashMap<String, Integer> objetosLooteados, GamePanel gp) {
+		for (String nombreObjeto : objetosLooteados.keySet()) {
+			String mensaje = "Has obtenido "+nombreObjeto+ " x"+objetosLooteados.get(nombreObjeto)+"!";
+			
+			gp.anadirMensaje(new Mensaje(mensaje, 180));
+		}
+	}
 }
+	
+
 	
 

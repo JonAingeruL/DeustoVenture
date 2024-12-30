@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -76,6 +77,14 @@ public class GamePanel extends JPanel implements Runnable {
 	// personajeJugable (PJ) que sea la que controla el jugador
 	Jugador jugador = new Jugador(this, tecladoM);
 	HashMap<String,ArrayList<Enemigo>> enemigos;
+	
+	
+	
+	
+	private ArrayList<Mensaje> mensajes = new ArrayList<Mensaje>();
+	
+	
+	
 	
 	
 	// Creamos un constructor de este GamePanel
@@ -203,7 +212,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos);
 		jugador.interaccion(tecladoM,mapa);
-		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null);
+		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null,inventarioJugador);
 		
 		//detectamos el cambio de movimiento de cada Enemigo
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
@@ -272,6 +281,26 @@ public class GamePanel extends JPanel implements Runnable {
 				enemigo.dibujarEnemigo(g2);
 			}
 		}
+		//dibuja los mensajes de looteo
+		int alturaDibujadoTexto =700;
+		g2.setColor(Color.BLACK);
+		for (Mensaje mensaje : mensajes) {
+				g2.drawString(mensaje.getTexto(), 700, alturaDibujadoTexto);
+				alturaDibujadoTexto+=20;
+		
+			
+			mensaje.setTiempodeVida(mensaje.getTiempodeVida()-1);
+			
+		}
+		
+		for (int i=0; i<mensajes.size();) {
+			if (mensajes.get(i).getTiempodeVida()==0){
+				mensajes.remove(i);
+			} else {
+				i++;
+			}
+		}
+
 		g2.dispose(); // Esto sirve para ahorrar memoria en el dibujado
 	}
 	
@@ -318,6 +347,10 @@ public class GamePanel extends JPanel implements Runnable {
 			e.printStackTrace();
 		}
 	
+	}
+	
+	public void anadirMensaje(Mensaje mensaje) {
+		mensajes.add(mensaje);
 	}
 
 }

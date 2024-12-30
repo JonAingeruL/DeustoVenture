@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 
 import main.GamePanel;
 import main.ManejoTeclado;

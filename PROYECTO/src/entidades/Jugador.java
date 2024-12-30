@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import gui.GameOverScreen;
+import gui.Inventario;
 import gui.InventarioCofre;
 import gui.NPC2;
 
@@ -538,7 +539,7 @@ public class Jugador extends Personaje {
 		this.archivoACargar = archivoACargar;
 	}
 
-	public void AccionAtacar(HashMap<String, ArrayList<Enemigo>> enemigos, Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel) {
+	public void AccionAtacar(HashMap<String, ArrayList<Enemigo>> enemigos, Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel, Inventario inventario) {
 		//TODO que el enemigo reciba daño una sola vez
 		if ((tecladoM.fPulsado == true) && (atacando == false) && (objetoEnMano != "")) {
 			// Establecemos en qué mopmento hemos atacado
@@ -546,7 +547,7 @@ public class Jugador extends Personaje {
 			sword.playClip(gp.getVolumenAudio());
 			System.out.println("Sword");
 			atacando = true;
-			DanoAtaque(enemigos, tamanobaldosa, mapa);
+			DanoAtaque(enemigos, tamanobaldosa, mapa, inventario);
 		} else {
 			// Si se estaba esperando al cooldown y ya ha pasado. Se pasa el cooldown (1) de
 			// segundos a milis
@@ -559,7 +560,7 @@ public class Jugador extends Personaje {
 		}
 	}
 	
-	public void DanoAtaque(HashMap<String, ArrayList<Enemigo>> enemigos, int tamanobaldosa, Mapa mapa) {
+	public void DanoAtaque(HashMap<String, ArrayList<Enemigo>> enemigos, int tamanobaldosa, Mapa mapa, Inventario inventario) {
 		//Creo un array con los datos de la caja de colisiones de la espada.
 		//Dependiendo de la dirección en la que mira el jugador, la caja es diferente
 		int[] posicionEspada = null;
@@ -602,6 +603,7 @@ public class Jugador extends Personaje {
 					enemigo.setVida(enemigoAElim.getVida()-danoJugador);
 					if(enemigo.getVida()<=0) {
 						this.setEnemigosDerrotados(this.getEnemigosDerrotados()+1);
+						enemigo.looteoEnemigo(inventario, this, gp);
 						enemigos.get(mapa.getNumeroMapa() + "," + mapa.getNumcelda()).remove(enemigo);
 					}
 				}

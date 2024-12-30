@@ -37,16 +37,20 @@ public class Inventario extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JTable tabla;
 	private ManejoTeclado tecladoM;
+	//HashMap de Espadas y su daño
 	private HashMap<String, Integer> espadasDisponibles = new HashMap<String, Integer>(){
 		private static final long serialVersionUID = 1L;
 	{
 			put("Espada de Madera",1); put("Espada de Piedra", 2);put("Espada de Hielo",1);
 	}};
+	//Hashmap de Pociones y su curación
 	private HashMap<String, Integer> objetosCurativos = new HashMap<String, Integer>(){
 		private static final long serialVersionUID = 1L;
 	{
-			put("Manzana",1); put("Pocion de salud", 6);
+			put("Manzana",1); put("Pocion de salud", 6); 
 	}};
+	
+
 	
     public Inventario(ManejoTeclado tecladoM, GamePanel gp, Jugador jugador) {
     	AudioPlayer audio = new AudioPlayer("Resources/audio/InvSound.wav");
