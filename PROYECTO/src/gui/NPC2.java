@@ -3,20 +3,26 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
 import entidades.Jugador;
@@ -32,7 +38,7 @@ public class NPC2 extends JFrame{
     public NPC2(ManejoTeclado tecladoM, GamePanel gp, String marcador) {
     	this.tecladoM =tecladoM;
         setTitle("NPC");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         int x = 275; 
 		int y = (gp.maxPantallaFila - gp.maxPantallaFila/3) * gp.tamañoBaldosa - 15; //hay q * para pasarlo a la unidad correcta
 		int ancho = gp.maxPantallaColu * (gp.tamañoBaldosa -2); 
@@ -48,7 +54,13 @@ public class NPC2 extends JFrame{
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Diseño vertical
         add(panel);
 
-		
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				cerrarConversacion();
+			}
+		});
 		addKeyListener(new KeyListener() {
 			
 			@Override
@@ -73,6 +85,8 @@ public class NPC2 extends JFrame{
 		});
 		
 		leerFichero(marcador);
+		JLabel instruccion = new JLabel("Pulse esc para cerrar");
+		add(instruccion, BorderLayout.NORTH);
 		setResizable(false);
 		setVisible(true);
 
@@ -96,10 +110,15 @@ public class NPC2 extends JFrame{
                         if (texto.startsWith("-")) { // Detecta otro marcador, detener lectura
                             break;
                         }
-
                         // Crear JLabel con el texto y añadirlo al panel
-                        JLabel etiqueta = new JLabel(texto);
+                        JLabel etiqueta = new JLabel("--"+texto);
                         etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar etiqueta
+                        etiqueta.setFont(new Font("PAPYRUS", Font.PLAIN, 20));// Dar fuente a la etiqueta
+                        etiqueta.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 5)
+                        		, BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.GRAY))); //Dar borde a la etiqueta
+                        etiqueta.setBackground(new Color(0,0,0)); //Color a la etiqueta
+                        etiqueta.setForeground(Color.YELLOW.brighter());
+                        etiqueta.setOpaque(true);
                         add(etiqueta); // Añadir al contenedor
                     }
                     break; // Salir del bucle principal

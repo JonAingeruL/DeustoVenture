@@ -117,6 +117,7 @@ public class Jugador extends Personaje {
 		if (tecladoM.arribaPulsado == true || tecladoM.abajoPulsado == true || tecladoM.izquierdaPulsado == true
 				|| tecladoM.derechaPulsado == true) {
 			interaccionDisponible = false;
+			hablarConNPC = false;
 			if (tecladoM.shiftPulsado == true) {
 				velocidad += 2;
 			}
@@ -361,10 +362,11 @@ public class Jugador extends Personaje {
 									|| ((y + tamanobaldosa <= (j * tamanobaldosa) + tamanobaldosa)
 											&& (y + tamanobaldosa >= j * tamanobaldosa))))) {
 						System.out.println("Hay colision");
-						if(mapa.getCelda()[i][j] == 50) {
+						if(mapa.getCelda()[i][j] == 50  || mapa.getCelda()[i][j] == 60) {
 							interaccionDisponible = true;
-						}else if (mapa.getCelda()[i][j] == 60) {
+						if (mapa.getCelda()[i][j] == 60) {
 							hablarConNPC = true;
+							}
 						}else {
 							interaccionDisponible = false;
 							hablarConNPC = false;
@@ -682,13 +684,14 @@ public class Jugador extends Personaje {
 	}
 	public void interaccion(ManejoTeclado mt, Mapa mapa) {
 		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
+			if(!this.hablarConNPC) {
 			new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda());
-			mt.hablarNPCPulsado = false;
-
-		}else if(mt.hablarNPCPulsado && !mt.empezarConversacion) {
+			}else{
 			mt.empezarConversacion = true;
 			new NPC2(mt, gp, "-1-");
 			
+		}
+			mt.hablarNPCPulsado = false;
 		}
 	}
 	public void muerte(GamePanel gp, Thread t) {

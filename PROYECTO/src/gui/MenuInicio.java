@@ -22,6 +22,7 @@ public class MenuInicio extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1024, 768);
         setLocationRelativeTo(null);
+		setBackground(Color.BLACK);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         
@@ -51,6 +52,7 @@ public class MenuInicio extends JFrame {
 		add(salir);
 		salir.setAlignmentX(CENTER_ALIGNMENT);
 		salir.setPreferredSize(new Dimension(100, 50));
+		setBackground(Color.BLACK);
 		setVisible(true);
 		
 			
