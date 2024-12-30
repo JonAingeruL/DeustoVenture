@@ -22,7 +22,6 @@ public class Jugador extends Personaje {
 	private String archivoACargar = "resources/mapas/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida, corazonAMedias, espada;
 	private boolean[] vidas = { true, true, true, true, true, true };
-	boolean teclaProcesadaNPC = false;
 	boolean atacando = false;
 	boolean interaccionDisponible = false;
 	boolean hablarConNPC = false;
@@ -529,77 +528,7 @@ public class Jugador extends Personaje {
 
 	}
 
-	public void dibujarDialogoPantalla(Graphics2D g2, Mapa mapa) {// hago 2 metodos pq hay diferentes npcs
-//      dialogoJL.setBounds(0, maxPantallaFila - maxPantallaFila/3, maxPantallaColu, maxPantallaFila/3); // Ajustar posición y tamaño.
 
-//		el panel de texto lo coloco abajo en el centro
-
-//		int x = 15; 
-//		int y = (gp.maxPantallaFila - gp.maxPantallaFila/3) * gp.tamañoBaldosa - 15; //hay q * para pasarlo a la unidad correcta
-//		int ancho = gp.maxPantallaColu * (gp.tamañoBaldosa -2); 
-//		int largo = gp.maxPantallaFila/3 * gp.tamañoBaldosa; 
-//		
-//		//llama al metodo de abajo y le t¡mete los datos para q haga el rectangulo, lo hago en 2 metodo pq hay varios npcs
-//		dibujarSubPantalla(x, y, ancho, largo, g2); 
-//		
-//		x+= gp.maxPantallaFila;
-//		y+= gp.maxPantallaColu + 20; //para que el texto encaje bien
-//		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F)); //poner la fuente de la letra
-//		// esto lo uso para hacer pruebas, no es correcto ya que hace un buble infito pero es una forma de ver que el texto se muestra
-//		for(NPC npc: mapa.getNpcs()) { 
-//			g2.drawString(npc.hablar(), x, y);
-//			
-//		//hay q hecer un for q interprete el salto de linea pq en este caso no lo hace automatico		
-//			for(String linea: npc.hablar().split("\n")) { 
-//				g2.drawString(npc.hablar(), x, y);
-//				y += 40;
-//			}
-//			
-//		}
-	}
-
-	public void dibujarSubPantalla(int x, int y, int ancho, int largo, Graphics2D g2) {
-		Color c = new Color(0, 0, 0, 200); // el 200 le aporta transparencia, cuanto mas bajo mas transparencia, va del
-											// 0 al 255
-		g2.setColor(c);
-		g2.fillRoundRect(x, y, ancho, largo, 20, 20);// dibujamos un recatangulo el 20 es para cambiar la redondez del
-														// rectangulo
-
-		c = new Color(255, 255, 255, 200); // el 200 le aporta transparencia
-		g2.setStroke(new BasicStroke(5)); // para hecerle un reborde 5 es su anchura
-		g2.setColor(c);
-		g2.drawRoundRect(x + 5, y + 5, ancho - 10, largo - 10, 10, 10); // saca el reboerde
-
-	}
-
-	public void InteractuarNPC(Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM) {
-
-//		int celdaX = (x + 32) / tamanobaldosa;
-//		if (x < -32) {
-//			celdaX = mapa.getCelda().length - 1;
-//		}
-//		int celdaY = (y + 32) / tamanobaldosa;
-//		if (y < -32) {
-//			celdaY = mapa.getCelda()[0].length - 1;
-//		}
-		for (NPC npc : mapa.getNpcs()) {
-//			if(Math.abs(celdaX - npc.getX()) <= 1 && Math.abs(celdaY - npc.getY()) <= 1 ) { //no funciona por que hay algo que lo pisa, pero el calculo esta bien
-//				System.out.println("deberia funcionar");
-
-			if (tecladoM.hablarNPCPulsado) { // interactua con la tecla E
-				if (!teclaProcesadaNPC) {
-					teclaProcesadaNPC = true;
-					npc.hablar();
-				}
-			} else {
-				teclaProcesadaNPC = false;
-				break;
-			}
-		}
-//			}else {
-//				System.out.println("coordenada x " + npc.getX() +" coordenada y "+ npc.getY());
-//			}
-	}
 
 	public String getArchivoACargar() {
 		return archivoACargar;

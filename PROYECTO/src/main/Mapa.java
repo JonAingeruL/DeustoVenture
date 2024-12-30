@@ -13,13 +13,11 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
 import entidades.Jugador;
-import entidades.NPC;
 
 public class Mapa {
 	private int[][] celda;
 	private int numCelda;
 	private String archivoACargar = "resources/mapas/tutorial.txt";
-	private List<NPC> npcs;
 	private BufferedImage i = new BufferedImage(1024, 768, BufferedImage.TYPE_INT_ARGB);
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
@@ -46,7 +44,6 @@ public class Mapa {
 	public Mapa(int numCelda) {
 		super();
 		this.numCelda = numCelda;
-		this.npcs = new ArrayList<NPC>();
 		cargarCelda(archivoACargar, numCelda);
 	}
 
@@ -185,18 +182,8 @@ public class Mapa {
 							break;
 						case 60:
 							g.setColor(Color.white);
-							npcs.add(new NPC(i, j, new String[] {
-									"hola soy un NPC, /nbienvenido al juego "
-							}));
-							g.setColor(Color.WHITE);
-							
 							break;
-						case 61:
-							g.setColor(Color.white);
-							npcs.add(new NPC(i, j, new String[] {
-									"hola soy el NPC2,/n disfruta del juego "
-							}));
-							break;
+
 						}
 						g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 					}
@@ -271,9 +258,6 @@ public class Mapa {
 		g.drawImage(i, 0, 0, null);
 	}
 
-	public List<NPC> getNpcs() {
-		return npcs;
-	}
 	
 	public int getNumeroMapa() {
 		return numeroMapa;

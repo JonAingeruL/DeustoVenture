@@ -8,11 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
@@ -20,16 +17,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.border.EmptyBorder;
 
-import entidades.Jugador;
-import main.AudioPlayer;
 import main.GamePanel;
 import main.ManejoTeclado;
-import main.Mapa;
 
 public class NPC2 extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -52,6 +44,7 @@ public class NPC2 extends JFrame{
         
     	JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Diseño vertical
+        		
         add(panel);
 
 		addWindowListener(new WindowAdapter() {

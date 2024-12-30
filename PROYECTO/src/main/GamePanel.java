@@ -203,7 +203,6 @@ public class GamePanel extends JPanel implements Runnable {
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos);
 		jugador.interaccion(tecladoM,mapa);
-		jugador.InteractuarNPC(mapa, tamañoBaldosa, tecladoM);
 		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null);
 		
 		//detectamos el cambio de movimiento de cada Enemigo
@@ -267,7 +266,6 @@ public class GamePanel extends JPanel implements Runnable {
 		jugador.dibujarPer(g2);
 		jugador.dibujarInterfaz(g2);
 		jugador.dibujarInteraccion(g2);
-		jugador.dibujarDialogoPantalla(g2, mapa); //de momento no lo uso por que no consigo relacionar los metodos
 		//vamos a pintar todos los enemigos
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
 			for (Enemigo enemigo : enemigos.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
