@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import gui.GameOverScreen;
 import gui.InventarioCofre;
+import gui.NPC2;
 
 public class Jugador extends Personaje {
 	GamePanel gp;
@@ -24,6 +25,7 @@ public class Jugador extends Personaje {
 	boolean teclaProcesadaNPC = false;
 	boolean atacando = false;
 	boolean interaccionDisponible = false;
+	boolean hablarConNPC = false;
 	private int enemigosDerrotados = 0;
 	public String objetoEnMano = "";
 	public int danoJugador = 0;
@@ -353,8 +355,11 @@ public class Jugador extends Personaje {
 						System.out.println("Hay colision");
 						if(mapa.getCelda()[i][j] == 50) {
 							interaccionDisponible = true;
+						}else if (mapa.getCelda()[i][j] == 60) {
+							hablarConNPC = true;
 						}else {
 							interaccionDisponible = false;
+							hablarConNPC = false;
 						}
 						return true;
 					}
@@ -672,6 +677,10 @@ public class Jugador extends Personaje {
 			new InventarioCofre(mt,archivoACargar,mapa.getNumcelda());
 			mt.hablarNPCPulsado = false;
 
+		}else if(mt.hablarNPCPulsado && !mt.empezarConversacion) {
+			mt.empezarConversacion = true;
+			new NPC2(mt, gp, "-1-");
+			
 		}
 	}
 	public void muerte(GamePanel gp, Thread t) {

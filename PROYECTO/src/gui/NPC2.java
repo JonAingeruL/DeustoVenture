@@ -1,11 +1,17 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Scanner;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,22 +29,24 @@ public class NPC2 extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private ManejoTeclado tecladoM;
 	
-    public NPC2(ManejoTeclado tecladoM, String mapa, int celda, GamePanel gp) {
+    public NPC2(ManejoTeclado tecladoM, GamePanel gp, String marcador) {
     	this.tecladoM =tecladoM;
         setTitle("NPC");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int x = 15; 
+        int x = 275; 
 		int y = (gp.maxPantallaFila - gp.maxPantallaFila/3) * gp.tamañoBaldosa - 15; //hay q * para pasarlo a la unidad correcta
 		int ancho = gp.maxPantallaColu * (gp.tamañoBaldosa -2); 
 		int largo = gp.maxPantallaFila/3 * gp.tamañoBaldosa; 
 		
-		//llama al metodo de abajo y le t¡mete los datos para q haga el rectangulo, lo hago en 2 metodo pq hay varios npcs
 		setBounds(x, y, ancho, largo); 
 
     	//Esto hace que que se pueda escuchar el evento de tecla esc añadido abajo
     	setFocusable(true);
+    	setResizable(false);
         
-    	// Manejador de cerrar la ventana con la X
+    	JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Diseño vertical
+        add(panel);
 
 		
 		addKeyListener(new KeyListener() {
@@ -64,35 +72,60 @@ public class NPC2 extends JFrame{
 			}
 		});
 		
+		leerFichero(marcador);
 		setResizable(false);
 		setVisible(true);
 
     }
+    
+    public void leerFichero(String marcador) {
+        try (Scanner sc = new Scanner(new FileInputStream("src/NPCs.txt"))) {
+            boolean encontrado = false;
 
-    /*
-	public void leerFichero(String mapa,int celda, DefaultTableModel modeloDatos) {
-		try {
-			// Leo el fichero
-			Scanner sc = new Scanner(new FileInputStream("src/lootCofre.txt"));
-			while (sc.hasNextLine()) {
-				// Si la linea actual equivale al indice que busco, la escaneo
-				if (sc.nextLine().strip().equals("-" + mapa + ","+ celda +"-")) {
-					String linea = sc.nextLine();
-					while(!linea.contains("-")) {
-						String[] dato = linea.split(";");
-						modeloDatos.addRow(dato);
-						linea = sc.nextLine();
-						
-					}
-					break;
-				}
-			}
-			sc.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	*/
+            // Leer línea por línea
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine().strip();
+
+                // mira si tienen el marcador q le hemos pasado
+                if (linea.equals(marcador)) {
+                    encontrado = true;
+
+                    // busca otro marcador o el final del archivo
+                    while (sc.hasNextLine()) {
+                        String texto = sc.nextLine().strip();
+                        if (texto.startsWith("-")) { // Detecta otro marcador, detener lectura
+                            break;
+                        }
+
+                        // Crear JLabel con el texto y añadirlo al panel
+                        JLabel etiqueta = new JLabel(texto);
+                        etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar etiqueta
+                        add(etiqueta); // Añadir al contenedor
+                    }
+                    break; // Salir del bucle principal
+                }
+            }
+
+            if (!encontrado) {
+                // Si no se encuentra el marcador, mostrar un mensaje
+                JLabel etiquetaError = new JLabel("Marcador no encontrado: " + marcador);
+                etiquetaError.setForeground(Color.RED);
+                add(etiquetaError);
+            }
+
+            // Refrescar la ventana
+            revalidate();
+            repaint();
+
+        } catch (FileNotFoundException e) {
+            JLabel errorLabel = new JLabel("Error: Archivo no encontrado.");
+            errorLabel.setForeground(Color.RED);
+            add(errorLabel);
+            revalidate();
+            repaint();
+        }
+    }
+
 	public void cerrarConversacion() {
     	tecladoM.empezarConversacion =false;
 		tecladoM.hablarNPCPulsado = false;

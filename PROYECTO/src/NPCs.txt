@@ -1,0 +1,4 @@
+-1-
+Hola, soy el primer NPC, bienvenido al juego. Ahora mismo te encuentras en la zona tutorial.
+-2-
+hola, soy el segundo NPC.
