@@ -238,7 +238,8 @@ public class Jugador extends Personaje {
 	 * 
 	 * @param g2 El objeto graphics 2d a utilizar
 	 */
-	public void dibujarVidas(Graphics2D g2) {
+	public void dibujarInterfaz(Graphics2D g2) {
+		//Primero dibujo las vidas
 		for (int i = 0; i < vidas.length; i += 2) {
 			if (vidas[i] && vidas[i + 1]) {
 				g2.drawImage(corazonVida, 80 + 35 * i / 2, 60, 40, 40, null);
@@ -252,10 +253,17 @@ public class Jugador extends Personaje {
 				g2.drawImage(corazonSinVida, 80 + 38 * i / 2, 60, 40, 40, null);
 			}
 		}
+		//Después el arma equipada actualmente
+		g2.setColor(new Color(0, 0, 0, 100));
+		g2.fillRoundRect(760, 40, 240, 60, 5, 5);
+		g2.setFont(new Font("TIMES NEW ROMAN",Font.BOLD,25));
+		g2.setColor(Color.WHITE);
+		g2.drawString(objetoEnMano, 780, 80);
 	}
 	
 	public void dibujarInteraccion(Graphics2D g2) {
 		if(interaccionDisponible) {
+			g2.setColor(Color.DARK_GRAY);
 			g2.fillRoundRect(150, 650, 75, 60, 10, 10);
 			g2.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 			g2.setColor(Color.WHITE);
@@ -674,7 +682,7 @@ public class Jugador extends Personaje {
 	}
 	public void interaccion(ManejoTeclado mt, Mapa mapa) {
 		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
-			new InventarioCofre(mt,archivoACargar,mapa.getNumcelda());
+			new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda());
 			mt.hablarNPCPulsado = false;
 
 		}else if(mt.hablarNPCPulsado && !mt.empezarConversacion) {

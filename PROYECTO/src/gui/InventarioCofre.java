@@ -12,7 +12,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -26,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import main.AudioPlayer;
+import main.GamePanel;
 import main.ManejoTeclado;
 
 //TODO Buscar manera de aprovechar código de inventario mediante herencia o interfaces
@@ -38,7 +42,7 @@ public class InventarioCofre extends JFrame{
 	private JTable tabla;
 	private ManejoTeclado tecladoM;
 	
-    public InventarioCofre(ManejoTeclado tecladoM, String mapa, int celda) {
+    public InventarioCofre(ManejoTeclado tecladoM, GamePanel gp, String mapa, int celda) {
     	AudioPlayer audio = new AudioPlayer("Resources/audio/InvSound.wav");
     	audio.playClip();
     	this.tecladoM =tecladoM;
@@ -48,7 +52,7 @@ public class InventarioCofre extends JFrame{
         setSize(400, 300);
         setLocationRelativeTo(null);
         
-    	JButton botonUsar = new JButton("Coger");
+    	JButton botonUsar = new JButton("Coger todo");
     	JButton botonSalir = new JButton("Salir");
     	
     	JPanel panelBotones = new JPanel();
@@ -90,11 +94,19 @@ public class InventarioCofre extends JFrame{
         tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         
-     // Manejador de eventos para el botón "Usar"
+     // Manejador de eventos para el botón "Coger todo"
     	botonUsar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				DefaultTableModel modeloInventario = Inventario.leerFichero("src/inventario.txt");
+				for (int i = 0 ; i < modeloInventario.getRowCount(); ++i) {
+					String[] newRow = {(modeloInventario.getValueAt(i, 0).toString()),(modeloInventario.getValueAt(i, 1).toString())};
+	            	model.addRow(newRow);
+	            }
+				Inventario.cargarFichero(model);
+				vaciarCofre(mapa, celda, model);
+				audio.closeClip();
+				cerrarInventario();
 				
 			}
         	
@@ -161,11 +173,61 @@ public class InventarioCofre extends JFrame{
 			e.printStackTrace();
 		}
 	}
+	public void vaciarCofre(String mapa,int celda, DefaultTableModel model) {
+		ArrayList<String> fichero = new ArrayList<String>();
+		try {
+			// Leo el fichero
+			Scanner sc = new Scanner(new FileInputStream("src/lootCofre.txt"));
+			while (sc.hasNextLine()) {
+				String linea = sc.nextLine();
+				// Si la linea actual equivale al indice que busco, la elimino
+				if (!linea.strip().equals("-" + mapa + ","+ celda +"-")) {
+					fichero.add(linea);
+				}else {
+					fichero.add(linea);
+					linea = sc.nextLine();
+					while(!linea.contains("-")) {
+						linea = sc.nextLine();
+					}
+					fichero.add(linea);
+					}
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+            PrintStream ps = new PrintStream("src/lootCofre.txt");
+            for (String string : fichero) {
+            	ps.println(string);
+            }
+            ps.close();
+        } catch (FileNotFoundException e) {
+        	e.printStackTrace();
+        }
+	}
 	public void cerrarInventario() {
     	tecladoM.abrirInventario =false;
 		tecladoM.iPulsado = false;
 		dispose();
     }
+	public static void inicializarLoot() {
+		 try {
+	            PrintStream ps = new PrintStream("src/lootCofre.txt");
+	            ps.println("-resources/mapas/tutorial.txt,1-");
+	            ps.println("Placeholder1;0");
+	            ps.println("Espada de Hielo;1");
+	            ps.println("-resources/mapas/tutorial.txt,2-");
+	            ps.println("Hacha;1");
+	            ps.println("-resources/mapas/mapa.txt,1-");
+	            ps.println("Oro;500");
+	            ps.println("-");
+	            ps.close();
+	        } catch (FileNotFoundException e) {
+	        	e.printStackTrace();
+	        	System.out.println("Error inicializando inventario prueba");
+	        }
+	}
 	
 
 }

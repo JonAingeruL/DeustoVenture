@@ -40,7 +40,12 @@ public class Inventario extends JFrame{
 	private HashMap<String, Integer> espadasDisponibles = new HashMap<String, Integer>(){
 		private static final long serialVersionUID = 1L;
 	{
-			put("Espada de Madera",1); put("Espada de Piedra", 2);
+			put("Espada de Madera",1); put("Espada de Piedra", 2);put("Espada de Hielo",1);
+	}};
+	private HashMap<String, Integer> objetosCurativos = new HashMap<String, Integer>(){
+		private static final long serialVersionUID = 1L;
+	{
+			put("Manzana",1); put("Pocion de salud", 6);
 	}};
 	
     public Inventario(ManejoTeclado tecladoM, GamePanel gp, Jugador jugador) {
@@ -67,19 +72,8 @@ public class Inventario extends JFrame{
         String[] columnaNombres = {"Objeto", "Cantidad"};
 
         // Crear el modelo de la tabla
-        DefaultTableModel model = new DefaultTableModel(columnaNombres,0) {
-        	//añadiendo las 4 lineas de abajo, puedo hacer que toda la tabla se vuelva 
-        	//no editable
-			private static final long serialVersionUID = 1L;
-			@Override
-        	public boolean isCellEditable(int row, int column) {
-        		return false;
-        	}
-        };
-        
-        
         String nombreFich = "src/inventario.txt";
-        leerFichero(nombreFich, model);
+        DefaultTableModel model = leerFichero(nombreFich);
 
         // Crear la tabla y asignar el modelo
         tabla = new JTable(model);
@@ -105,22 +99,20 @@ public class Inventario extends JFrame{
 				String numObjetosSeleccionados = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
 				if ( Integer.parseInt(numObjetosSeleccionados)-1==0) {
 					model.removeRow(tabla.getSelectedRow());
+					if(!jugador.objetoEnMano.equals("")) {
+						String[] nuevaFila = {jugador.objetoEnMano,"1"};
+						model.addRow(nuevaFila);
+					}
 					tabla = new JTable(model);
-						
-				        try {
-				            PrintStream ps = new PrintStream("src/inventario.txt");
-				            for (int i = 0 ; i < model.getRowCount(); ++i) {
-				            	ps.println(model.getValueAt(i, 0)+";"+model.getValueAt(i, 1));
-				            }
-				            if(!jugador.objetoEnMano.equals(""))
-				            	ps.println(jugador.objetoEnMano+";1");
-				            ps.close();
-				        } catch (FileNotFoundException e2) {
-				        	e2.printStackTrace();
-				        }
+					cargarFichero(model);  
 				        if (objetoSeleccionado.contains("Espada")) {
 							jugador.objetoEnMano = objetoSeleccionado;
 							jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
+				        }else if(objetosCurativos.containsKey(objetoSeleccionado)){
+				        	jugador.cambiarVidas(objetosCurativos.get(objetoSeleccionado));
+				        	jugador.objetoEnMano = "";
+				        }else {
+				        	jugador.objetoEnMano = "";
 				        }
 				        audio.closeClip();
 				        cerrarInventario();
@@ -128,6 +120,7 @@ public class Inventario extends JFrame{
 			}
         	
     	});
+    	
     	
      // Manejador de eventos para el botón "Salir"
     	botonSalir.addActionListener(new ActionListener() {
@@ -168,8 +161,18 @@ public class Inventario extends JFrame{
 
     }
   // Lee el fichero y carga los datos en el inventario
-    public void leerFichero(String nombreFich, DefaultTableModel modeloDatos) {
+    public static DefaultTableModel leerFichero(String nombreFich) {
     	//HashMap<String,String> mObjeto = new HashMap<>();
+    	String[] columnaNombres = {"Objeto", "Cantidad"};
+    	DefaultTableModel modeloDatos = new DefaultTableModel(columnaNombres,0){
+        	//añadiendo las 4 lineas de abajo, puedo hacer que toda la tabla se vuelva 
+        	//no editable
+			private static final long serialVersionUID = 1L;
+			@Override
+        	public boolean isCellEditable(int row, int column) {
+        		return false;
+        	}
+        };
     	try(BufferedReader br = new BufferedReader(new FileReader(nombreFich))){
     		String linea;
     		while ((linea = br.readLine())!=null) {
@@ -184,6 +187,19 @@ public class Inventario extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	return modeloDatos;
+    }
+    
+    public static void cargarFichero(DefaultTableModel model) {
+    	try {
+            PrintStream ps = new PrintStream("src/inventario.txt");
+            for (int i = 0 ; i < model.getRowCount(); ++i) {
+            	ps.println(model.getValueAt(i, 0)+";"+model.getValueAt(i, 1));
+            }
+            ps.close();
+        } catch (FileNotFoundException e) {
+        	e.printStackTrace();
+        }
     }
     
     
@@ -200,6 +216,19 @@ public class Inventario extends JFrame{
 	}
 	public void setEspadasDisponibles(HashMap<String, Integer> espadasDisponibles) {
 		this.espadasDisponibles = espadasDisponibles;
+	}
+	public static void inicializarInventarioPrueba() {
+		 try {
+	            PrintStream ps = new PrintStream("src/inventario.txt");
+	            ps.println("Espada de Madera;1");
+	            ps.println("Espada de Piedra;1");
+	            ps.println("Pocion de salud;1");
+	            ps.println("Manzana;1");
+	            ps.close();
+	        } catch (FileNotFoundException e) {
+	        	e.printStackTrace();
+	        	System.out.println("Error inicializando inventario prueba");
+	        }
 	}
     
      
