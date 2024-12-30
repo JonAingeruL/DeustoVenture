@@ -2,6 +2,9 @@ package main;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class GestorBD {
@@ -20,8 +23,8 @@ public class GestorBD {
 			
 			//Tenemos los valores en p
 			DRIVER_NAME = p.getProperty("DRIVER_NAME");
-			DRIVER_NAME = p.getProperty("DATABASE_FILE");
-			DRIVER_NAME = p.getProperty("CONNECTION_STRING") + DATABASE_FILE;
+			DATABASE_FILE = p.getProperty("DATABASE_FILE");
+			CONNECTION_STRING = p.getProperty("CONNECTION_STRING") + DATABASE_FILE;
 			
 			
 		} catch (IOException e) {
@@ -36,6 +39,30 @@ public class GestorBD {
 			ex.printStackTrace();
 		}
 		
+	}
+	
+	public void CrearBBDD() {
+		//Se abre la conexion y se obtiene el Statement
+		//Al abrir la conexion, si no existia el fichero, se crea la base de datos
 		
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+				Statement stmt = con.createStatement()) {
+			 // Define la estructura de la tabla
+			String sql = "CREATE TABLE IF NOT EXISTS USUARIO (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "nomUsuario TEXT NOT NULL, " +
+                    "numMuertes INTEGER DEFAULT 0, " +
+                    "numAsesinatos INTEGER DEFAULT 0, " +
+                    "tiempoJugado INTEGER DEFAULT 0" +
+                    ");";
+			
+			 // Ejecuta la consulta para crear la tabla
+            stmt.executeUpdate(sql);
+            System.out.println("Tabla USUARIO creada o ya existía.");
+			
+		} catch (Exception e) {
+			System.err.format("\n* Error al crear la tabla en la base de datos: %s", e.getMessage());
+            e.printStackTrace();
+		}
 	}
 }
