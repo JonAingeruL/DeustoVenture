@@ -127,4 +127,26 @@ public class GestorBD {
 
 	    return actualizado;
 	}
+	
+	public boolean eliminarUsuario(int id) {
+	    String sql = "DELETE FROM USUARIO WHERE id = ?";
+	    boolean eliminado = false;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        // Configura el parámetro para la consulta
+	        pstmt.setInt(1, id);
+
+	        // Ejecuta la consulta y verifica si se eliminó alguna fila
+	        int affectedRows = pstmt.executeUpdate();
+	        eliminado = affectedRows > 0;
+
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al eliminar el usuario: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return eliminado;
+	}
 }
