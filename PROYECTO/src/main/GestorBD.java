@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 
@@ -64,5 +66,40 @@ public class GestorBD {
 			System.err.format("\n* Error al crear la tabla en la base de datos: %s", e.getMessage());
             e.printStackTrace();
 		}
+		
 	}
+	
+	public int guardarUsuario(String nomUsuario, int numMuertes, int numAsesinatos, int tiempoJugado) {
+        String sql = "INSERT INTO USUARIO (nomUsuario, numMuertes, numAsesinatos, tiempoJugado) VALUES (?, ?, ?, ?)";
+        int generatedId = -1;
+
+        try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            // Configura los valores para la consulta
+            pstmt.setString(1, nomUsuario);
+            pstmt.setInt(2, numMuertes);
+            pstmt.setInt(3, numAsesinatos);
+            pstmt.setInt(4, tiempoJugado);
+
+            // Ejecuta la consulta
+            int affectedRows = pstmt.executeUpdate();
+
+            // Comprueba si se ha insertado correctamente
+            if (affectedRows > 0) {
+                // Obtiene el ID generado automáticamente
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        generatedId = rs.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.format("\n* Error al guardar el usuario: %s", e.getMessage());
+            e.printStackTrace();
+        }
+
+        return generatedId;
+    }
+	
 }
