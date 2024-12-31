@@ -102,4 +102,29 @@ public class GestorBD {
         return generatedId;
     }
 	
+	public boolean actualizarUsuario(int id, String nomUsuario, int numMuertes, int numAsesinatos, int tiempoJugado) {
+	    String sql = "UPDATE USUARIO SET nomUsuario = ?, numMuertes = ?, numAsesinatos = ?, tiempoJugado = ? WHERE id = ?";
+	    boolean actualizado = false;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        // Configura los valores para la consulta
+	        pstmt.setString(1, nomUsuario);
+	        pstmt.setInt(2, numMuertes);
+	        pstmt.setInt(3, numAsesinatos);
+	        pstmt.setInt(4, tiempoJugado);
+	        pstmt.setInt(5, id);
+
+	        // Ejecuta la consulta y verifica si se actualizó alguna fila
+	        int affectedRows = pstmt.executeUpdate();
+	        actualizado = affectedRows > 0;
+
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al actualizar el usuario: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return actualizado;
+	}
 }
