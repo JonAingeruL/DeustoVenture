@@ -214,5 +214,34 @@ public class GestorBD {
 	    return usuarios;
 	}
 	
-	
+	//Metodo que busca usuarios por nombre
+	public List<Usuario> buscarUsuariosPorNombre(String nombre) {
+	    String sql = "SELECT * FROM USUARIO WHERE nomUsuario LIKE ?";
+	    List<Usuario> usuarios = new ArrayList<>();
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        // Configura el parámetro con el texto de búsqueda
+	        pstmt.setString(1, "%" + nombre + "%");
+
+	        // Ejecuta la consulta y procesa los resultados
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                Usuario usuario = new Usuario(
+	                    rs.getString("nomUsuario"),
+	                    rs.getInt("numMuertes"),
+	                    rs.getInt("numAsesinatos"),
+	                    rs.getInt("tiempoJugado")
+	                );
+	                usuarios.add(usuario); // Agrega el usuario a la lista
+	            }
+	        }
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al buscar usuarios: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return usuarios;
+	}
 }
