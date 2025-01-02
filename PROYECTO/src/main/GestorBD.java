@@ -43,6 +43,7 @@ public class GestorBD {
 		
 	}
 	
+	//Metodo que crea la base de datos
 	public void CrearBBDD() {
 		//Se abre la conexion y se obtiene el Statement
 		//Al abrir la conexion, si no existia el fichero, se crea la base de datos
@@ -69,6 +70,7 @@ public class GestorBD {
 		
 	}
 	
+	//Metodo para guardar los usuarios en la base de datos
 	public int guardarUsuario(String nomUsuario, int numMuertes, int numAsesinatos, int tiempoJugado) {
         String sql = "INSERT INTO USUARIO (nomUsuario, numMuertes, numAsesinatos, tiempoJugado) VALUES (?, ?, ?, ?)";
         int generatedId = -1;
@@ -102,6 +104,7 @@ public class GestorBD {
         return generatedId;
     }
 	
+	//Metodo para actulizar la base de datos
 	public boolean actualizarUsuario(int id, String nomUsuario, int numMuertes, int numAsesinatos, int tiempoJugado) {
 	    String sql = "UPDATE USUARIO SET nomUsuario = ?, numMuertes = ?, numAsesinatos = ?, tiempoJugado = ? WHERE id = ?";
 	    boolean actualizado = false;
@@ -128,6 +131,7 @@ public class GestorBD {
 	    return actualizado;
 	}
 	
+	//Metodo para eliminar un usuario de la base de datos
 	public boolean eliminarUsuario(int id) {
 	    String sql = "DELETE FROM USUARIO WHERE id = ?";
 	    boolean eliminado = false;
@@ -148,5 +152,36 @@ public class GestorBD {
 	    }
 
 	    return eliminado;
+	}
+	
+	//Metodo que obtiene un usuario de la base de datos por su ID
+	public Usuario obtenerUsuarioPorId(int id) {
+	    String sql = "SELECT * FROM USUARIO WHERE id = ?";
+	    Usuario usuario = null;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        // Configura el ID como parámetro de la consulta
+	        pstmt.setInt(1, id);
+
+	        // Ejecuta la consulta y procesa el resultado
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                // Crea un objeto Usuario con los datos obtenidos
+	                usuario = new Usuario(
+	                    rs.getString("nomUsuario"),
+	                    rs.getInt("numMuertes"),
+	                    rs.getInt("numAsesinatos"),
+	                    rs.getInt("tiempoJugado")
+	                );
+	            }
+	        }
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al obtener el usuario: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return usuario;
 	}
 }
