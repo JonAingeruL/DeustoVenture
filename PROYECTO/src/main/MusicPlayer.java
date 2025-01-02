@@ -8,11 +8,11 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
 public class MusicPlayer {
-	Player player;
-	boolean playing;
-	FileInputStream fis;
-	String path;
-	private static Thread t;
+	private Player player;
+	private boolean playing;
+	private FileInputStream fis;
+	private String path;
+	private Thread t;
 	
 	public MusicPlayer(String path) {
 		super();
@@ -77,17 +77,17 @@ public class MusicPlayer {
 	}
 	/**
 	 * Cambia el volumen del objeto player actual.
-	 * NOTA: Este método convierte el float a dB, de manera que el sonido
-	 * no aumenta de manera lineal. También se asegura de que el volumen máximo no supere el inicial, así
-	 * que cualquier valor por encima de aprox 0,93 sonará igual de alto.
 	 * @param volumen float de 0 a 1.
 	 */
 	public void cambiarVolumen(float volumen) {
-		//TODO El volumen está en escala logaritmica (dB) No es intuitivo...
-		if(playing) {
+		if(playing&&!(null==player)) {
 			if (volumen==0) {
 				player.setVolume(-80f);
 			}else {
+				//El volumen en esta librería esta en dB (escala logaritmica), así que
+				//hago esta transformación para que la escala sea más cercana a la lineal
+				//y por lo tanto más facil de entender para un usuario.
+				volumen = (float) Math.pow(volumen, 0.3);
 				volumen = volumen*86-80;
 				if (volumen>0) {
 					volumen = 0;

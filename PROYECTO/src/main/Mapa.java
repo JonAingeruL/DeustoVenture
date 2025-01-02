@@ -178,11 +178,13 @@ public class Mapa {
 							g.setColor(Color.ORANGE.darker());
 							break;
 						case 50:
-							g.setColor(Color.WHITE.darker());
+							g.setColor(new Color(180,100,20).brighter());
 							break;
 						case 60:
 							g.setColor(Color.white);
 							break;
+						default:
+							g.setColor(Color.WHITE.darker());
 
 						}
 						g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);

@@ -20,7 +20,7 @@ import main.GamePanel;
 public class MenuConfiguracion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	public int volumenActualMusica=50;
+	public int volumenActualMusica;
 	public int volumenActualSonido;
 	//sliders utilizados para ajustar el sonido
 	public JSlider sliderVolumenSonido;
@@ -34,8 +34,10 @@ public class MenuConfiguracion extends JFrame {
 		setTitle("Opciones");
 		setLocationRelativeTo(null);
 		volumenActualSonido = (int) Math.round(gp.getVolumenAudio()*100);
+		volumenActualMusica = (int) Math.round(gp.getVolumenMusica()*100);
+		
 		sliderVolumenSonido = new JSlider(0,100,volumenActualSonido);
-		sliderVolumenMusica = new JSlider(0,100,volumenActualSonido);
+		sliderVolumenMusica = new JSlider(0,100,volumenActualMusica);
 		
 		
 		//panel de Opciones principal
@@ -163,10 +165,16 @@ public class MenuConfiguracion extends JFrame {
 		volumenActualSonido= sliderVolumenSonido.getValue();
 		volumenActualMusica= sliderVolumenMusica.getValue();
 		cambioVolumen(gp);
+		cambioVolumenMusica(gp);
 	}
 	
 	public void cambioVolumen(GamePanel gp) {
 		gp.setVolumenAudio((float) volumenActualSonido/100);
+		
+	}
+	public void cambioVolumenMusica(GamePanel gp) {
+		gp.setVolumenMusica((float) volumenActualMusica/100);
+		gp.getMusicPlayer().cambiarVolumen((float) volumenActualMusica/100);
 		
 	}
 	

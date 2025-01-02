@@ -69,12 +69,22 @@ public class GamePanel extends JPanel implements Runnable {
 		this.volumenAudio = volumen;
 	}
 	public float getVolumenMusica() {
-		return volumenAudio;
+		return volumenMusica;
 	}
 
 	public void setVolumenMusica(float volumen) {
-		this.volumenAudio = volumen;
+		this.volumenMusica = volumen;
 	}
+	
+
+	public MusicPlayer getMusicPlayer() {
+		return musicPlayer;
+	}
+
+	public void setMusicPlayer(MusicPlayer musicPlayer) {
+		this.musicPlayer = musicPlayer;
+	}
+
 
 	// Despues de crear el ManejoTeclado y los controles de movimiento del juego y
 	// hacer que lo pueda leer el GamePanel, hay que crear el mapa y el jugador
@@ -219,6 +229,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// Para hacer las dos cosas dentro del bucle tenemos que crear dos metodos
 	public void update() {
+		musicPlayer.cambiarVolumen(volumenMusica);
 		// Recomiendo comentar jugador.muerte para debugging
 		jugador.muerte(this, gameThread);
 		// El personaje tiene una función movimiento a la que llamamos ahora
@@ -248,7 +259,6 @@ public class GamePanel extends JPanel implements Runnable {
 			this.tiempoPausa = System.nanoTime();
 
 			MenuPausa pausa = new MenuPausa(this);
-			musicPlayer.cambiarVolumen(0.75f);
 			while (pausa.isOpen()==true) {
 				try {
 					Thread.sleep(1);
@@ -259,7 +269,6 @@ public class GamePanel extends JPanel implements Runnable {
 				}
 				
 			}
-			musicPlayer.cambiarVolumen(volumenMusica);
 			tecladoM.abrirPausa = false;
 			this.tiempoPausa = System.nanoTime()-tiempoPausa;
 		}
@@ -362,6 +371,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	
 	}
+	
 	
 	public void anadirMensaje(Mensaje mensaje) {
 		mensajes.add(mensaje);
