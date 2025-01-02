@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class GestorBD {
@@ -184,4 +186,33 @@ public class GestorBD {
 
 	    return usuario;
 	}
+	
+	//Metodo que recupera todos los usuarios almacenados en la base de datos.
+	public List<Usuario> listarUsuarios() {
+	    String sql = "SELECT * FROM USUARIO";
+	    List<Usuario> usuarios = new ArrayList<>();
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         Statement stmt = con.createStatement();
+	         ResultSet rs = stmt.executeQuery(sql)) {
+
+	        // Recorre todos los resultados y crea objetos Usuario
+	        while (rs.next()) {
+	            Usuario usuario = new Usuario(
+	                rs.getString("nomUsuario"),
+	                rs.getInt("numMuertes"),
+	                rs.getInt("numAsesinatos"),
+	                rs.getInt("tiempoJugado")
+	            );
+	            usuarios.add(usuario); // Agrega el usuario a la lista
+	        }
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al listar usuarios: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return usuarios;
+	}
+	
+	
 }
