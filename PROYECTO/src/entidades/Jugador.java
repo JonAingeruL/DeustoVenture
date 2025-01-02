@@ -627,7 +627,6 @@ public class Jugador extends Personaje {
 	}
 	public void muerte(GamePanel gp, Thread t) {
 		if(vidas[0] == false) {
-			MusicPlayer.stopMusic();
 			t.interrupt();
 			new GameOverScreen(getEnemigosDerrotados());
 		}

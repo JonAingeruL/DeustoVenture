@@ -40,6 +40,8 @@ public class GamePanel extends JPanel implements Runnable {
 	private Inventario inventarioJugador;
 	private long tiempoPausa = 0;
 	private float volumenAudio = 1;
+	private float volumenMusica = 1f;
+	private MusicPlayer musicPlayer;
 	// establecemos los fps como variable
 	// FPS
 	int FPS = 60;
@@ -64,6 +66,13 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void setVolumenAudio(float volumen) {
+		this.volumenAudio = volumen;
+	}
+	public float getVolumenMusica() {
+		return volumenAudio;
+	}
+
+	public void setVolumenMusica(float volumen) {
 		this.volumenAudio = volumen;
 	}
 
@@ -114,6 +123,8 @@ public class GamePanel extends JPanel implements Runnable {
 		InventarioCofre.inicializarLoot();
 		//Cargamos un txt de enemigos ya hecho
 		cargarEmemigos();
+		musicPlayer = new MusicPlayer("Resources/musica/1.mp3");
+		musicPlayer.playMusic();
 		//cargamos el primer mapa XD
 		mapa.updateMapa(tamañoBaldosa);
 		// Vamos a instanciar el gameThread
@@ -122,7 +133,6 @@ public class GamePanel extends JPanel implements Runnable {
 										// instanciarlo.
 		// Ahora vamos a iniciar el hilo
 		gameThread.start(); // Esto automaticamente llamara al metodo run() que nos puso auto el Runnable
-		MusicPlayer.playMusic("Resources/musica/1.mp3");
 	}
 
 	// Despues de implementar Runnable automaticamente nos metera este metodo
@@ -203,6 +213,8 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 
 		}
+		System.out.println("Se acabo");
+		musicPlayer.stopMusic();
 	}
 
 	// Para hacer las dos cosas dentro del bucle tenemos que crear dos metodos
@@ -236,6 +248,7 @@ public class GamePanel extends JPanel implements Runnable {
 			this.tiempoPausa = System.nanoTime();
 
 			MenuPausa pausa = new MenuPausa(this);
+			musicPlayer.cambiarVolumen(0.75f);
 			while (pausa.isOpen()==true) {
 				try {
 					Thread.sleep(1);
@@ -246,6 +259,7 @@ public class GamePanel extends JPanel implements Runnable {
 				}
 				
 			}
+			musicPlayer.cambiarVolumen(volumenMusica);
 			tecladoM.abrirPausa = false;
 			this.tiempoPausa = System.nanoTime()-tiempoPausa;
 		}
