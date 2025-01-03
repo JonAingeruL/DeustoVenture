@@ -82,18 +82,18 @@ public class GestorBD {
         try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
              PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            // Configura los valores para la consulta
+            // configura los valores para la consulta
             pstmt.setString(1, nomUsuario);
             pstmt.setInt(2, numMuertes);
             pstmt.setInt(3, numAsesinatos);
             pstmt.setInt(4, tiempoJugado);
 
-            // Ejecuta la consulta
+            // ejecuta la consulta
             int affectedRows = pstmt.executeUpdate();
 
-            // Comprueba si se ha insertado correctamente
+            // comprueba si se ha insertado correctamente
             if (affectedRows > 0) {
-                // Obtiene el ID generado automáticamente
+                // obtiene el ID generado automáticamente
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
                         generatedId = rs.getInt(1);
@@ -116,14 +116,14 @@ public class GestorBD {
 	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 	         PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-	        // Configura los valores para la consulta
+	        // configura los valores para la consulta
 	        pstmt.setString(1, nomUsuario);
 	        pstmt.setInt(2, numMuertes);
 	        pstmt.setInt(3, numAsesinatos);
 	        pstmt.setInt(4, tiempoJugado);
 	        pstmt.setInt(5, id);
 
-	        // Ejecuta la consulta y verifica si se actualizó alguna fila
+	        // ejecuta la consulta y verifica si se actualizó alguna fila
 	        int affectedRows = pstmt.executeUpdate();
 	        actualizado = affectedRows > 0;
 
@@ -143,10 +143,10 @@ public class GestorBD {
 	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 	         PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-	        // Configura el parámetro para la consulta
+	        // configura el parámetro para la consulta
 	        pstmt.setInt(1, id);
 
-	        // Ejecuta la consulta y verifica si se eliminó alguna fila
+	        // ejecuta la consulta y verifica si se eliminó alguna fila
 	        int affectedRows = pstmt.executeUpdate();
 	        eliminado = affectedRows > 0;
 
@@ -166,13 +166,13 @@ public class GestorBD {
 	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 	         PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-	        // Configura el ID como parámetro de la consulta
+	        // configura el ID como parámetro de la consulta
 	        pstmt.setInt(1, id);
 
-	        // Ejecuta la consulta y procesa el resultado
+	        // ejecuta la consulta y procesa el resultado
 	        try (ResultSet rs = pstmt.executeQuery()) {
 	            if (rs.next()) {
-	                // Crea un objeto Usuario con los datos obtenidos
+	                // crea un objeto Usuario con los datos obtenidos
 	                usuario = new Usuario(
 	                    rs.getString("nomUsuario"),
 	                    rs.getInt("numMuertes"),
@@ -198,7 +198,7 @@ public class GestorBD {
 	         Statement stmt = con.createStatement();
 	         ResultSet rs = stmt.executeQuery(sql)) {
 
-	        // Recorre todos los resultados y crea objetos Usuario
+	        // recorre todos los resultados y crea objetos Usuario
 	        while (rs.next()) {
 	            Usuario usuario = new Usuario(
 	                rs.getString("nomUsuario"),
@@ -206,7 +206,7 @@ public class GestorBD {
 	                rs.getInt("numAsesinatos"),
 	                rs.getInt("tiempoJugado")
 	            );
-	            usuarios.add(usuario); // Agrega el usuario a la lista
+	            usuarios.add(usuario); // agrega el usuario a la lista
 	        }
 	    } catch (Exception e) {
 	        System.err.format("\n* Error al listar usuarios: %s", e.getMessage());
@@ -224,10 +224,10 @@ public class GestorBD {
 	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 	         PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-	        // Configura el parámetro con el texto de búsqueda
+	        // configura el parámetro con el texto de búsqueda
 	        pstmt.setString(1, "%" + nombre + "%");
 
-	        // Ejecuta la consulta y procesa los resultados
+	        // ejecuta la consulta y procesa los resultados
 	        try (ResultSet rs = pstmt.executeQuery()) {
 	            while (rs.next()) {
 	                Usuario usuario = new Usuario(
@@ -236,7 +236,7 @@ public class GestorBD {
 	                    rs.getInt("numAsesinatos"),
 	                    rs.getInt("tiempoJugado")
 	                );
-	                usuarios.add(usuario); // Agrega el usuario a la lista
+	                usuarios.add(usuario); // agrega el usuario a la lista
 	            }
 	        }
 	    } catch (Exception e) {
@@ -259,7 +259,7 @@ public class GestorBD {
 	         ResultSet rs = stmt.executeQuery(sql)) {
 
 	        if (rs.next()) {
-	            // Obtiene los totales y los almacena en el mapa
+	            // obtiene los totales y los almacena en el mapa
 	            estadisticas.put("totalMuertes", rs.getInt("totalMuertes"));
 	            estadisticas.put("totalAsesinatos", rs.getInt("totalAsesinatos"));
 	            estadisticas.put("totalTiempoJugado", rs.getInt("totalTiempoJugado"));
@@ -270,5 +270,49 @@ public class GestorBD {
 	    }
 
 	    return estadisticas;
+	}
+	
+	//Metodo que elimina usuarios cuyo tiempo jugado sea menor que un valor dado
+	public boolean eliminarUsuariosInactivos(int tiempoJugadoMaximo) {
+	    String sql = "DELETE FROM USUARIO WHERE tiempoJugado < ?";
+	    boolean eliminado = false;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        // configura el tiempo jugado máximo como parámetro
+	        pstmt.setInt(1, tiempoJugadoMaximo);
+
+	        // ejecuta la consulta y verifica si se eliminaron filas
+	        int affectedRows = pstmt.executeUpdate();
+	        eliminado = affectedRows > 0;
+
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al eliminar usuarios inactivos: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return eliminado;
+	}
+	
+	//Metodo que cuenta el numero total de usuarios
+	public int contarUsuarios() {
+	    String sql = "SELECT COUNT(*) AS totalUsuarios FROM USUARIO";
+	    int totalUsuarios = 0;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         Statement stmt = con.createStatement();
+	         ResultSet rs = stmt.executeQuery(sql)) {
+
+	        // Si hay un resultado, obtiene el número total de usuarios
+	        if (rs.next()) {
+	            totalUsuarios = rs.getInt("totalUsuarios");
+	        }
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al contar usuarios: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return totalUsuarios;
 	}
 }
