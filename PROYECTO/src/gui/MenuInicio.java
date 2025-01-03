@@ -25,7 +25,7 @@ public class MenuInicio extends JFrame {
 		setBackground(Color.BLACK);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
-        
+        //Crea los botones que aparecen en el menu de Inicio y les cambia la fuente y el tamaño
         JButton nuevaPartida = new JButton("Nueva Partida");
 		nuevaPartida.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		JButton botonConfiguracion = new JButton("Configuracion");
@@ -34,31 +34,42 @@ public class MenuInicio extends JFrame {
 		botonContinuar.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		JButton salir = new JButton("Salir del juego");
 		salir.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+		
+		//Configura el comportamiento del boton salir en el menu
 		salir.addActionListener(e -> salir());
 		salir.setForeground(Color.RED);
+		
+		//Añade los botones al menu, los centra y les cambia el tamaño
+		
+		//Nuevapartida
 		add(Box.createVerticalGlue());
 		add(nuevaPartida);
 		nuevaPartida.setAlignmentX(CENTER_ALIGNMENT);
 		nuevaPartida.setPreferredSize(new Dimension(100, 50));
+
+		//Continuar
 		add(Box.createVerticalGlue());
 		add(botonContinuar);
 		botonContinuar.setAlignmentX(CENTER_ALIGNMENT);
 		botonContinuar.setPreferredSize(new Dimension(100, 50));
+		
+		//Configuracion
 		add(Box.createVerticalGlue());
 		add(botonConfiguracion);
 		botonConfiguracion.setAlignmentX(CENTER_ALIGNMENT);
 		botonConfiguracion.setPreferredSize(new Dimension(100, 50));
+		
+		//Salir
 		add(Box.createVerticalGlue());
 		add(salir);
 		salir.setAlignmentX(CENTER_ALIGNMENT);
 		salir.setPreferredSize(new Dimension(100, 50));
 		setBackground(Color.BLACK);
-		setVisible(true);
 		
-			
-    	
+		setVisible(true);
 	}
 	
+	//Pregunta si quiere cerrar el juego antes de salir
 	public void salir() {
 		int choice = JOptionPane.showConfirmDialog(this,"¿Está seguro de que desea salir del juego?","Salir del juego", JOptionPane.YES_OPTION);
 		if (choice == 0) {
@@ -67,6 +78,7 @@ public class MenuInicio extends JFrame {
 		
 	}
 	
+	//Main provisional para ver la ventana
 	public static void main(String[] args) {
                 MenuInicio programa = new MenuInicio();
                 programa.setVisible(true);
