@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public class GestorBD {
@@ -243,5 +245,30 @@ public class GestorBD {
 	    }
 
 	    return usuarios;
+	}
+	
+	//Metodo que obtiene estadísticas de todos los usuarios
+	public Map<String, Integer> obtenerEstadisticasGlobales() {
+	    String sql = "SELECT SUM(numMuertes) AS totalMuertes, " +
+	                 "SUM(numAsesinatos) AS totalAsesinatos, " +
+	                 "SUM(tiempoJugado) AS totalTiempoJugado FROM USUARIO";
+	    Map<String, Integer> estadisticas = new HashMap<>();
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         Statement stmt = con.createStatement();
+	         ResultSet rs = stmt.executeQuery(sql)) {
+
+	        if (rs.next()) {
+	            // Obtiene los totales y los almacena en el mapa
+	            estadisticas.put("totalMuertes", rs.getInt("totalMuertes"));
+	            estadisticas.put("totalAsesinatos", rs.getInt("totalAsesinatos"));
+	            estadisticas.put("totalTiempoJugado", rs.getInt("totalTiempoJugado"));
+	        }
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al obtener estadísticas: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return estadisticas;
 	}
 }
