@@ -3,11 +3,20 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 
 public class MenuInicio extends JFrame {
@@ -16,14 +25,34 @@ public class MenuInicio extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private Image imagenFondo = new ImageIcon("resources/texturas/extra/fondoMenuInicial.png").getImage();
 	
 	public MenuInicio() {
 		setTitle("Deusto Venture");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1024, 768);
+        setSize(400,360);
         setLocationRelativeTo(null);
-		setBackground(Color.BLACK);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		//setBackground(Color.BLACK);
+       //setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        //setIconImage(imagenFondo);
+        
+        //Creo un nuevo JPanel para utilizarlo como fondo
+        //Utilizo esta forma de hacerlo para que de esta manera en caso de que queramos cambiar de tamaño de ventana la imagen solo se estire 
+        // (no lo hagais tanto que si no la imagen se ve fatal xd)
+        JPanel p = new JPanel() {
+			private static final long serialVersionUID = 1L;
+        	
+			//hago un override de el paintComponent y de esta manera dibujo la imagen que necesito usando Graphics
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(imagenFondo, 0, 0,this.getWidth(), this.getHeight(),this);
+			}
+        };
+        //aqui cambio el panel de contenido actual por otro nuevo, y así puedo 
+        setContentPane(p);
+        p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
+        
         
         //Crea los botones que aparecen en el menu de Inicio y les cambia la fuente y el tamaño
         JButton nuevaPartida = new JButton("Nueva Partida");
@@ -32,6 +61,8 @@ public class MenuInicio extends JFrame {
 		botonConfiguracion.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		JButton botonContinuar = new JButton("Continuar");
 		botonContinuar.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+		JButton botonRecords = new JButton("Tabla de puntuaciones");
+		botonRecords.setFont(new Font(Font.DIALOG, Font.BOLD,15));
 		JButton salir = new JButton("Salir del juego");
 		salir.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		
@@ -41,17 +72,42 @@ public class MenuInicio extends JFrame {
 		
 		//Añade los botones al menu, los centra y les cambia el tamaño
 		
+		//Título
+		JLabel tituloJuego = new JLabel();
+		tituloJuego.setText("DeustoVenture");
+		tituloJuego.setAlignmentX(CENTER_ALIGNMENT);
+		tituloJuego.setFont(new Font(Font.DIALOG,Font.BOLD,32));
+		tituloJuego.setForeground(Color.BLUE);
+		tituloJuego.setAlignmentY(CENTER_ALIGNMENT);
+		add(tituloJuego);
+		
 		//Nuevapartida
 		add(Box.createVerticalGlue());
 		add(nuevaPartida);
 		nuevaPartida.setAlignmentX(CENTER_ALIGNMENT);
 		nuevaPartida.setPreferredSize(new Dimension(100, 50));
+		
+		nuevaPartida.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 
 		//Continuar
 		add(Box.createVerticalGlue());
 		add(botonContinuar);
 		botonContinuar.setAlignmentX(CENTER_ALIGNMENT);
 		botonContinuar.setPreferredSize(new Dimension(100, 50));
+		
+		
+		//Records 
+		add(Box.createVerticalGlue());
+		add(botonRecords);
+		botonRecords.setAlignmentX(CENTER_ALIGNMENT);
+		botonRecords.setPreferredSize(new Dimension(100,50));
+		
 		
 		//Configuracion
 		add(Box.createVerticalGlue());
