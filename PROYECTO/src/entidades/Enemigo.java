@@ -190,27 +190,34 @@ public abstract class Enemigo extends Personaje{
 	
 	//se añaden los items al inventario
 	private void actualizarInventario(Inventario inventario,  HashMap<String, Integer> objetosLooteados) {
-		DefaultTableModel nuevoInventario = Inventario.leerFichero("src/inventario.txt");
+//		DefaultTableModel nuevoInventario = Inventario.crearModeloFichero("src/inventario.txt");
+//		for (String clave : objetosLooteados.keySet()) {
+//			boolean elementoEncontrado = false;
+//				for (int row = 0; row < nuevoInventario.getRowCount(); row++) {
+//					String elemento = (String) nuevoInventario.getValueAt(row, 1);
+//					if (nuevoInventario.getValueAt(row, 0).equals(clave)) {
+//						elementoEncontrado = true;
+//						int elementoASumar = Integer.parseInt(elemento);
+//						elementoASumar += objetosLooteados.get(clave);
+//						nuevoInventario.setValueAt(String.valueOf(elementoASumar), row, 1);		
+//					} 
+//				
+//				}	
+//				if (!elementoEncontrado) {
+//					String[] nuevaFila = {clave, objetosLooteados.get(clave).toString()};
+//					nuevoInventario.addRow(nuevaFila);
+//				}
+//				
+//				
+//		}
+//		Inventario.cargarFichero(nuevoInventario);
 		for (String clave : objetosLooteados.keySet()) {
-			boolean elementoEncontrado = false;
-				for (int row = 0; row < nuevoInventario.getRowCount(); row++) {
-					String elemento = (String) nuevoInventario.getValueAt(row, 1);
-					if (nuevoInventario.getValueAt(row, 0).equals(clave)) {
-						elementoEncontrado = true;
-						int elementoASumar = Integer.parseInt(elemento);
-						elementoASumar += objetosLooteados.get(clave);
-						nuevoInventario.setValueAt(String.valueOf(elementoASumar), row, 1);		
-					} 
-				
-				}	
-				if (!elementoEncontrado) {
-					String[] nuevaFila = {clave, objetosLooteados.get(clave).toString()};
-					nuevoInventario.addRow(nuevaFila);
-				}
-				
-				
+		if (gp.getJugador().getInventario().containsKey(clave)) {
+			gp.getJugador().getInventario().put(clave, gp.getJugador().getInventario().get(clave)+objetosLooteados.get(clave));
+		}else {
+			gp.getJugador().getInventario().put(clave, objetosLooteados.get(clave));
 		}
-		Inventario.cargarFichero(nuevoInventario);
+	} 
 	}
 	
 	private void anadirMensajesLoot(HashMap<String, Integer> objetosLooteados, GamePanel gp) {

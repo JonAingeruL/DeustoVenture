@@ -6,10 +6,14 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import main.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
+import javax.swing.table.DefaultTableModel;
 
 import gui.GameOverScreen;
 import gui.Inventario;
@@ -23,15 +27,24 @@ public class Jugador extends Personaje {
 	private String archivoACargar = "resources/mapas/tutorial.txt";
 	private BufferedImage corazonVida, corazonSinVida, corazonAMedias, espada;
 	private boolean[] vidas = { true, true, true, true, true, true };
-	boolean atacando = false;
+	private boolean atacando = false;
 	boolean interaccionDisponible = false;
 	boolean hablarConNPC = false;
+	private HashMap<String, Integer> inventario = new HashMap<String, Integer>();
 	private int enemigosDerrotados = 0;
 	public String objetoEnMano = "";
 	public int danoJugador = 0;
 
 	public int getEnemigosDerrotados() {
 		return enemigosDerrotados;
+	}
+
+	public HashMap<String, Integer> getInventario() {
+		return inventario;
+	}
+
+	public void setInventario(HashMap<String, Integer> inventario) {
+		this.inventario = inventario;
 	}
 
 	public void setEnemigosDerrotados(int enemigosDerrotados) {
@@ -50,6 +63,9 @@ public class Jugador extends Personaje {
 
 		valoresDefault();
 		conseguirImagenJugador();
+		String nombreFich = "src/inventario.txt";
+		Inventario.inicializarInventarioPrueba();
+        setInventario(leerFichero(nombreFich));
 	}
 
 	public void valoresDefault() {
@@ -613,10 +629,30 @@ public class Jugador extends Personaje {
 		}
 
 	}
+	
+	public static  HashMap<String, Integer> leerFichero(String nombreFich) {
+    	HashMap<String,Integer> inventario = new HashMap<>();
+  
+    	try(BufferedReader br = new BufferedReader(new FileReader(nombreFich))){
+    		String linea;
+    		while ((linea = br.readLine())!=null) {
+    			String[] datos = linea.split(";");
+    			inventario.put(datos[0], Integer.parseInt(datos[1]));
+    		}
+    	} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return inventario;
+    }
+	
 	public void interaccion(ManejoTeclado mt, Mapa mapa) {
 		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
 			if(!this.hablarConNPC) {
-			new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda());
+			new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda(), this);
 			}else{
 			mt.empezarConversacion = true;
 			new NPC2(mt, gp, "-1-");

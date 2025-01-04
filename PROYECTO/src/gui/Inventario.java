@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -76,8 +77,7 @@ public class Inventario extends JFrame{
         String[] columnaNombres = {"Objeto", "Cantidad"};
 
         // Crear el modelo de la tabla
-        String nombreFich = "src/inventario.txt";
-        DefaultTableModel model = leerFichero(nombreFich);
+        DefaultTableModel model = createTableModel(jugador);
 
         // Crear la tabla y asignar el modelo
         tabla = new JTable(model);
@@ -102,13 +102,10 @@ public class Inventario extends JFrame{
 
 				String numObjetosSeleccionados = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
 				if ( Integer.parseInt(numObjetosSeleccionados)-1==0) {
-					model.removeRow(tabla.getSelectedRow());
+					jugador.getInventario().remove(objetoSeleccionado);
 					if(!jugador.objetoEnMano.equals("")) {
-						String[] nuevaFila = {jugador.objetoEnMano,"1"};
-						model.addRow(nuevaFila);
+						jugador.getInventario().put(jugador.objetoEnMano, 1);
 					}
-					tabla = new JTable(model);
-					cargarFichero(model);  
 				        if (objetoSeleccionado.contains("Espada")) {
 							jugador.objetoEnMano = objetoSeleccionado;
 							jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
@@ -164,8 +161,8 @@ public class Inventario extends JFrame{
 		setVisible(true);
 
     }
-  // Lee el fichero y carga los datos en el inventario
-    public static DefaultTableModel leerFichero(String nombreFich) {
+   //Lee el fichero y carga los datos en el inventario
+    public static DefaultTableModel crearModeloFichero(String nombreFich) {
     	//HashMap<String,String> mObjeto = new HashMap<>();
     	String[] columnaNombres = {"Objeto", "Cantidad"};
     	DefaultTableModel modeloDatos = new DefaultTableModel(columnaNombres,0){
@@ -190,6 +187,26 @@ public class Inventario extends JFrame{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+    	return modeloDatos;
+    }
+    
+    public DefaultTableModel createTableModel(Jugador jugador){
+    	HashMap <String,Integer> mapa = jugador.getInventario();
+    	String[] columnaNombres = {"Objeto", "Cantidad"};
+    	DefaultTableModel modeloDatos = new DefaultTableModel(columnaNombres,0){
+        	//añadiendo las 4 lineas de abajo, puedo hacer que toda la tabla se vuelva 
+        	//no editable
+			private static final long serialVersionUID = 1L;
+			@Override
+        	public boolean isCellEditable(int row, int column) {
+        		return false;
+        	}
+        };
+    	for (HashMap.Entry<String, Integer> entry : mapa.entrySet()) {
+			String key = entry.getKey();
+			Integer val = entry.getValue();
+			modeloDatos.addRow(new String[] {key,val.toString()});
 		}
     	return modeloDatos;
     }

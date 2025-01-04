@@ -60,6 +60,12 @@ public class GamePanel extends JPanel implements Runnable {
 	// Una vez creada la clase ManejoTeclado y programar el movimineto AWSD hay que
 	// instanciar la clase
 	ManejoTeclado tecladoM = new ManejoTeclado();
+	
+	
+
+	public Jugador getJugador() {
+		return jugador;
+	}
 
 	public float getVolumenAudio() {
 		return volumenAudio;
@@ -128,7 +134,6 @@ public class GamePanel extends JPanel implements Runnable {
 	// vamos a crear un nuevo metodo para iniciar el juego
 	public void iniciarJuegoHilo() {
 		
-		Inventario.inicializarInventarioPrueba();
 		//AVISO: El loot de prueba todavía no hace nada en el inventario
 		InventarioCofre.inicializarLoot();
 		//Cargamos un txt de enemigos ya hecho

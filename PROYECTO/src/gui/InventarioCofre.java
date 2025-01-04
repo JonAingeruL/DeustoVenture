@@ -28,6 +28,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import entidades.Jugador;
 import main.AudioPlayer;
 import main.GamePanel;
 import main.ManejoTeclado;
@@ -42,7 +43,7 @@ public class InventarioCofre extends JFrame{
 	private JTable tabla;
 	private ManejoTeclado tecladoM;
 	
-    public InventarioCofre(ManejoTeclado tecladoM, GamePanel gp, String mapa, int celda) {
+    public InventarioCofre(ManejoTeclado tecladoM, GamePanel gp, String mapa, int celda,Jugador jugador) {
     	AudioPlayer audio = new AudioPlayer("Resources/audio/InvSound.wav");
     	audio.playClip();
     	this.tecladoM =tecladoM;
@@ -98,12 +99,9 @@ public class InventarioCofre extends JFrame{
     	botonUsar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel modeloInventario = Inventario.leerFichero("src/inventario.txt");
-				for (int i = 0 ; i < modeloInventario.getRowCount(); ++i) {
-					String[] newRow = {(modeloInventario.getValueAt(i, 0).toString()),(modeloInventario.getValueAt(i, 1).toString())};
-	            	model.addRow(newRow);
+				for (int i = 0 ; i < model.getRowCount(); ++i) {
+					jugador.getInventario().put(model.getValueAt(i, 0).toString(),Integer.parseInt(model.getValueAt(i, 1).toString()));
 	            }
-				Inventario.cargarFichero(model);
 				vaciarCofre(mapa, celda, model);
 				audio.closeClip();
 				cerrarInventario();
