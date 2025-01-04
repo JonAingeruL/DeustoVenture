@@ -186,7 +186,7 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return usuario;
+	    return usuario; // Retorna el usuario o null si no se encontró
 	}
 	
 	//Metodo que recupera todos los usuarios almacenados en la base de datos.
@@ -213,7 +213,7 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return usuarios;
+	    return usuarios; // Retorna la lista de usuarios
 	}
 	
 	//Metodo que busca usuarios por nombre
@@ -244,7 +244,7 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return usuarios;
+	    return usuarios; // Retorna la lista de usuarios encontrados
 	}
 	
 	//Metodo que obtiene estadísticas de todos los usuarios
@@ -269,7 +269,7 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return estadisticas;
+	    return estadisticas; // Retorna el mapa con las estadísticas
 	}
 	
 	//Metodo que elimina usuarios cuyo tiempo jugado sea menor que un valor dado
@@ -292,7 +292,7 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return eliminado;
+	    return eliminado; // Retorna true si se eliminaron usuarios
 	}
 	
 	//Metodo que cuenta el numero total de usuarios
@@ -313,7 +313,7 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return totalUsuarios;
+	    return totalUsuarios; // Retorna el total de usuarios encontrados
 	}
 	
 	//Metodo que obtiene el usuario con más asesinatos
@@ -339,7 +339,7 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return usuario;
+	    return usuario; // Retorna el usuario con más asesinatos o null si no hay usuarios
 	}
 	
 	//Metodo que actualiza el tiempo de un jugador por su ID
@@ -363,6 +363,51 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return actualizado; 
+	    return actualizado; // Retorna true si la actualización fue bien
+	}
+	
+	//Metodo que resetea todas las estadisticas
+	public boolean reiniciarEstadisticas() {
+	    String sql = "UPDATE USUARIO SET numMuertes = 0, numAsesinatos = 0, tiempoJugado = 0";
+	    boolean reiniciado = false;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         Statement stmt = con.createStatement()) {
+
+	        // Ejecuta la consulta de actualización
+	        int affectedRows = stmt.executeUpdate(sql);
+	        reiniciado = affectedRows > 0; // Se reiniciaron estadísticas si hay filas afectadas
+
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al reiniciar estadísticas: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return reiniciado; // Retorna true si se reiniciaron estadísticas
+	}
+	
+	//Metodo que verifica si existe un usuario por ID
+	public boolean existeUsuario(int id) {
+	    String sql = "SELECT COUNT(*) AS total FROM USUARIO WHERE id = ?";
+	    boolean existe = false;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        // Configura el parámetro de la consulta
+	        pstmt.setInt(1, id);
+
+	        // Ejecuta la consulta y verifica el resultado
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next() && rs.getInt("total") > 0) {
+	                existe = true; // El usuario existe si el total es mayor que 0
+	            }
+	        }
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al verificar existencia del usuario: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return existe; // Retorna true si el usuario existe
 	}
 }
