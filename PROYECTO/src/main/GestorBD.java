@@ -315,4 +315,54 @@ public class GestorBD {
 
 	    return totalUsuarios;
 	}
+	
+	//Metodo que obtiene el usuario con más asesinatos
+	public Usuario obtenerUsuarioConMasAsesinatos() {
+	    String sql = "SELECT * FROM USUARIO ORDER BY numAsesinatos DESC LIMIT 1";
+	    Usuario usuario = null;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         Statement stmt = con.createStatement();
+	         ResultSet rs = stmt.executeQuery(sql)) {
+
+	        // Si hay resultados, crea un objeto Usuario con los datos obtenidos
+	        if (rs.next()) {
+	            usuario = new Usuario(
+	                rs.getString("nomUsuario"),
+	                rs.getInt("numMuertes"),
+	                rs.getInt("numAsesinatos"),
+	                rs.getInt("tiempoJugado")
+	            );
+	        }
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al obtener usuario con más asesinatos: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return usuario;
+	}
+	
+	//Metodo que actualiza el tiempo de un jugador por su ID
+	public boolean actualizarTiempoJugado(int id, int tiempoNuevo) {
+	    String sql = "UPDATE USUARIO SET tiempoJugado = ? WHERE id = ?";
+	    boolean actualizado = false;
+
+	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        // Configura los parámetros de la consulta
+	        pstmt.setInt(1, tiempoNuevo);
+	        pstmt.setInt(2, id);
+
+	        // Ejecuta la actualización y verifica si se afectaron filas
+	        int affectedRows = pstmt.executeUpdate();
+	        actualizado = affectedRows > 0;
+
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al actualizar el tiempo jugado: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return actualizado; 
+	}
 }
