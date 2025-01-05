@@ -72,8 +72,17 @@ public class MusicPlayer {
 	}
 	//TODO Averiguar por qué no se interrumpe la música
 	public void stopMusic() {
+		cambiarVolumen(0);
 		playing = false;
 		t.interrupt();
+	}
+	
+	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 	/**
 	 * Cambia el volumen del objeto player actual.

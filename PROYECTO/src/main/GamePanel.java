@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private long tiempoPausa = 0;
 	private float volumenAudio = 1;
 	private float volumenMusica = 1f;
-	private MusicPlayer musicPlayer;
+	private MusicPlayer musicPlayer = new MusicPlayer("Resources/musica/1.mp3");
 	// establecemos los fps como variable
 	// FPS
 	int FPS = 60;
@@ -91,11 +91,10 @@ public class GamePanel extends JPanel implements Runnable {
 		this.musicPlayer = musicPlayer;
 	}
 
-
 	// Despues de crear el ManejoTeclado y los controles de movimiento del juego y
 	// hacer que lo pueda leer el GamePanel, hay que crear el mapa y el jugador
 	//Creo el mapa
-	Mapa mapa = new Mapa(1);
+	Mapa mapa = new Mapa(1,this);
 
 	// Creo el jugador
 	// TODO Pensar el esquema de herencias de la clase personaje y crear una clase
@@ -145,7 +144,6 @@ public class GamePanel extends JPanel implements Runnable {
 		cargarEmemigos();
 		//Cargamos un txt de npcs ya hecho 
 		cargarNPCs();
-		musicPlayer = new MusicPlayer("Resources/musica/1.mp3");
 		musicPlayer.playMusic();
 		//cargamos el primer mapa XD
 		mapa.updateMapa(tamañoBaldosa);

@@ -99,6 +99,7 @@ public class InventarioCofre extends JFrame{
     	botonUsar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//Coloca los objetos del modelo en el inventario. Si ya están, los suma
 				for (int i = 0 ; i < model.getRowCount(); ++i) {
 					if (jugador.getInventario().containsKey(model.getValueAt(i, 0))) {
 						jugador.getInventario().put(model.getValueAt(i, 0).toString(),Integer.parseInt(model.getValueAt(i, 1).toString())+jugador.getInventario().get(model.getValueAt(i, 0)));
@@ -106,7 +107,8 @@ public class InventarioCofre extends JFrame{
 						jugador.getInventario().put(model.getValueAt(i, 0).toString(),Integer.parseInt(model.getValueAt(i, 1).toString()));
 	            }
 				}
-				vaciarCofre(mapa, celda, model);
+				//Vacia el cofre para la próxima vez que se abra
+				vaciarCofre(mapa, celda);
 				audio.closeClip();
 				cerrarInventario();
 				
@@ -152,7 +154,12 @@ public class InventarioCofre extends JFrame{
 		setVisible(true);
 
     }
-
+    /**
+     * Lee datos de fichero para llenar el coffre con los objetos que corresponden
+     * @param mapa El mapa en el que está el cofre (dirección)
+	 * @param celda La celda en la que está el cofre
+     * @param modeloDatos el modelo de datos del cofre
+     */
 	public void leerFichero(String mapa,int celda, DefaultTableModel modeloDatos) {
 		try {
 			// Leo el fichero
@@ -161,6 +168,7 @@ public class InventarioCofre extends JFrame{
 				// Si la linea actual equivale al indice que busco, la escaneo
 				if (sc.nextLine().strip().equals("-" + mapa + ","+ celda +"-")) {
 					String linea = sc.nextLine();
+					//Escaneo hasta encontrar el siguiente guión
 					while(!linea.contains("-")) {
 						String[] dato = linea.split(";");
 						modeloDatos.addRow(dato);
@@ -175,7 +183,14 @@ public class InventarioCofre extends JFrame{
 			e.printStackTrace();
 		}
 	}
-	public void vaciarCofre(String mapa,int celda, DefaultTableModel model) {
+	/**
+	 * Este método escribe a fichero para que se vacien los cofres ya looteados
+	 * @param mapa El mapa en el que está el cofre (dirección)
+	 * @param celda La celda en la que está el cofre
+	 */
+	public void vaciarCofre(String mapa,int celda) {
+		//Este método funciona leyendo todo el fichero de cofres y después reescribiendolo omitiendo
+		//el cofre a vaciar
 		ArrayList<String> fichero = new ArrayList<String>();
 		try {
 			// Leo el fichero
@@ -188,6 +203,7 @@ public class InventarioCofre extends JFrame{
 				}else {
 					fichero.add(linea);
 					linea = sc.nextLine();
+					//Escaneo hasta encontrar el siguiente guión
 					while(!linea.contains("-")) {
 						linea = sc.nextLine();
 					}
@@ -213,6 +229,9 @@ public class InventarioCofre extends JFrame{
 		tecladoM.iPulsado = false;
 		dispose();
     }
+	/**
+	 * Este método inicializa los cofres con su loot por defecto
+	 */
 	public static void inicializarLoot() {
 		 try {
 	            PrintStream ps = new PrintStream("src/lootCofre.txt");
@@ -227,7 +246,7 @@ public class InventarioCofre extends JFrame{
 	            ps.close();
 	        } catch (FileNotFoundException e) {
 	        	e.printStackTrace();
-	        	System.out.println("Error inicializando inventario prueba");
+	        	System.out.println("Error inicializando loot cofres prueba");
 	        }
 	}
 	
