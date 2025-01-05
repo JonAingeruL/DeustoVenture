@@ -114,8 +114,8 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	
 	// Creamos un constructor de este GamePanel
-	public GamePanel() {
-
+	public GamePanel(String usuarioActual) {
+		jugador.setNombreJugador(usuarioActual);
 		this.setPreferredSize(new Dimension(pantallaAnchuta, pantallaAltura)); // Esto establece el tamaño de esta clase
 																				// (JPanel)
 		this.setBackground(Color.black); // Para que el fondo de la pantalla sea negro (esto no importa mucho porque no

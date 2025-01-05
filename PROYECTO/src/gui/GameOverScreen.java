@@ -3,12 +3,17 @@ package gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import main.GestorBD;
 
 public class GameOverScreen extends JFrame {
 
@@ -17,7 +22,7 @@ public class GameOverScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public GameOverScreen(int puntos)  {
+	public GameOverScreen(int puntos,String usuarioActual)  {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -47,7 +52,15 @@ public class GameOverScreen extends JFrame {
 		JButton botonGuardar = new JButton("Guardar");
 		botonGuardar.setFont(mediana);
 		//TODO boton guardado saca una ventana que te pide tu nombre de usuario. Después en DB se guarda junto con otros datos
-		botonGuardar.addActionListener(e -> {JOptionPane.showMessageDialog(botonGuardar, "Funcionalidad no implementada"); botonGuardar.setEnabled(false);} );
+		botonGuardar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GestorBD gbd = new GestorBD();
+				
+				
+			}
+		} );
 		guardar.add(botonGuardar);
 		guardar.add(new JLabel(""));
 		principal.add(guardar);
@@ -59,9 +72,7 @@ public class GameOverScreen extends JFrame {
 		add(principal);
 		setVisible(true);
 	}
-	public static void main(String[] args) {
-		//new GameOverScreen(100);
-	}
+	
 	
 	
 	

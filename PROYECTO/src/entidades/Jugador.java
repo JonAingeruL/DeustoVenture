@@ -34,6 +34,18 @@ public class Jugador extends Personaje {
 	private int enemigosDerrotados = 0;
 	public String objetoEnMano = "";
 	public int danoJugador = 0;
+	private String nombreJugador;
+
+	
+	
+	
+	public String getNombreJugador() {
+		return nombreJugador;
+	}
+
+	public void setNombreJugador(String nombreJugador) {
+		this.nombreJugador = nombreJugador;
+	}
 
 	public int getEnemigosDerrotados() {
 		return enemigosDerrotados;
@@ -692,7 +704,7 @@ public class Jugador extends Personaje {
 	public void muerte(GamePanel gp, Thread t) {
 		if(vidas[0] == false) {
 			t.interrupt();
-			new GameOverScreen(getEnemigosDerrotados());
+			new GameOverScreen(getEnemigosDerrotados(),nombreJugador);
 		}
 	}
 
