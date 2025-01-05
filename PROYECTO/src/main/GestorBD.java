@@ -73,10 +73,37 @@ public class GestorBD {
 		
 	}
 	
-	//Metodo para guardar los usuarios en la base de datos
-	public boolean guardarUsuario(Usuario usuario) {
-	    String sql = "INSERT INTO USUARIO (nomUsuario, numMuertes, numAsesinatos, tiempoJugado) VALUES (?, ?, ?, ?)";
+	//Metodo que sirve para ver si el nombre que alguien se pone ya esta cogido
+	public boolean verificarNombreDisponible(String nomUsuario) {
+	    String sql = "SELECT COUNT(*) AS total FROM USUARIO WHERE nomUsuario = ?";
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, nomUsuario);
 
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next() && rs.getInt("total") > 0) {
+	                return true; // El nombre ya existe
+	            }
+	        }
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al verificar nombre: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+	    return false; // El nombre está disponible
+	}
+	
+	//Metodo para guardar los usuarios en la base de datos una vez validado que ese nombre esta disponible
+	public boolean guardarUsuarioConValidacion(Usuario usuario) {
+	    // Verificar si el nombre ya existe
+	    if (verificarNombreDisponible(usuario.nomUsuario)) {
+	        System.out.println("El nombre de usuario \"" + usuario.nomUsuario + "\" no está disponible.");
+	        return false;
+	    }
+
+	    // Proceder con la inserción si el nombre está disponible
+	    String sql = "INSERT INTO USUARIO (nomUsuario, numMuertes, numAsesinatos, tiempoJugado) VALUES (?, ?, ?, ?)";
 	    try (
 	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
 	        PreparedStatement pstmt = con.prepareStatement(sql)
