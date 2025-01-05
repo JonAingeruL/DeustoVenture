@@ -649,6 +649,29 @@ public class Jugador extends Personaje {
     	return inventario;
     }
 	
+	public boolean detectaColisionNpcs(HashMap<String, ArrayList<NPC>> npcs, int tamanobaldosa, Mapa mapa) {
+		if (npcs.containsKey(mapa.getNumeroMapa() + "," + mapa.getNumcelda())) {
+			for (NPC npc : npcs.get(mapa.getNumeroMapa() + "," + mapa.getNumcelda())) {
+				if (((((npc.getPosX() <= (this.getX()) + tamanobaldosa) && (npc.getPosX() >= this.getX()))
+						// Colisión en X 
+						|| ((npc.getPosX() + tamanobaldosa <= this.getX() + tamanobaldosa)
+								&& (npc.getPosX() + tamanobaldosa >= this.getX())))
+						// Colision en Y
+						&& (((npc.getPosY() <= this.getY() + tamanobaldosa) && (npc.getPosY() >= this.getY()))
+								|| ((npc.getPosY() + tamanobaldosa <= this.getY() + tamanobaldosa)
+										&& (npc.getPosY() + tamanobaldosa >= this.getY()))))) {
+					return true;
+					
+					
+				}
+			}
+			return false;
+		}
+		return false;
+
+	}
+
+	
 	public void interaccion(ManejoTeclado mt, Mapa mapa) {
 		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
 			if(!this.hablarConNPC) {
