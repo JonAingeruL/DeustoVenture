@@ -105,9 +105,10 @@ public class Boss extends Enemigo {
 			case 8: x+=velocidad; y+=velocidad;
 			break;
 			}
+			Random r = new Random();
+			direccion = r.nextInt(1, 9);
 		}
-		Random r = new Random();
-		direccion = r.nextInt(1, 9);
+		
 			
 
 		
