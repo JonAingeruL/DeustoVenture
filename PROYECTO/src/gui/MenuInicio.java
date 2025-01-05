@@ -18,6 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import main.GamePanel;
+import main.GestorBD;
+
 
 public class MenuInicio extends JFrame {
 
@@ -26,6 +29,8 @@ public class MenuInicio extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Image imagenFondo = new ImageIcon("resources/texturas/extra/fondoMenuInicial.png").getImage();
+	public String usuarioActual ="";
+	private GestorBD gestorBD;
 	
 	public MenuInicio() {
 		setTitle("Deusto Venture");
@@ -87,13 +92,7 @@ public class MenuInicio extends JFrame {
 		nuevaPartida.setAlignmentX(CENTER_ALIGNMENT);
 		nuevaPartida.setPreferredSize(new Dimension(100, 50));
 		
-		nuevaPartida.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+		nuevaPartida.addActionListener(e-> inicioSesion());
 
 		//Continuar
 		add(Box.createVerticalGlue());
@@ -115,6 +114,7 @@ public class MenuInicio extends JFrame {
 		botonConfiguracion.setAlignmentX(CENTER_ALIGNMENT);
 		botonConfiguracion.setPreferredSize(new Dimension(100, 50));
 		
+		
 		//Salir
 		add(Box.createVerticalGlue());
 		add(salir);
@@ -125,6 +125,11 @@ public class MenuInicio extends JFrame {
 		setVisible(true);
 	}
 	
+	public void inicioSesion() {
+		new VentanaRegistroJugador(usuarioActual,gestorBD);
+	}
+	
+	
 	//Pregunta si quiere cerrar el juego antes de salir
 	public void salir() {
 		int choice = JOptionPane.showConfirmDialog(this,"¿Está seguro de que desea salir del juego?","Salir del juego", JOptionPane.YES_OPTION);
@@ -134,11 +139,6 @@ public class MenuInicio extends JFrame {
 		
 	}
 	
-	//Main provisional para ver la ventana
-	public static void main(String[] args) {
-                MenuInicio programa = new MenuInicio();
-                programa.setVisible(true);
-           
-    }
+	
 
 }
