@@ -11,7 +11,8 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 	
 	//Despuesd de la asignacion de botones creamos unas variables booleanas para saber si estan siendo pulsados o no
 
-	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado,hablarNPCPulsado, fPulsado;
+	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado,hablarNPCPulsado, fPulsado,unopulsado,dospulsado,trespulsado,cuatropulsado,
+					cincopulsado,seispulsado,sietepulsado,ochopulsado,nuevepulsado;
 	public boolean abrirInventario, abrirPausa, empezarConversacion = false;
 
 
@@ -53,6 +54,34 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if(code == KeyEvent.VK_F) {
 			fPulsado = true;
 		}
+		//estos 9 atajos se utilizan para los teletransportes rápidos a zonas
+		if (code == KeyEvent.VK_1) { //tecla 1-> Tutorial
+			unopulsado = true;
+		}
+		if (code == KeyEvent.VK_2) { //tecla 2-> Inicio mapa
+			dospulsado = true;
+		}
+		if (code == KeyEvent.VK_3) { //tecla 3-> Entrada Mazmorra 1
+			trespulsado = true;
+		}
+		if (code == KeyEvent.VK_4) { //tecla 4-> Pueblo 1
+			cuatropulsado = true;
+		}
+		if (code == KeyEvent.VK_5) { //tecla 5-> Entrada Mazmorra 2
+			cincopulsado = true;
+		}
+		if (code == KeyEvent.VK_6) { //tecla 6-> Pueblo 2
+			seispulsado = true;
+		}
+		if (code == KeyEvent.VK_7) {// tecla 7-> Entrada Mazmorra 3
+			sietepulsado = true;
+		}
+		if (code == KeyEvent.VK_8) { //tecla 8-> Entrada Casa
+			ochopulsado = true;
+		}
+		if (code == KeyEvent.VK_9) { //tecla 9-> Zona boss (casilla 5)
+			nuevepulsado = true;
+		}
 		
 		
 	}
@@ -88,6 +117,37 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		}
 		if(code == KeyEvent.VK_F) {
 			fPulsado = false;
+		} 
+		if(code ==KeyEvent.VK_1) {
+			unopulsado=false;
+		}
+		if (code == KeyEvent.VK_1) { //tecla 1-> Tutorial
+			unopulsado = false;
+		}
+		if (code == KeyEvent.VK_2) { //tecla 2-> Inicio mapa
+			dospulsado = false;
+		}
+		if (code == KeyEvent.VK_3) { //tecla 3-> Entrada Mazmorra 1
+			trespulsado = false;
+		}
+		if (code == KeyEvent.VK_4) { //tecla 4-> Pueblo 1
+			cuatropulsado = false;
+		}
+		if (code == KeyEvent.VK_5) { //tecla 5-> Entrada Mazmorra 2
+			cincopulsado = false;
+		}
+		if (code == KeyEvent.VK_6) { //tecla 6-> Pueblo 2
+			seispulsado = false;
+		}
+		if (code == KeyEvent.VK_7) {// tecla 7-> Entrada Mazmorra 3
+			sietepulsado = false;
+		}
+		if (code == KeyEvent.VK_8) { //tecla 8-> Entrada Casa
+			ochopulsado = false;
+	
+		}
+		if (code == KeyEvent.VK_9) { //tecla 9-> Zona boss (casilla 5)
+			nuevepulsado = false;
 		}
 		
 	} 

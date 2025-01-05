@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import gui.GameOverScreen;
 import gui.Inventario;
 import gui.InventarioCofre;
+import gui.Mensaje;
 import gui.NPC2;
 
 public class Jugador extends Personaje {
@@ -35,8 +36,8 @@ public class Jugador extends Personaje {
 	public String objetoEnMano = "";
 	public int danoJugador = 0;
 	private String nombreJugador;
-
-	
+	//guia numMapa
+	//mapa tutorial =0 ; mapa principal =1 ;mapa dungeon1 = 2;  mapa dungeon2 = 3;  mapa dungeon3 =4 ; mapa casa =5;
 	
 	
 	public String getNombreJugador() {
@@ -192,8 +193,45 @@ public class Jugador extends Personaje {
 				contadorSprites = 0;
 			}
 		}
+		if (tecladoM.unopulsado) {
+			archivoACargar="resources/mapas/tutorial.txt";
+			cambioMapa(archivoACargar, 1, 0, tamanoBaldosa, 475, 400, true, mapa);
+		}
+		if (tecladoM.dospulsado) {
+			archivoACargar="resources/mapas/mapa.txt";
+			cambioMapa(archivoACargar, 1, 1, tamanoBaldosa, 320, 310, false, mapa);
+		}
+		if (tecladoM.trespulsado) {
+			archivoACargar="resources/mapas/dungeon1.txt";
+			cambioMapa(archivoACargar,1,2,tamanoBaldosa,212,370,true,mapa);
+		}
+		if(tecladoM.cuatropulsado) {
+			archivoACargar="resources/mapas/mapa.txt";
+			cambioMapa(archivoACargar, 31, 1, tamanoBaldosa, 50, 380, false, mapa);
+		}
+		if(tecladoM.cincopulsado) {
+			archivoACargar="resources/mapas/dungeon2.txt";
+			cambioMapa(archivoACargar, 1, 3, tamanoBaldosa, 180, 370, true, mapa);
+		}
+		if(tecladoM.seispulsado) {
+			archivoACargar="resources/mapas/mapa.txt";
+			cambioMapa(archivoACargar,85,1,tamanoBaldosa,460,360,false,mapa);
+		}
+		if(tecladoM.sietepulsado) {
+			archivoACargar="resources/mapas/dungeon3.txt";
+			cambioMapa(archivoACargar, 1, 4, tamanoBaldosa, 200, 380, true, mapa);
+		}
+		if (tecladoM.ochopulsado) {
+			archivoACargar="resources/mapas/casa.txt";
+			cambioMapa(archivoACargar, 1, 5, tamanoBaldosa, 180, 370, true, mapa);
+		}
+		if (tecladoM.nuevepulsado) {
+			archivoACargar="resources/mapas/mapa.txt";
+			cambioMapa(archivoACargar, 5, 1, tamanoBaldosa, 440, 40, false, mapa);
+		}
 
 	}
+	
 
 	public void dibujarPer(Graphics2D g2) {
 		// g2.setColor(Color.white);
@@ -420,116 +458,58 @@ public class Jugador extends Personaje {
 							break;
 
 						case 20:
+							//entrada y salida tutorial
 							System.out.println("20");
 							if (this.estaDentroDeMazmorra) {
-								mapa.setNumcelda(1);
-								mapa.setNumeroMapa(1);
-								archivoACargar = "resources/mapas/mapa.txt";
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								this.estaDentroDeMazmorra = false;
-								// POSICIONES NUEVAS PARA DESPUES CARGAR EL MAPA
-								x = 450;
-								y = 300;
+								archivoACargar = "resources/mapas/mapa.txt";		
+								cambioMapa(archivoACargar, 1, 1, tamanobaldosa, 280, 300, false, mapa);
 							} else {
-								mapa.setNumcelda(4);
-								mapa.setNumeroMapa(0);
 								archivoACargar = "resources/mapas/tutorial.txt";
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 705;
-								y = 241;
-								this.estaDentroDeMazmorra = true;
-
+								cambioMapa(archivoACargar, 4, 0, tamanobaldosa, 705, 241, true, mapa);
 							}
 							break;
 
 						case 21:
+							//entrada y salida mazmorra 1
 							if (!estaDentroDeMazmorra) {
 
 								archivoACargar = "resources/mapas/dungeon1.txt";
-								mapa.setNumcelda(1);
-								mapa.setNumeroMapa(2);
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 450;
-								y = 300;
-								estaDentroDeMazmorra = true;
+								cambioMapa(archivoACargar, 1, 2, tamanobaldosa, 200, 380, true, mapa);
 							} else {
-								mapa.setNumcelda(34);
-								mapa.setNumeroMapa(1);
 								archivoACargar = "resources/mapas/mapa.txt";
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 450;
-								y = 160;
-								estaDentroDeMazmorra = false;
+								cambioMapa(archivoACargar, 34, 1, tamanobaldosa, 450, 160, false, mapa);
 							}
 							break;
 
 						case 22:
+							//entrada y salida mazmorra 2
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "resources/mapas/dungeon2.txt";
-								mapa.setNumcelda(1);
-								mapa.setNumeroMapa(3);
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 450;
-								y = 300;
-								estaDentroDeMazmorra = true;
+								cambioMapa(archivoACargar, 1, 3, tamanobaldosa, 200, 380, true, mapa);
 							} else {
 								archivoACargar = "resources/mapas/mapa.txt";
-								mapa.setNumcelda(94);
-								mapa.setNumeroMapa(1);
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 500;
-								y = 380;
-								estaDentroDeMazmorra = false;
+								cambioMapa(archivoACargar,94,1,tamanobaldosa,500,380,false,mapa);
 							}
 							break;
 						case 23:
+							//entrada y salida mazmorra 3
 							if (!estaDentroDeMazmorra) {
 
 								archivoACargar = "resources/mapas/dungeon3.txt";
-								mapa.setNumcelda(1);
-								mapa.setNumeroMapa(4);
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 450;
-								y = 300;
-								estaDentroDeMazmorra = true;
+								cambioMapa(archivoACargar,1,4,tamanobaldosa,200,380,true,mapa);
 							} else {
 								archivoACargar = "resources/mapas/mapa.txt";
-								mapa.setNumcelda(56);
-								mapa.setNumeroMapa(1);
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 450;
-								y = 270;
-								estaDentroDeMazmorra = false;
+								cambioMapa(archivoACargar,56,1,tamanobaldosa,450,270,false,mapa);
 							}
 							break;
 						case 24:
+							//entrada y salida casa
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "resources/mapas/casa.txt";
-								mapa.setNumcelda(1);
-								mapa.setNumeroMapa(5);
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 450;
-								y = 300;
-								estaDentroDeMazmorra = true;
+								cambioMapa(archivoACargar,1,5,tamanobaldosa,200,380,true,mapa);
 							} else {
 								archivoACargar = "resources/mapas/mapa.txt";
-								mapa.setNumcelda(87);
-								mapa.setNumeroMapa(1);
-								mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
-								mapa.updateMapa(tamanobaldosa);
-								x = 780;
-								y = 370;
-								estaDentroDeMazmorra = false;
-
+								cambioMapa(archivoACargar,87,1,tamanobaldosa,780,370,false,mapa);
 							}
 							break;
 						}
@@ -539,6 +519,15 @@ public class Jugador extends Personaje {
 		}
 
 		return false;
+	}
+	public void cambioMapa(String archivoACargar, int numeroCelda, int numeroMapa, int tamanoBaldosa, int posx, int posy, boolean estaDentro, Mapa mapa) {
+		mapa.setNumcelda(numeroCelda);
+		mapa.setNumeroMapa(numeroMapa);
+		mapa.cargarCelda(archivoACargar, mapa.getNumcelda());
+		mapa.updateMapa(tamanoBaldosa);
+		x = posx;
+		y=posy;
+		estaDentroDeMazmorra = estaDentro;
 	}
 
 	public boolean detectaColisionEnemigos(HashMap<String, ArrayList<Enemigo>> enemigos, int tamanobaldosa, Mapa mapa) {
@@ -572,7 +561,7 @@ public class Jugador extends Personaje {
 		this.archivoACargar = archivoACargar;
 	}
 
-	public void AccionAtacar(HashMap<String, ArrayList<Enemigo>> enemigos, Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel, Inventario inventario) {
+	public void AccionAtacar(HashMap<String, ArrayList<Enemigo>> enemigos, Mapa mapa, int tamanobaldosa, ManejoTeclado tecladoM, GamePanel gamePanel, Inventario inventario, ArrayList<Mensaje> mensajes) {
 		//TODO que el enemigo reciba daño una sola vez
 		if ((tecladoM.fPulsado == true) && (atacando == false) && (objetoEnMano != "")) {
 			// Establecemos en qué mopmento hemos atacado
@@ -580,7 +569,7 @@ public class Jugador extends Personaje {
 			sword.playClip(gp.getVolumenAudio());
 			System.out.println("Sword");
 			atacando = true;
-			DanoAtaque(enemigos, tamanobaldosa, mapa, inventario);
+			DanoAtaque(enemigos, tamanobaldosa, mapa, inventario, mensajes);
 		} else {
 			// Si se estaba esperando al cooldown y ya ha pasado. Se pasa el cooldown (1) de
 			// segundos a milis
@@ -593,7 +582,7 @@ public class Jugador extends Personaje {
 		}
 	}
 	
-	public void DanoAtaque(HashMap<String, ArrayList<Enemigo>> enemigos, int tamanobaldosa, Mapa mapa, Inventario inventario) {
+	public void DanoAtaque(HashMap<String, ArrayList<Enemigo>> enemigos, int tamanobaldosa, Mapa mapa, Inventario inventario, ArrayList<Mensaje> mensajes) {
 		//Creo un array con los datos de la caja de colisiones de la espada.
 		//Dependiendo de la dirección en la que mira el jugador, la caja es diferente
 		int[] posicionEspada = null;
@@ -626,7 +615,9 @@ public class Jugador extends Personaje {
 								// Compruebo si hay colisión en Y por abajo
 								|| ((posicionEspada[1] + posicionEspada[3] <= enemigo.getY() + tamanobaldosa)
 										&& (posicionEspada[1] + posicionEspada[3] >= enemigo.getY() + tamanobaldosa))))) {
-					System.out.println("Daño");
+					//sacamos por el juego el daño hecho mediante un texto
+					Mensaje m = new Mensaje("-"+danoJugador+" hp a "+enemigo.getNombre()+"!", 90,Color.BLUE);
+					mensajes.add(m);
 					enemigoAElim=enemigo;
 					enemigosAElim.add(enemigoAElim);
 				}
@@ -635,6 +626,7 @@ public class Jugador extends Personaje {
 				for (Enemigo enemigo : enemigosAElim) {
 					enemigo.setVida(enemigoAElim.getVida()-danoJugador);
 					if(enemigo.getVida()<=0) {
+						mensajes.add(new Mensaje("Has matado a "+enemigo.getNombre()+"!", tamanobaldosa, Color.BLUE));
 						this.setEnemigosDerrotados(this.getEnemigosDerrotados()+1);
 						enemigo.looteoEnemigo(inventario, this, gp);
 						enemigos.get(mapa.getNumeroMapa() + "," + mapa.getNumcelda()).remove(enemigo);

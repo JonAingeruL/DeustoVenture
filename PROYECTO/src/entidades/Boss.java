@@ -9,6 +9,7 @@ public class Boss extends Enemigo {
 	
 	public Boss(int x, int y, GamePanel gp) {
 		super(200, gp);
+		this.setNombre("JavaBoss");
 		velocidad = 2;
 		this.x = x;
 		this.y =y;

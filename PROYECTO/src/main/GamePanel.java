@@ -246,7 +246,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// El personaje tiene una función movimiento a la que llamamos ahora
 		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos, npcs);
 		jugador.interaccion(tecladoM,mapa);
-		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null,inventarioJugador);
+		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null,inventarioJugador,mensajes);
 		
 		//detectamos el cambio de movimiento de cada Enemigo
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
@@ -338,9 +338,10 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		//dibuja los mensajes de looteo
 		int alturaDibujadoTexto =700;
-		g2.setColor(Color.BLACK);
+		
 		for (Mensaje mensaje : mensajes) {
-				g2.drawString(mensaje.getTexto(), 700, alturaDibujadoTexto);
+			g2.setColor(mensaje.getColorMensaje());
+				g2.drawString(mensaje.getTexto(), 750, alturaDibujadoTexto);
 				alturaDibujadoTexto+=20;
 		
 			

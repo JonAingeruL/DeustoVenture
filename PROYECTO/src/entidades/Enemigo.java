@@ -1,15 +1,12 @@
 package entidades;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
-import javax.swing.table.DefaultTableModel;
+
 
 import gui.Inventario;
 import gui.Mensaje;
@@ -20,6 +17,8 @@ import main.Mapa;
 public abstract class Enemigo extends Personaje{
 	GamePanel gp;
 	private int vida;
+	private String nombre;
+
 	protected int direccion;
 	private HashMap<String,Integer> objetosLooteados;
 	AudioPlayer loot = new AudioPlayer("Resources/audio/lootCoin.wav");
@@ -32,7 +31,15 @@ public abstract class Enemigo extends Personaje{
 		this.direccion = r.nextInt(1, 5);//num aleatorio del 1 al 4	
 		}	
 
-	
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
 	public int getVida() {
 		return vida;
 	}
@@ -237,7 +244,7 @@ public abstract class Enemigo extends Personaje{
 		for (String nombreObjeto : objetosLooteados.keySet()) {
 			String mensaje = "Has obtenido "+nombreObjeto+ " x"+objetosLooteados.get(nombreObjeto)+"!";
 			
-			gp.anadirMensaje(new Mensaje(mensaje, 180));
+			gp.anadirMensaje(new Mensaje(mensaje, 180,Color.BLACK));
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -133,7 +134,7 @@ public class Inventario extends JFrame {
 					cerrarInventario();
 				}else {
 					//Si el objeto no es utilizable, se avisa al jugador con un mensaje
-					gp.anadirMensaje(new Mensaje("Este objeto no es utilizable", 60));
+					gp.anadirMensaje(new Mensaje("Este objeto no es utilizable", 60,Color.RED));
 			}
 				
 			}
