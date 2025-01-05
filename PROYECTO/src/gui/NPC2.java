@@ -76,13 +76,17 @@ public class NPC2 extends JFrame{
 			}
 		});
 		
-		leerFichero(marcador);
+//		leerFichero(marcador);
 		JLabel instruccion = new JLabel("Pulse esc para cerrar");
 		add(instruccion, BorderLayout.NORTH);
 		setResizable(false);
 		setVisible(true);
 
     }
+    
+    /*
+     * PRUEBAS
+     
     
     public void leerFichero(String marcador) {
         try (Scanner sc = new Scanner(new FileInputStream("src/NPCs.txt"))) {
@@ -136,6 +140,8 @@ public class NPC2 extends JFrame{
             repaint();
         }
     }
+    
+    */
 
 	public void cerrarConversacion() {
     	tecladoM.empezarConversacion =false;

@@ -29,7 +29,7 @@ public class Jugador extends Personaje {
 	private boolean[] vidas = { true, true, true, true, true, true };
 	private boolean atacando = false;
 	boolean interaccionDisponible = false;
-	boolean hablarConNPC = false;
+	public boolean hablarConNPC = false;
 	private HashMap<String, Integer> inventario = new HashMap<String, Integer>();
 	private int enemigosDerrotados = 0;
 	public String objetoEnMano = "";

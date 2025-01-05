@@ -283,6 +283,12 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		//Después comprobamos si el personaje ha cambiado de celda
 		mapa.detectarCambio(jugador, tamañoBaldosa);
+		
+//		if (jugador.detectaColisionNpcs(npcs, tamañoBaldosa, mapa)) {
+//	        jugador.hablarConNPC = true; // Activar la bandera si hay un NPC cerca
+//	    } else {
+//	        jugador.hablarConNPC = false; // Desactivarla si no hay colisión
+//	    }
 
 	}
 
@@ -331,6 +337,12 @@ public class GamePanel extends JPanel implements Runnable {
 				i++;
 			}
 		}
+		if (npcs.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
+			for (NPC npc : npcs.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
+				npc.dibujarNpc(g2);
+			}
+		}
+
 
 		g2.dispose(); // Esto sirve para ahorrar memoria en el dibujado
 	}

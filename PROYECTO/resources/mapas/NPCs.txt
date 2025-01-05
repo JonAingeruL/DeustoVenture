@@ -1,0 +1,3 @@
+//FORMATO: Num mapa; num celda; posicion X (del 0 al 15); posicion Y (del 0 al 11); Frase;
+0;1;3;7;Hola, soy el primer NPC, bienvenido al juego. Ahora mismo te encuentras en la zona tutorial.;
+0;2;3;7;hola, soy el segundo NPC;
