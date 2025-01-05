@@ -190,6 +190,17 @@ public abstract class Enemigo extends Personaje{
 				
 			}
 		}
+			//LOOT BOSS
+			if (this instanceof Boss) {
+				//el jugador recibirá entre 50 y 500 de oro por matar un Slime
+				oroRecibido+=r.nextInt(1, 11)*50;
+				if (r.nextInt(1, 11)==1) {
+					//con un 10% de probabilidad suelta una manzana (la cantidad es 1)
+					objetosLooteados.put("Pocion de salud", 1);
+					
+				}
+				objetosLooteados.put("Espada Debug", 1);
+			}
 		//se añade el oro del enemigo eliminado
 		loot.playClip(gp.getVolumenAudio());
 		objetosLooteados.put("Oro",oroRecibido);
