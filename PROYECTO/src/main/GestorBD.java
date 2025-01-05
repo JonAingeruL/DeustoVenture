@@ -410,4 +410,36 @@ public class GestorBD {
 
 	    return existe; // Retorna true si el usuario existe
 	}
+	
+	//Metodo que verifica si existe un usuario por su nombre
+	public boolean existeUsuarioPorNombre(String nombreUsuario) {
+	    // Consulta SQL para contar los usuarios con el nombre especificado
+	    String sql = "SELECT COUNT(*) AS total FROM USUARIO WHERE nomUsuario = ?";
+	    boolean existe = false;
+
+	    try (
+	        // Establece la conexión con la base de datos
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        // Prepara la sentencia SQL con parámetros
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        // Establece el valor del parámetro de la consulta (nombreUsuario)
+	        pstmt.setString(1, nombreUsuario);
+
+	        // Ejecuta la consulta y obtiene los resultados
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            // Verifica si hay resultados y si el número total es mayor a 0
+	            if (rs.next() && rs.getInt("total") > 0) {
+	                existe = true; // El usuario existe
+	            }
+	        }
+	    } catch (Exception e) {
+	        // Manejo de errores en caso de fallo en la conexión o consulta
+	        System.err.format("\n* Error al verificar existencia del usuario por nombre: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    // Devuelve true si el usuario existe, false en caso contrario
+	    return existe;
+	}
 }
