@@ -121,7 +121,7 @@ public class Jugador extends Personaje {
 	 * @param tecladoM El objeto manejoTeclado a utilizar
 	 */
 	public void movimiento(ManejoTeclado tecladoM, Mapa mapa, int tamanoBaldosa,
-			HashMap<String, ArrayList<Enemigo>> enemigos) {
+			HashMap<String, ArrayList<Enemigo>> enemigos, HashMap<String, ArrayList<NPC>> npcs) {
 		// Dependiendo de la tecla pulsada, muevo al jugador en la dirección
 		// correspondiente.
 		// Después compruebo si hay colisión con el mapa, y en ese caso revierto el
@@ -140,25 +140,25 @@ public class Jugador extends Personaje {
 			if (tecladoM.arribaPulsado == true) {
 				direccion = "arriba";
 				y -= velocidad;
-				while (detectaColision(mapa, tamanoBaldosa) || detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)) {
+				while (detectaColision(mapa, tamanoBaldosa) || detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)|| detectaColisionNpcs(npcs, tamanoBaldosa, mapa)) {
 					y += 1;
 				}
 			} else if (tecladoM.abajoPulsado == true) {
 				direccion = "abajo";
 				y += velocidad;
-				while (detectaColision(mapa, tamanoBaldosa) || detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)) {
+				while (detectaColision(mapa, tamanoBaldosa) || detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)|| detectaColisionNpcs(npcs, tamanoBaldosa, mapa)) {
 					y -= 1;
 				}
 			} else if (tecladoM.izquierdaPulsado == true) {
 				direccion = "izquierda";
 				x -= velocidad;
-				while (detectaColision(mapa, tamanoBaldosa) || detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)) {
+				while (detectaColision(mapa, tamanoBaldosa) || detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)|| detectaColisionNpcs(npcs, tamanoBaldosa, mapa)) {
 					x += 1;
 				}
 			} else if (tecladoM.derechaPulsado == true) {
 				direccion = "derecha";
 				x += velocidad;
-				while (detectaColision(mapa, tamanoBaldosa) || detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)) {
+				while (detectaColision(mapa, tamanoBaldosa) || detectaColisionEnemigos(enemigos, tamanoBaldosa, mapa)|| detectaColisionNpcs(npcs, tamanoBaldosa, mapa)) {
 					x -= 1;
 				}
 			}

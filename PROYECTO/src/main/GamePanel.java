@@ -102,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// personajeJugable (PJ) que sea la que controla el jugador
 	Jugador jugador = new Jugador(this, tecladoM);
 	HashMap<String,ArrayList<Enemigo>> enemigos;
+	HashMap<String,ArrayList<NPC>> npcs;
 	
 	
 	
@@ -138,6 +139,8 @@ public class GamePanel extends JPanel implements Runnable {
 		InventarioCofre.inicializarLoot();
 		//Cargamos un txt de enemigos ya hecho
 		cargarEmemigos();
+		//Cargamos un txt de npcs ya hecho 
+		cargarNPCs();
 		musicPlayer = new MusicPlayer("Resources/musica/1.mp3");
 		musicPlayer.playMusic();
 		//cargamos el primer mapa XD
@@ -238,7 +241,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// Recomiendo comentar jugador.muerte para debugging
 		jugador.muerte(this, gameThread);
 		// El personaje tiene una función movimiento a la que llamamos ahora
-		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos);
+		jugador.movimiento(tecladoM, mapa, tamañoBaldosa, enemigos, npcs);
 		jugador.interaccion(tecladoM,mapa);
 		jugador.AccionAtacar(enemigos, mapa, tamañoBaldosa, tecladoM, null,inventarioJugador);
 		
@@ -366,6 +369,37 @@ public class GamePanel extends JPanel implements Runnable {
 						enemigos.put(clave, new ArrayList<Enemigo>());
 					}
 					enemigos.get(clave).add(e);
+					
+			
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	
+	private void cargarNPCs() {
+		npcs = new HashMap<String, ArrayList<NPC>>();
+		try (Scanner sc = new Scanner(new FileInputStream("Resources/mapas/NPCs.txt"))) {
+			while (sc.hasNextLine()) {
+				String linea = sc.nextLine();
+				if (!linea.trim().startsWith("//")) {
+					String[] campos = linea.split(";");
+					String numMapa = campos[0];
+					String numCelda = campos[1];
+					String clave = numMapa+","+numCelda;
+					int posXNpc = Integer.parseInt(campos[2])*tamañoBaldosa;
+					int posYNpc = Integer.parseInt(campos[3])*tamañoBaldosa;
+					String frase = campos[4];
+					NPC n = new NPC(posXNpc, posYNpc, frase, this);
+					
+					if (!npcs.containsKey(clave)) {
+						npcs.put(clave, new ArrayList<NPC>());
+					}
+					npcs.get(clave).add(n);
 					
 			
 				}
