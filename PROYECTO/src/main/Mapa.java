@@ -19,6 +19,7 @@ public class Mapa {
 	private int numCelda;
 	private String archivoACargar = "resources/mapas/tutorial.txt";
 	private BufferedImage i = new BufferedImage(1024, 768, BufferedImage.TYPE_INT_ARGB);
+	private GamePanel gp;
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
 	public static List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
@@ -29,21 +30,25 @@ public class Mapa {
 	//valor 5 = casa.txt
 	private int numeroMapa;
 
-	public Mapa(int[][] celda, int numCelda) {
+	public Mapa(int[][] celda, int numCelda, GamePanel gp) {
 		super();
 		this.celda = celda;
 		this.numCelda = numCelda;
+		this.gp = gp;
 	}
 
-	public Mapa(int[][] celda) {
+	public Mapa(int[][] celda , GamePanel gp) {
 		super();
 		this.celda = celda;
+		this.gp = gp;
+		
 
 	}
 
-	public Mapa(int numCelda) {
+	public Mapa(int numCelda,GamePanel gp) {
 		super();
 		this.numCelda = numCelda;
+		this.gp = gp;
 		cargarCelda(archivoACargar, numCelda);
 	}
 
@@ -121,6 +126,20 @@ public class Mapa {
 			e.printStackTrace();
 		}
 		setCelda(map);
+		if(gp.getMusicPlayer().getPath().equals("resources/musica/boss.mp3")) {
+			gp.getMusicPlayer().stopMusic();
+			gp.setMusicPlayer(new MusicPlayer("resources/musica/1.mp3"));
+			gp.getMusicPlayer().playMusic();
+			}
+		if ((numCelda == 5)&&celda.equals("resources/mapas/mapa.txt")){
+			if(!gp.getMusicPlayer().getPath().equals("resources/musica/boss.mp3")) {
+			System.out.println("done");
+			gp.getMusicPlayer().stopMusic();
+			gp.setMusicPlayer(new MusicPlayer("resources/musica/boss.mp3"));
+			gp.getMusicPlayer().playMusic();
+			}
+			
+		}
 	}
 	
 	
