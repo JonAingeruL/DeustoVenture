@@ -102,6 +102,8 @@ public class GamePanel extends JPanel implements Runnable {
 	// personajeJugable (PJ) que sea la que controla el jugador
 	Jugador jugador = new Jugador(this, tecladoM);
 	HashMap<String,ArrayList<Enemigo>> enemigos;
+	int contadorBoss = 180;
+	
 	HashMap<String,ArrayList<NPC>> npcs;
 	
 	
@@ -115,7 +117,9 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	// Creamos un constructor de este GamePanel
 	public GamePanel(String usuarioActual) {
+		
 		jugador.setNombreJugador(usuarioActual);
+		
 		this.setPreferredSize(new Dimension(pantallaAnchuta, pantallaAltura)); // Esto establece el tamaño de esta clase
 																				// (JPanel)
 		this.setBackground(Color.black); // Para que el fondo de la pantalla sea negro (esto no importa mucho porque no
@@ -149,6 +153,7 @@ public class GamePanel extends JPanel implements Runnable {
 		gameThread = new Thread(this); // Cuando ponemos this nos referimos a esta clase (GamePanel), basicamente
 										// estamos pasando la clase GamePanel a este constructor de hilo para
 										// instanciarlo.
+		
 		// Ahora vamos a iniciar el hilo
 		gameThread.start(); // Esto automaticamente llamara al metodo run() que nos puso auto el Runnable
 	}
@@ -248,7 +253,22 @@ public class GamePanel extends JPanel implements Runnable {
 		//detectamos el cambio de movimiento de cada Enemigo
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
 			for (Enemigo enemigo : enemigos.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
-				enemigo.movimiento(mapa,tamañoBaldosa, jugador);
+				if (enemigo instanceof Boss) {
+					Boss finalBoss = (Boss) enemigo;
+					//mediante el contadorBoss, se controla que el boss cuando este sea 0, se cambie el patrón de movimiento a otro aleatorio, pa que el boss sea mas dificil de dar.
+					if (contadorBoss ==0) {
+						finalBoss.movimientoBoss(mapa, tamañoBaldosa, jugador, contadorBoss);
+						contadorBoss=180;
+					} else {
+						contadorBoss--;
+						finalBoss.movimientoBoss(mapa, tamañoBaldosa, jugador, contadorBoss);
+					}
+					
+					
+				} else {
+					enemigo.movimiento(mapa,tamañoBaldosa, jugador);
+				}
+				
 			}
 		}
 		//controla si el inventario se puede abrir o no, para que no se abran mas de un inventario (controla que también se le haya dado a la I para abrirlo)
@@ -374,6 +394,8 @@ public class GamePanel extends JPanel implements Runnable {
 					case "Slime": e = new Slime(posXEnemigo,posYEnemigo,this);
 					break;
 					case "Dummy": e = new Dummy(posXEnemigo, posYEnemigo, this);
+					break;
+					case "Boss": e = new Boss(posXEnemigo,posYEnemigo,this);
 					break;
 					default: e= new Slime(posXEnemigo, posYEnemigo, this);
 					}

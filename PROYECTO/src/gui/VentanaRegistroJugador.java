@@ -19,7 +19,7 @@ import main.GestorBD;
 public class VentanaRegistroJugador extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	public VentanaRegistroJugador(String usuarioActual,GestorBD gestorBD) {
+	public VentanaRegistroJugador(String usuarioActual) {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Usuario");
 		setSize(300, 150);
@@ -54,7 +54,15 @@ public class VentanaRegistroJugador extends JFrame {
 		//boton cancelar
 		JButton botonCancelar = new JButton();
 		botonCancelar.setText("Cancelar");
-		botonCancelar.addActionListener(e->dispose());
+		botonCancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MenuInicio();
+				dispose();
+				
+			}
+		});
 		panelBotones.add(botonCancelar);
 		
 		//boton iniciar juego
@@ -81,7 +89,7 @@ public class VentanaRegistroJugador extends JFrame {
 						iniciarJuego(usuarioActual);
 					}*/
 				iniciarJuego(usuarioActual);
-
+				dispose();
 				
 			}
 		});

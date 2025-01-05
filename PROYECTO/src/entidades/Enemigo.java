@@ -3,8 +3,12 @@ package entidades;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 import gui.Inventario;
@@ -16,7 +20,7 @@ import main.Mapa;
 public abstract class Enemigo extends Personaje{
 	GamePanel gp;
 	private int vida;
-	private int direccion;
+	protected int direccion;
 	private HashMap<String,Integer> objetosLooteados;
 	AudioPlayer loot = new AudioPlayer("Resources/audio/lootCoin.wav");
 	
@@ -42,14 +46,19 @@ public abstract class Enemigo extends Personaje{
 	
 	
 	public void dibujarEnemigo(Graphics2D g2) {
-		g2.setColor(new Color(50*vida,0,0));
 
-		g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
+		if (this instanceof Boss) {
+			Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
+			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+		} else {
+			g2.setColor(new Color(50*vida,0,0));
 
+			g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
+		}
 		//BufferedImage imagen = null;
 		
 		
-		//g2.drawImage(imagen, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+		//
 	}
 	//generador aleatorio de movimiento, mediante una Random que genera un numero del 1 al 4
 	//Dependiendo del numero, se moverá en un eje, y en caso de que haya colisión, el jugador se moverá al lado contrario
@@ -89,7 +98,7 @@ public abstract class Enemigo extends Personaje{
 		}
 		break;
 		}
-		if (detectaColision(mapa,tamanoBaldosa) || x<0 || x>16*tamanoBaldosa || y> 12*tamanoBaldosa || y<0) {
+		if (detectaColision(mapa,tamanoBaldosa) || x<0 || x>16*tamanoBaldosa || y> 12*tamanoBaldosa || y<0 ) {
 			switch(this.direccion) {
 			case 1: x-=velocidad;
 			break;
@@ -105,6 +114,7 @@ public abstract class Enemigo extends Personaje{
 		}
 	
 	}
+
 	//colisiones iguales a las del jugador (no detecta ni al jugador ni a la espada todavía, por lo cual la variable de vida no es utilizada)
 	public boolean detectaColision(Mapa mapa, int tamanobaldosa) {
 		// se usa para saber en que celda esta el jugador
