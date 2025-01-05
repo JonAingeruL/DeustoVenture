@@ -103,6 +103,9 @@ public class Inventario extends JFrame{
 				String numObjetosSeleccionados = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
 				if ( Integer.parseInt(numObjetosSeleccionados)-1==0) {
 					jugador.getInventario().remove(objetoSeleccionado);
+				}else {
+					jugador.getInventario().put(objetoSeleccionado, jugador.getInventario().get(objetoSeleccionado)-1);
+				}
 					if(!jugador.objetoEnMano.equals("")) {
 						jugador.getInventario().put(jugador.objetoEnMano, 1);
 					}
@@ -111,13 +114,12 @@ public class Inventario extends JFrame{
 							jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
 				        }else if(objetosCurativos.containsKey(objetoSeleccionado)){
 				        	jugador.cambiarVidas(objetosCurativos.get(objetoSeleccionado));
-				        	jugador.objetoEnMano = "";
 				        }else {
 				        	jugador.objetoEnMano = "";
 				        }
 				        audio.closeClip();
 				        cerrarInventario();
-				}
+				//}
 			}
         	
     	});

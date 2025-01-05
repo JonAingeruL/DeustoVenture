@@ -2,3 +2,14 @@ Sonido inventario:
 freesound.org "GameAudio -UI SFX- "
 Sonido espada:
 freesound.org "skewer1.flac"
+Sonido dinero:
+Coins_Several_01.wav by
+ LittleRobotSoundFactory
+  -- https://freesound.org/s/276197/
+   -- License: Attribution 4.0
+Sonido cofre:
+freesound.org "Open Chest"
+Sonido daño:
+freesound.org "Retro video game sfx - Ouch"
+Sonido curación:
+freesound.org "Powerup 02.wav"

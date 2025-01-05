@@ -1,5 +1,5 @@
 -resources/mapas/tutorial.txt,1-
-Placeholder1;0
+Manzana;2
 Espada de Hielo;1
 -resources/mapas/tutorial.txt,2-
 Hacha;1

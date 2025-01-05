@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import gui.Inventario;
 import gui.Mensaje;
+import main.AudioPlayer;
 import main.GamePanel;
 import main.Mapa;
 
@@ -17,6 +18,7 @@ public abstract class Enemigo extends Personaje{
 	private int vida;
 	private int direccion;
 	private HashMap<String,Integer> objetosLooteados;
+	AudioPlayer loot = new AudioPlayer("Resources/audio/lootCoin.wav");
 	
 	public Enemigo(int vida, GamePanel gp) {
 		super();
@@ -179,6 +181,7 @@ public abstract class Enemigo extends Personaje{
 			}
 		}
 		//se añade el oro del enemigo eliminado
+		loot.playClip(gp.getVolumenAudio());
 		objetosLooteados.put("Oro",oroRecibido);
 		//actualizamos el inventario
 		actualizarInventario(inventario, objetosLooteados);

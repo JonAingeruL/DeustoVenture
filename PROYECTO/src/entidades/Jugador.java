@@ -54,7 +54,9 @@ public class Jugador extends Personaje {
 	// e ataca. Con esto se puede calcular cuanto tiempo ha pasado
 	// TODO Método que cierre todo lo que se abra al cerrar el juego, tanto en
 	// esta clase como en las demás.
-	AudioPlayer sword = new AudioPlayer("resources/audio/Sword.wav");
+	private AudioPlayer sword = new AudioPlayer("resources/audio/Sword.wav");
+	private AudioPlayer damage = new AudioPlayer("resources/audio/PlayerDmg.wav");
+	private AudioPlayer heal = new AudioPlayer("resources/audio/Heal.wav");
 
 	public Jugador(GamePanel gp, ManejoTeclado maneT) {
 
@@ -314,11 +316,13 @@ public class Jugador extends Personaje {
 	/**
 	 * Este método aumenta o reduce el número de vidas según el entero que recibe
 	 * (Positivo aumenta negativo disminuye)
+	 * Dependiendo de si la vida aumenta o disminuye, reproduce un sonido u otro
 	 * 
 	 * @param value El entero que indica si aumentar o reducir las vidas
 	 */
 	public void cambiarVidas(int value) {
 		if (value < 0) {
+			damage.playClip(gp.getVolumenAudio());
 			for (int i = vidas.length - 1; i >= 0; i--) {
 				if (vidas[i]) {
 					vidas[i] = false;
@@ -329,6 +333,7 @@ public class Jugador extends Personaje {
 				}
 			}
 		} else if (value > 0) {
+			heal.playClip(gp.getVolumenAudio()*0.1f);
 			for (int i = 0; i < vidas.length; i++) {
 				if (!vidas[i]) {
 					vidas[i] = true;

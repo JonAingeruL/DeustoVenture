@@ -44,8 +44,8 @@ public class InventarioCofre extends JFrame{
 	private ManejoTeclado tecladoM;
 	
     public InventarioCofre(ManejoTeclado tecladoM, GamePanel gp, String mapa, int celda,Jugador jugador) {
-    	AudioPlayer audio = new AudioPlayer("Resources/audio/InvSound.wav");
-    	audio.playClip();
+    	AudioPlayer audio = new AudioPlayer("Resources/audio/chest.wav");
+    	audio.playClip(gp.getVolumenAudio());
     	this.tecladoM =tecladoM;
         setTitle("Cofre");
         //Esto no es necesario, ya que está creado un windowListener que hace lo mismo
@@ -100,8 +100,12 @@ public class InventarioCofre extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (int i = 0 ; i < model.getRowCount(); ++i) {
-					jugador.getInventario().put(model.getValueAt(i, 0).toString(),Integer.parseInt(model.getValueAt(i, 1).toString()));
+					if (jugador.getInventario().containsKey(model.getValueAt(i, 0))) {
+						jugador.getInventario().put(model.getValueAt(i, 0).toString(),Integer.parseInt(model.getValueAt(i, 1).toString())+jugador.getInventario().get(model.getValueAt(i, 0)));
+					}else {
+						jugador.getInventario().put(model.getValueAt(i, 0).toString(),Integer.parseInt(model.getValueAt(i, 1).toString()));
 	            }
+				}
 				vaciarCofre(mapa, celda, model);
 				audio.closeClip();
 				cerrarInventario();
@@ -213,7 +217,7 @@ public class InventarioCofre extends JFrame{
 		 try {
 	            PrintStream ps = new PrintStream("src/lootCofre.txt");
 	            ps.println("-resources/mapas/tutorial.txt,1-");
-	            ps.println("Placeholder1;0");
+	            ps.println("Manzana;2");
 	            ps.println("Espada de Hielo;1");
 	            ps.println("-resources/mapas/tutorial.txt,2-");
 	            ps.println("Hacha;1");
