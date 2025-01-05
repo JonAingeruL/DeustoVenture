@@ -28,6 +28,9 @@ public class Boss extends Enemigo {
 		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
 			x-=1;
 		}
+		while(detectaColision(mapa, tamanoBaldosa)) {
+			x-=1;
+		}
 		break;
 		case 2: x-=velocidad;
 		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
@@ -58,7 +61,7 @@ public class Boss extends Enemigo {
 			jugador.cambiarVidas(-1);
 		}
 		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			x-=-1; y-=-1;
+			x-=1; y-=1;
 			
 		}
 		break;
