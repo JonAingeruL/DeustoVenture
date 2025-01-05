@@ -56,11 +56,10 @@ public class GestorBD {
 				Statement stmt = con.createStatement()) {
 			 // Define la estructura de la tabla
 			String sql = "CREATE TABLE IF NOT EXISTS USUARIO (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "nomUsuario TEXT NOT NULL, " +
+                    "nomUsuario TEXT PRIMARY KEY, " +
                     "numMuertes INTEGER DEFAULT 0, " +
                     "numAsesinatos INTEGER DEFAULT 0, " +
-                    "tiempoJugado INTEGER DEFAULT 0" +
+                    "tiempoJugado INTEGER DEFAULT 0 " +
                     ");";
 			
 			 // Ejecuta la consulta para crear la tabla
@@ -75,119 +74,71 @@ public class GestorBD {
 	}
 	
 	//Metodo para guardar los usuarios en la base de datos
-	public int guardarUsuario(String nomUsuario, int numMuertes, int numAsesinatos, int tiempoJugado) {
-        String sql = "INSERT INTO USUARIO (nomUsuario, numMuertes, numAsesinatos, tiempoJugado) VALUES (?, ?, ?, ?)";
-        int generatedId = -1;
+	public boolean guardarUsuario(Usuario usuario) {
+	    String sql = "INSERT INTO USUARIO (nomUsuario, numMuertes, numAsesinatos, tiempoJugado) VALUES (?, ?, ?, ?)";
 
-        try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, usuario.nomUsuario);
+	        pstmt.setInt(2, usuario.numMuertes);
+	        pstmt.setInt(3, usuario.numAsesinatos);
+	        pstmt.setInt(4, usuario.tiempoJugado);
 
-            // configura los valores para la consulta
-            pstmt.setString(1, nomUsuario);
-            pstmt.setInt(2, numMuertes);
-            pstmt.setInt(3, numAsesinatos);
-            pstmt.setInt(4, tiempoJugado);
+	        pstmt.executeUpdate();
+	        return true;
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al guardar el usuario: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
 
-            // ejecuta la consulta
-            int affectedRows = pstmt.executeUpdate();
-
-            // comprueba si se ha insertado correctamente
-            if (affectedRows > 0) {
-                // obtiene el ID generado automáticamente
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        generatedId = rs.getInt(1);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.err.format("\n* Error al guardar el usuario: %s", e.getMessage());
-            e.printStackTrace();
-        }
-
-        return generatedId;
-    }
+	    return false;
+	}
 	
 	//Metodo para actulizar la base de datos
-	public boolean actualizarUsuario(int id, String nomUsuario, int numMuertes, int numAsesinatos, int tiempoJugado) {
-	    String sql = "UPDATE USUARIO SET nomUsuario = ?, numMuertes = ?, numAsesinatos = ?, tiempoJugado = ? WHERE id = ?";
-	    boolean actualizado = false;
+	public boolean actualizarUsuario(Usuario usuario) {
+	    String sql = "UPDATE USUARIO SET numMuertes = ?, numAsesinatos = ?, tiempoJugado = ? WHERE nomUsuario = ?";
 
-	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setInt(1, usuario.numMuertes);
+	        pstmt.setInt(2, usuario.numAsesinatos);
+	        pstmt.setInt(3, usuario.tiempoJugado);
+	        pstmt.setString(4, usuario.nomUsuario);
 
-	        // configura los valores para la consulta
-	        pstmt.setString(1, nomUsuario);
-	        pstmt.setInt(2, numMuertes);
-	        pstmt.setInt(3, numAsesinatos);
-	        pstmt.setInt(4, tiempoJugado);
-	        pstmt.setInt(5, id);
-
-	        // ejecuta la consulta y verifica si se actualizó alguna fila
-	        int affectedRows = pstmt.executeUpdate();
-	        actualizado = affectedRows > 0;
-
+	        int filasActualizadas = pstmt.executeUpdate();
+	        return filasActualizadas > 0;
 	    } catch (Exception e) {
 	        System.err.format("\n* Error al actualizar el usuario: %s", e.getMessage());
 	        e.printStackTrace();
 	    }
 
-	    return actualizado;
+	    return false;
 	}
 	
 	//Metodo para eliminar un usuario de la base de datos
-	public boolean eliminarUsuario(int id) {
-	    String sql = "DELETE FROM USUARIO WHERE id = ?";
-	    boolean eliminado = false;
+	public boolean eliminarUsuario(String nomUsuario) {
+	    String sql = "DELETE FROM USUARIO WHERE nomUsuario = ?";
 
-	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, nomUsuario);
 
-	        // configura el parámetro para la consulta
-	        pstmt.setInt(1, id);
-
-	        // ejecuta la consulta y verifica si se eliminó alguna fila
-	        int affectedRows = pstmt.executeUpdate();
-	        eliminado = affectedRows > 0;
-
+	        int filasEliminadas = pstmt.executeUpdate();
+	        return filasEliminadas > 0;
 	    } catch (Exception e) {
 	        System.err.format("\n* Error al eliminar el usuario: %s", e.getMessage());
 	        e.printStackTrace();
 	    }
 
-	    return eliminado;
+	    return false;
 	}
 	
-	//Metodo que obtiene un usuario de la base de datos por su ID
-	public Usuario obtenerUsuarioPorId(int id) {
-	    String sql = "SELECT * FROM USUARIO WHERE id = ?";
-	    Usuario usuario = null;
-
-	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-	         PreparedStatement pstmt = con.prepareStatement(sql)) {
-
-	        // configura el ID como parámetro de la consulta
-	        pstmt.setInt(1, id);
-
-	        // ejecuta la consulta y procesa el resultado
-	        try (ResultSet rs = pstmt.executeQuery()) {
-	            if (rs.next()) {
-	                // crea un objeto Usuario con los datos obtenidos
-	                usuario = new Usuario(
-	                    rs.getString("nomUsuario"),
-	                    rs.getInt("numMuertes"),
-	                    rs.getInt("numAsesinatos"),
-	                    rs.getInt("tiempoJugado")
-	                );
-	            }
-	        }
-	    } catch (Exception e) {
-	        System.err.format("\n* Error al obtener el usuario: %s", e.getMessage());
-	        e.printStackTrace();
-	    }
-
-	    return usuario; // Retorna el usuario o null si no se encontró
-	}
 	
 	//Metodo que recupera todos los usuarios almacenados en la base de datos.
 	public List<Usuario> listarUsuarios() {
@@ -216,36 +167,6 @@ public class GestorBD {
 	    return usuarios; // Retorna la lista de usuarios
 	}
 	
-	//Metodo que busca usuarios por nombre
-	public List<Usuario> buscarUsuariosPorNombre(String nombre) {
-	    String sql = "SELECT * FROM USUARIO WHERE nomUsuario LIKE ?";
-	    List<Usuario> usuarios = new ArrayList<>();
-
-	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-	         PreparedStatement pstmt = con.prepareStatement(sql)) {
-
-	        // configura el parámetro con el texto de búsqueda
-	        pstmt.setString(1, "%" + nombre + "%");
-
-	        // ejecuta la consulta y procesa los resultados
-	        try (ResultSet rs = pstmt.executeQuery()) {
-	            while (rs.next()) {
-	                Usuario usuario = new Usuario(
-	                    rs.getString("nomUsuario"),
-	                    rs.getInt("numMuertes"),
-	                    rs.getInt("numAsesinatos"),
-	                    rs.getInt("tiempoJugado")
-	                );
-	                usuarios.add(usuario); // agrega el usuario a la lista
-	            }
-	        }
-	    } catch (Exception e) {
-	        System.err.format("\n* Error al buscar usuarios: %s", e.getMessage());
-	        e.printStackTrace();
-	    }
-
-	    return usuarios; // Retorna la lista de usuarios encontrados
-	}
 	
 	//Metodo que obtiene estadísticas de todos los usuarios
 	public Map<String, Integer> obtenerEstadisticasGlobales() {
@@ -342,29 +263,6 @@ public class GestorBD {
 	    return usuario; // Retorna el usuario con más asesinatos o null si no hay usuarios
 	}
 	
-	//Metodo que actualiza el tiempo de un jugador por su ID
-	public boolean actualizarTiempoJugado(int id, int tiempoNuevo) {
-	    String sql = "UPDATE USUARIO SET tiempoJugado = ? WHERE id = ?";
-	    boolean actualizado = false;
-
-	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-	         PreparedStatement pstmt = con.prepareStatement(sql)) {
-
-	        // Configura los parámetros de la consulta
-	        pstmt.setInt(1, tiempoNuevo);
-	        pstmt.setInt(2, id);
-
-	        // Ejecuta la actualización y verifica si se afectaron filas
-	        int affectedRows = pstmt.executeUpdate();
-	        actualizado = affectedRows > 0;
-
-	    } catch (Exception e) {
-	        System.err.format("\n* Error al actualizar el tiempo jugado: %s", e.getMessage());
-	        e.printStackTrace();
-	    }
-
-	    return actualizado; // Retorna true si la actualización fue bien
-	}
 	
 	//Metodo que resetea todas las estadisticas
 	public boolean reiniciarEstadisticas() {
@@ -386,21 +284,21 @@ public class GestorBD {
 	    return reiniciado; // Retorna true si se reiniciaron estadísticas
 	}
 	
-	//Metodo que verifica si existe un usuario por ID
-	public boolean existeUsuario(int id) {
-	    String sql = "SELECT COUNT(*) AS total FROM USUARIO WHERE id = ?";
+	
+	//Metodo que verifica si existe un usuario por su nombre
+	public boolean existeUsuario(String nomUsuario) {
+	    String sql = "SELECT COUNT(*) AS total FROM USUARIO WHERE nomUsuario = ?";
 	    boolean existe = false;
 
-	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, nomUsuario);
 
-	        // Configura el parámetro de la consulta
-	        pstmt.setInt(1, id);
-
-	        // Ejecuta la consulta y verifica el resultado
 	        try (ResultSet rs = pstmt.executeQuery()) {
 	            if (rs.next() && rs.getInt("total") > 0) {
-	                existe = true; // El usuario existe si el total es mayor que 0
+	                existe = true;
 	            }
 	        }
 	    } catch (Exception e) {
@@ -408,38 +306,7 @@ public class GestorBD {
 	        e.printStackTrace();
 	    }
 
-	    return existe; // Retorna true si el usuario existe
-	}
-	
-	//Metodo que verifica si existe un usuario por su nombre
-	public boolean existeUsuarioPorNombre(String nombreUsuario) {
-	    // Consulta SQL para contar los usuarios con el nombre especificado
-	    String sql = "SELECT COUNT(*) AS total FROM USUARIO WHERE nomUsuario = ?";
-	    boolean existe = false;
-
-	    try (
-	        // Establece la conexión con la base de datos
-	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
-	        // Prepara la sentencia SQL con parámetros
-	        PreparedStatement pstmt = con.prepareStatement(sql)
-	    ) {
-	        // Establece el valor del parámetro de la consulta (nombreUsuario)
-	        pstmt.setString(1, nombreUsuario);
-
-	        // Ejecuta la consulta y obtiene los resultados
-	        try (ResultSet rs = pstmt.executeQuery()) {
-	            // Verifica si hay resultados y si el número total es mayor a 0
-	            if (rs.next() && rs.getInt("total") > 0) {
-	                existe = true; // El usuario existe
-	            }
-	        }
-	    } catch (Exception e) {
-	        // Manejo de errores en caso de fallo en la conexión o consulta
-	        System.err.format("\n* Error al verificar existencia del usuario por nombre: %s", e.getMessage());
-	        e.printStackTrace();
-	    }
-
-	    // Devuelve true si el usuario existe, false en caso contrario
 	    return existe;
 	}
+	
 }
