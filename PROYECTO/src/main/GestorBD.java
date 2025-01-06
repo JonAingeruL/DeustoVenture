@@ -171,7 +171,7 @@ public class GestorBD {
 	
 	//Metodo que recupera todos los usuarios almacenados en la base de datos.
 	public List<Usuario> listarUsuarios() {
-	    String sql = "SELECT * FROM USUARIO ORDER BY numAsesinatos";
+	    String sql = "SELECT * FROM USUARIO ORDER BY numAsesinatos DESC";
 	    List<Usuario> usuarios = new ArrayList<>();
 
 	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -400,7 +400,7 @@ public class GestorBD {
 	}
 	
 	//Metodo para para buscar datos por nombre de usuario
-	public List<Object> buscarDatosUsuario(String usuario) {
+	public List<Object> buscarDatosUsuarioPOS(String usuario) {
 	    String sql = "SELECT usuario, x, y, numCelda, numMapa FROM POSICION_USUARIO WHERE usuario = ?";
 	    List<Object> datosUsuario = new ArrayList<>();
 
@@ -457,7 +457,7 @@ public class GestorBD {
 	}
 	
 	//Metodo para verificar si la el nombre de usuario en la tabla 2 
-	public boolean verificarUsuarioPorNombre(String usuario) {
+	public boolean verificarUsuarioPorNombrePOS(String usuario) {
 	    String sql = "SELECT 1 FROM POSICION_USUARIO WHERE usuario = ?";
 	    try (
 	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -499,7 +499,7 @@ public class GestorBD {
 	//Metodo para guardar datos de la tabla
 	public boolean guardarPosicionUsuario(String usuario, int x, int y, int numCelda, int numMapa) {
 	    // Verificar si el usuario ya existe
-	    if (verificarUsuarioPorNombre(usuario)) {
+	    if (verificarUsuarioPorNombrePOS(usuario)) {
 	        System.out.println("El nombre de usuario ya existe: " + usuario);
 	        return false;
 	    }
