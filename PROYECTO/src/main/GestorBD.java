@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -336,4 +337,35 @@ public class GestorBD {
 	    return existe;
 	}
 	
+	//Método para obtener estadísticas
+	public Usuario obtenerEstadisticasUsuario(String nomUsuario) {
+	    String sql = "SELECT nomUsuario, numMuertes, numAsesinatos, tiempoJugado FROM USUARIO WHERE nomUsuario = ?";
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, nomUsuario);
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                // Crear el objeto Usuario con los datos obtenidos
+	                Usuario usuario = new Usuario();
+	                usuario.nomUsuario = rs.getString("nomUsuario");
+	                usuario.numMuertes = rs.getInt("numMuertes");
+	                usuario.numAsesinatos = rs.getInt("numAsesinatos");
+	                usuario.tiempoJugado = rs.getInt("tiempoJugado");
+	                return usuario;
+	            } else {
+	                // Usuario no encontrado
+	                System.out.println("No se encontró el usuario con nombre: " + nomUsuario);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al obtener las estadísticas del usuario: %s", e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return null; // Retorna null si ocurre algún error o el usuario no existe
+	}
 }

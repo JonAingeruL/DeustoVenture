@@ -13,6 +13,8 @@ public class Usuario {
 	
 	//Registra el tiempo jugado
 	public int tiempoJugado;
+	
+	public Usuario() {}
 
 	public Usuario(String nomUsuario, int numMuertes, int numAsesinatos, int tiempoJugado) {
 		super();
