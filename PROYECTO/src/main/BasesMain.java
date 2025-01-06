@@ -8,7 +8,7 @@ public class BasesMain {
 		bd.CrearBBDD_POS();
 		bd.CrearBBDD_INV();
 		bd.guardarUsuarioConValidacion(new Usuario("Default", 0, 0, 0));
-		bd.guardarPosicionUsuario("Default", 0, 0, 0, 0);
+		bd.guardarPosicionUsuario("Default", 0, 0, 1, 0, "resources/mapas/tutorial.txt");
 		bd.guardarItemEnInventario("Default", "Espada de madera", 1);
 		bd.guardarItemEnInventario("Default", "Manzana", 1);
 		bd.guardarItemEnInventario("Default", "Pocion de salud", 1);

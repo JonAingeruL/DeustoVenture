@@ -385,7 +385,8 @@ public class GestorBD {
 					 "x INTEGER NOT NULL, "+
 					 "y INTEGER NOT NULL, "+
 					 "numCelda INTEGER NOT NULL, "+
-					 "numMapa INTEGER NOT NULL "+
+					 "numMapa INTEGER NOT NULL, "+
+					 "mapaCargar TEXT NOT NULL "+
 					");";
 			
 			 // Ejecuta la consulta para crear la tabla
@@ -401,7 +402,7 @@ public class GestorBD {
 	
 	//Metodo para para buscar datos por nombre de usuario
 	public List<Object> buscarDatosUsuarioPOS(String usuario) {
-	    String sql = "SELECT usuario, x, y, numCelda, numMapa FROM POSICION_USUARIO WHERE usuario = ?";
+	    String sql = "SELECT usuario, x, y, numCelda, numMapa, mapaCargar FROM POSICION_USUARIO WHERE usuario = ?";
 	    List<Object> datosUsuario = new ArrayList<>();
 
 	    try (
@@ -418,6 +419,7 @@ public class GestorBD {
 	            datosUsuario.add(rs.getInt("y"));          // Coordenada Y
 	            datosUsuario.add(rs.getInt("numCelda"));   // Número de celda
 	            datosUsuario.add(rs.getInt("numMapa"));    // Número de mapa
+	            datosUsuario.add(rs.getString("mapaCargar"));  // Mapa
 	        } else {
 	            System.out.println("Usuario no encontrado: " + usuario);
 	        }
@@ -432,7 +434,7 @@ public class GestorBD {
 	public boolean resetearPosicionUsuario(String usuario) {
 	    String sql = """
 	        UPDATE POSICION_USUARIO
-	        SET x = 0, y = 0, numCelda = 0, numMapa = 0
+	        SET x = 0, y = 0, numCelda = 1, numMapa = 0, mapaCargar = 0
 	        WHERE usuario = ?;
 	        """;
 
@@ -497,7 +499,7 @@ public class GestorBD {
 	}
 	
 	//Metodo para guardar datos de la tabla
-	public boolean guardarPosicionUsuario(String usuario, int x, int y, int numCelda, int numMapa) {
+	public boolean guardarPosicionUsuario(String usuario, int x, int y, int numCelda, int numMapa, String mapaCargar) {
 	    // Verificar si el usuario ya existe
 	    if (verificarUsuarioPorNombrePOS(usuario)) {
 	        System.out.println("El nombre de usuario ya existe: " + usuario);
@@ -505,8 +507,8 @@ public class GestorBD {
 	    }
 
 	    String sql = """
-	        INSERT INTO POSICION_USUARIO (usuario, x, y, numCelda, numMapa)
-	        VALUES (?, ?, ?, ?, ?);
+	        INSERT INTO POSICION_USUARIO (usuario, x, y, numCelda, numMapa, mapaCargar)
+	        VALUES (?, ?, ?, ?, ?, ?);
 	        """;
 
 	    try (
@@ -518,6 +520,7 @@ public class GestorBD {
 	        pstmt.setInt(3, y);
 	        pstmt.setInt(4, numCelda);
 	        pstmt.setInt(5, numMapa);
+	        pstmt.setString(6, mapaCargar);
 
 	        pstmt.executeUpdate();
 	        System.out.println("Datos guardados correctamente para el usuario: " + usuario);
