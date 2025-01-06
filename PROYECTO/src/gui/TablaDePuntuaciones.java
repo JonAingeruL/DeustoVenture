@@ -31,8 +31,11 @@ public class TablaDePuntuaciones extends JFrame {
 		};
 		
 		for (Usuario usuario : usuarios) {
-			Object[] filausuario = {usuario.getNomUsuario(),usuario.getNumAsesinatos(),usuario.getNumMuertes(),usuario.getTiempoJugado()};
-			modelo.addRow(filausuario);
+			if (!usuario.getNomUsuario().equals("Default")) {
+				Object[] filausuario = {usuario.getNomUsuario(),usuario.getNumAsesinatos(),usuario.getNumMuertes(),usuario.getTiempoJugado()};
+				modelo.addRow(filausuario);
+			}
+			
 		}
 		
 		JTable tablaPuntuaciones = new JTable(modelo);
@@ -47,19 +50,6 @@ public class TablaDePuntuaciones extends JFrame {
 		setVisible(true);
 		
 		
-	}
-	
-	public static void main(String[] args) {
-		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-		usuarios.add(new Usuario("Primero", 1, 1, 1));
-		usuarios.add(new Usuario("Segundo", 1, 1, 1));
-		usuarios.add(new Usuario("Tercero", 1, 1, 1));
-		usuarios.add(new Usuario("Primero", 1, 1, 1));
-		usuarios.add(new Usuario("Primero", 1, 1, 1));
-		usuarios.add(new Usuario("Primero", 1, 1, 1));
-		usuarios.add(new Usuario("Primero", 1, 1, 1));
-		usuarios.add(new Usuario("Primero", 1, 1, 1));
-		new TablaDePuntuaciones(usuarios);
 	}
 	
 	

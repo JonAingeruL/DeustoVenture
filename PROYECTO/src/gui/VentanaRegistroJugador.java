@@ -89,6 +89,9 @@ public class VentanaRegistroJugador extends JFrame {
 							esnuevoUsuario=false;
 							iniciarJuego(usuarioActual,esnuevoUsuario);
 							dispose();
+						} else {
+							new VentanaRegistroJugador();
+							dispose();
 						}
 				} else {
 					esnuevoUsuario = true;
