@@ -126,6 +126,8 @@ public class VentanaRegistroJugador extends JFrame {
 		window.setVisible(true); //Para poder ver la pantalla
 		
 		gamePanel.iniciarJuegoHilo(); //Iniciamos el hilo para iniciar el bucle
+		
+		
 	}
 	
 
