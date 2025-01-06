@@ -73,6 +73,7 @@ public class GestorBD {
 		}
 		
 	}
+
 	
 	//Metodo que sirve para ver si el nombre que alguien se pone ya esta cogido
 	public boolean verificarNombreDisponible(String nomUsuario) {
@@ -170,7 +171,7 @@ public class GestorBD {
 	
 	//Metodo que recupera todos los usuarios almacenados en la base de datos.
 	public List<Usuario> listarUsuarios() {
-	    String sql = "SELECT * FROM USUARIO";
+	    String sql = "SELECT * FROM USUARIO ORDER BY numAsesinatos";
 	    List<Usuario> usuarios = new ArrayList<>();
 
 	    try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
@@ -367,5 +368,262 @@ public class GestorBD {
 	    }
 
 	    return null; // Retorna null si ocurre algún error o el usuario no existe
+	}
+	
+	//BASE DE DATOS NUMERO 2
+	
+	//Metodo para crear las base de datos de posicion
+	public void CrearBBDD_POS() {
+		//Se abre la conexion y se obtiene el Statement
+		//Al abrir la conexion, si no existia el fichero, se crea la base de datos
+		
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+				Statement stmt = con.createStatement()) {
+			 // Define la estructura de la tabla
+			String sql = "CREATE TABLE IF NOT EXISTS POSICION_USUARIO ("+
+					 "usuario TEXT PRIMARY KEY, "+
+					 "x INTEGER NOT NULL, "+
+					 "y INTEGER NOT NULL, "+
+					 "numCelda INTEGER NOT NULL, "+
+					 "numMapa INTEGER NOT NULL "+
+					");";
+			
+			 // Ejecuta la consulta para crear la tabla
+            stmt.executeUpdate(sql);
+            System.out.println("Tabla POSICION_USUARIO creada o ya existía.");
+			
+		} catch (Exception e) {
+			System.err.format("\n* Error al crear la tabla en la base de datos: %s", e.getMessage());
+            e.printStackTrace();
+		}
+		
+	}
+	
+	//Metodo para para buscar datos por nombre de usuario
+	public List<Object> buscarDatosUsuario(String usuario) {
+	    String sql = "SELECT usuario, x, y, numCelda, numMapa FROM POSICION_USUARIO WHERE usuario = ?";
+	    List<Object> datosUsuario = new ArrayList<>();
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, usuario);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        // Si hay resultados, los agregamos a la lista
+	        if (rs.next()) {
+	            datosUsuario.add(rs.getString("usuario"));  // Nombre del usuario
+	            datosUsuario.add(rs.getInt("x"));          // Coordenada X
+	            datosUsuario.add(rs.getInt("y"));          // Coordenada Y
+	            datosUsuario.add(rs.getInt("numCelda"));   // Número de celda
+	            datosUsuario.add(rs.getInt("numMapa"));    // Número de mapa
+	        } else {
+	            System.out.println("Usuario no encontrado: " + usuario);
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al buscar datos del usuario: %s", e.getMessage());
+	    }
+
+	    return datosUsuario; // Devolverá una lista vacía si no se encuentra nada
+	}
+	
+	//Metodo para resetear posiciones
+	public boolean resetearPosicionUsuario(String usuario) {
+	    String sql = """
+	        UPDATE POSICION_USUARIO
+	        SET x = 0, y = 0, numCelda = 0, numMapa = 0
+	        WHERE usuario = ?;
+	        """;
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, usuario);
+
+	        int filasAfectadas = pstmt.executeUpdate();
+	        if (filasAfectadas > 0) {
+	            System.out.println("Posición reseteada para el usuario: " + usuario);
+	            return true;
+	        } else {
+	            System.out.println("El usuario no existe: " + usuario);
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al resetear los datos del usuario: %s", e.getMessage());
+	    }
+
+	    return false;
+	}
+	
+	//Metodo para verificar si la el nombre de usuario en la tabla 2 
+	public boolean verificarUsuarioPorNombre(String usuario) {
+	    String sql = "SELECT 1 FROM POSICION_USUARIO WHERE usuario = ?";
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, usuario);
+	        ResultSet rs = pstmt.executeQuery();
+	        return rs.next(); // Si hay un resultado, el usuario ya existe
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al verificar el usuario: %s", e.getMessage());
+	    }
+	    return false;
+	}
+	
+	//Metodo para eliminar posiciones
+	public boolean eliminarPosicionUsuario(String usuario) {
+	    String sql = "DELETE FROM POSICION_USUARIO WHERE usuario = ?";
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, usuario);
+
+	        int filasAfectadas = pstmt.executeUpdate();
+	        if (filasAfectadas > 0) {
+	            System.out.println("Usuario eliminado de la tabla POSICION_USUARIO: " + usuario);
+	            return true;
+	        } else {
+	            System.out.println("El usuario no existe: " + usuario);
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al eliminar los datos del usuario: %s", e.getMessage());
+	    }
+
+	    return false;
+	}
+	
+	//Metodo para guardar datos de la tabla
+	public boolean guardarPosicionUsuario(String usuario, int x, int y, int numCelda, int numMapa) {
+	    // Verificar si el usuario ya existe
+	    if (verificarUsuarioPorNombre(usuario)) {
+	        System.out.println("El nombre de usuario ya existe: " + usuario);
+	        return false;
+	    }
+
+	    String sql = """
+	        INSERT INTO POSICION_USUARIO (usuario, x, y, numCelda, numMapa)
+	        VALUES (?, ?, ?, ?, ?);
+	        """;
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(sql)
+	    ) {
+	        pstmt.setString(1, usuario);
+	        pstmt.setInt(2, x);
+	        pstmt.setInt(3, y);
+	        pstmt.setInt(4, numCelda);
+	        pstmt.setInt(5, numMapa);
+
+	        pstmt.executeUpdate();
+	        System.out.println("Datos guardados correctamente para el usuario: " + usuario);
+	        return true;
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al guardar los datos del usuario: %s", e.getMessage());
+	    }
+
+	    return false;
+	}
+	
+	//BASE DE DATOS NUMERO 3
+	
+	//Metodo para crear las base de datos de posicion
+	public void CrearBBDD_INV() {
+		//Se abre la conexion y se obtiene el Statement
+		//Al abrir la conexion, si no existia el fichero, se crea la base de datos
+		
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+				Statement stmt = con.createStatement()) {
+			 // Define la estructura de la tabla
+			String sql = "CREATE TABLE IF NOT EXISTS INVENTARIO_JUGADORES ("+
+					 "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
+					 "usuario TEXT NOT NULL, "+
+					 "nombreObjeto TEXT NOT NULL, "+
+					 "cantidad INTEGER NOT NULL, "+
+					 "FOREIGN KEY (usuario) REFERENCES POSICION_USUARIO(usuario) ON DELETE CASCADE "+
+					");";
+			
+			 // Ejecuta la consulta para crear la tabla
+            stmt.executeUpdate(sql);
+            System.out.println("Tabla POSICION_USUARIO creada o ya existía.");
+			
+		} catch (Exception e) {
+			System.err.format("\n* Error al crear la tabla en la base de datos: %s", e.getMessage());
+            e.printStackTrace();
+		}
+	}
+	
+	//Metodo para poner valores predeterminados
+	@SuppressWarnings("unused")
+	private void insertarItemsPredeterminados(Statement stmt) {
+	    String insertarItemsSQL = """
+	        INSERT INTO INVENTARIO_USUARIO (usuario, nombreObjeto, cantidad)
+	        VALUES
+	            ('Default', 'Espada de Madera', 1),
+	            ('Default', 'Pocion de Salud', 1),
+	            ('Default', 'Manzana', 1);
+	        """;
+
+	    try {
+	        stmt.executeUpdate(insertarItemsSQL);
+	        System.out.println("Ítems predeterminados insertados para el usuario 'Default'.");
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al insertar los ítems predeterminados: %s", e.getMessage());
+	    }
+	}
+	
+	//Metodo para guardar item en el inventario
+	public void guardarItemEnInventario(int idPosicion, String nombreObjeto, int cantidad) {
+	    String insertarItemSQL = """
+	        INSERT INTO INVENTARIO_USUARIO (id_posicion, nombreObjeto, cantidad)
+	        VALUES (?, ?, ?);
+	    """;
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(insertarItemSQL)
+	    ) {
+	        // Establece los valores en el PreparedStatement
+	        pstmt.setInt(1, idPosicion);  // id_posicion
+	        pstmt.setString(2, nombreObjeto);  // nombreObjeto
+	        pstmt.setInt(3, cantidad);  // cantidad
+
+	        // Ejecuta la inserción
+	        pstmt.executeUpdate();
+	        System.out.println("Ítem '" + nombreObjeto + "' guardado correctamente para el usuario con id_posicion " + idPosicion);
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al guardar el ítem: %s", e.getMessage());
+	    }
+	}
+	
+	//Metodo para eliminar item de inventario
+	public void eliminarItemDelInventario(int idPosicion, String nombreObjeto) {
+	    String eliminarItemSQL = """
+	        DELETE FROM INVENTARIO_USUARIO
+	        WHERE id_posicion = ? AND nombreObjeto = ?;
+	    """;
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(eliminarItemSQL)
+	    ) {
+	        // Establece los valores en el PreparedStatement
+	        pstmt.setInt(1, idPosicion);  // id_posicion
+	        pstmt.setString(2, nombreObjeto);  // nombreObjeto
+
+	        // Ejecuta la eliminación
+	        int rowsAffected = pstmt.executeUpdate();
+	        if (rowsAffected > 0) {
+	            System.out.println("Ítem '" + nombreObjeto + "' eliminado correctamente para el usuario con id_posicion " + idPosicion);
+	        } else {
+	            System.out.println("No se encontró el ítem '" + nombreObjeto + "' para el usuario con id_posicion " + idPosicion);
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al eliminar el ítem: %s", e.getMessage());
+	    }
 	}
 }
