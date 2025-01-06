@@ -532,6 +532,34 @@ public class GestorBD {
 	    return false;
 	}
 	
+	//Metodo para insertar datos en la tabla de pos
+	public void insertarPosicionUsuario(String usuario, int x, int y, int numCelda, int numMapa, String mapaCargar) {
+	    // SQL para insertar los datos en la tabla POSICION_USUARIO
+	    String insertarPosicionSQL = """
+	        INSERT INTO POSICION_USUARIO (usuario, x, y, numCelda, numMapa, mapaCargar)
+	        VALUES (?, ?, ?, ?, ?, ?);
+	    """;
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(insertarPosicionSQL)
+	    ) {
+	        // Establecer los valores de los parámetros en el PreparedStatement
+	        pstmt.setString(1, usuario);  // Usuario
+	        pstmt.setInt(2, x);  // Posición X
+	        pstmt.setInt(3, y);  // Posición Y
+	        pstmt.setInt(4, numCelda);  // Número de celda
+	        pstmt.setInt(5, numMapa);  // Número de mapa
+	        pstmt.setString(6, mapaCargar);  // Mapa que el usuario debe cargar (String)
+
+	        // Ejecutar la inserción
+	        pstmt.executeUpdate();
+	        System.out.println("Posición de usuario '" + usuario + "' insertada correctamente.");
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al insertar la posición del usuario: %s", e.getMessage());
+	    }
+	}
+	
 	//BASE DE DATOS NUMERO 3
 	
 	//Metodo para crear las base de datos de posicion
