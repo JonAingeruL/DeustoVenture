@@ -549,7 +549,7 @@ public class GestorBD {
 			
 			 // Ejecuta la consulta para crear la tabla
             stmt.executeUpdate(sql);
-            System.out.println("Tabla POSICION_USUARIO creada o ya existía.");
+            System.out.println("Tabla INVENTARIO_JUGADORES creada o ya existía.");
 			
 		} catch (Exception e) {
 			System.err.format("\n* Error al crear la tabla en la base de datos: %s", e.getMessage());
@@ -557,29 +557,10 @@ public class GestorBD {
 		}
 	}
 	
-	//Metodo para poner valores predeterminados
-	@SuppressWarnings("unused")
-	private void insertarItemsPredeterminados(Statement stmt) {
-	    String insertarItemsSQL = """
-	        INSERT INTO INVENTARIO_USUARIO (usuario, nombreObjeto, cantidad)
-	        VALUES
-	            ('Default', 'Espada de Madera', 1),
-	            ('Default', 'Pocion de Salud', 1),
-	            ('Default', 'Manzana', 1);
-	        """;
-
-	    try {
-	        stmt.executeUpdate(insertarItemsSQL);
-	        System.out.println("Ítems predeterminados insertados para el usuario 'Default'.");
-	    } catch (SQLException e) {
-	        System.err.format("\n* Error al insertar los ítems predeterminados: %s", e.getMessage());
-	    }
-	}
-	
 	//Metodo para guardar item en el inventario
-	public void guardarItemEnInventario(int idPosicion, String nombreObjeto, int cantidad) {
+	public void guardarItemEnInventario(String usuario, String nombreObjeto, int cantidad) {
 	    String insertarItemSQL = """
-	        INSERT INTO INVENTARIO_USUARIO (id_posicion, nombreObjeto, cantidad)
+	        INSERT INTO INVENTARIO_JUGADORES (usuario, nombreObjeto, cantidad)
 	        VALUES (?, ?, ?);
 	    """;
 
@@ -588,23 +569,23 @@ public class GestorBD {
 	        PreparedStatement pstmt = con.prepareStatement(insertarItemSQL)
 	    ) {
 	        // Establece los valores en el PreparedStatement
-	        pstmt.setInt(1, idPosicion);  // id_posicion
+	        pstmt.setString(1, usuario);  // usuario
 	        pstmt.setString(2, nombreObjeto);  // nombreObjeto
 	        pstmt.setInt(3, cantidad);  // cantidad
 
 	        // Ejecuta la inserción
 	        pstmt.executeUpdate();
-	        System.out.println("Ítem '" + nombreObjeto + "' guardado correctamente para el usuario con id_posicion " + idPosicion);
+	        System.out.println("Ítem '" + nombreObjeto + "' guardado correctamente para el usuario" + usuario);
 	    } catch (SQLException e) {
 	        System.err.format("\n* Error al guardar el ítem: %s", e.getMessage());
 	    }
 	}
 	
 	//Metodo para eliminar item de inventario
-	public void eliminarItemDelInventario(int idPosicion, String nombreObjeto) {
+	public void eliminarItemDelInventario(String usuario, String nombreObjeto) {
 	    String eliminarItemSQL = """
-	        DELETE FROM INVENTARIO_USUARIO
-	        WHERE id_posicion = ? AND nombreObjeto = ?;
+	        DELETE FROM INVENTARIO_JUGADORES
+	        WHERE usuario = ? AND nombreObjeto = ?;
 	    """;
 
 	    try (
@@ -612,15 +593,15 @@ public class GestorBD {
 	        PreparedStatement pstmt = con.prepareStatement(eliminarItemSQL)
 	    ) {
 	        // Establece los valores en el PreparedStatement
-	        pstmt.setInt(1, idPosicion);  // id_posicion
+	        pstmt.setString(1, usuario);  // id_posicion
 	        pstmt.setString(2, nombreObjeto);  // nombreObjeto
 
 	        // Ejecuta la eliminación
 	        int rowsAffected = pstmt.executeUpdate();
 	        if (rowsAffected > 0) {
-	            System.out.println("Ítem '" + nombreObjeto + "' eliminado correctamente para el usuario con id_posicion " + idPosicion);
+	            System.out.println("Ítem '" + nombreObjeto + "' eliminado correctamente para el usuario" + usuario);
 	        } else {
-	            System.out.println("No se encontró el ítem '" + nombreObjeto + "' para el usuario con id_posicion " + idPosicion);
+	            System.out.println("No se encontró el ítem '" + nombreObjeto + "' para el usuario " + usuario);
 	        }
 	    } catch (SQLException e) {
 	        System.err.format("\n* Error al eliminar el ítem: %s", e.getMessage());
