@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -45,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// establecemos los fps como variable
 	// FPS
 	int FPS = 60;
+	int contadorTiempo =60;
 
 	// Ya tenemos la pantalla creada, pero todos los juegos 2d de aventuras tienen
 	// tiempo, hay enemigos que se mueven etc... por eso hay que hacer un reloj (los
@@ -115,9 +117,32 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	
 	// Creamos un constructor de este GamePanel
-	public GamePanel(String usuarioActual) {
-		
+	public GamePanel(String usuarioActual, Boolean esnuevoUsuario) {
+		//creo un gestor nuevo en gamePanel
+		GestorBD gbd = new GestorBD();
+		//hago que el jugador tenga este nombre (se utiliza ya que el gameOverScreen utiliza a un jugador
 		jugador.setNombreJugador(usuarioActual);
+		if (esnuevoUsuario) {
+			//en caso de ser un usuarioNuevo (se verifica antes), se ponen todos los valores en 0
+			jugador.setEnemigosDerrotados(0);
+			jugador.setNumMuertes(0);
+			jugador.setTiempoJugado(0);
+			//si está el jugador ya en la base de datos, se le cambian los valores a 0 (ya que es una nueva partida)
+			if (gbd.existeUsuario(usuarioActual)) {
+				gbd.actualizarUsuario(new Usuario(usuarioActual,0,0,0));
+
+				//en caso de que no, se añade un nuevo usuario a la BD
+			} else {
+				gbd.guardarUsuarioConValidacion(new Usuario(usuarioActual,0,0,0));	
+				
+			}
+		} else { //en caso de que le demos a continuar, todavía no está del todo hecho
+			Usuario u = gbd.obtenerEstadisticasUsuario(usuarioActual);
+			jugador.setEnemigosDerrotados(u.getNumAsesinatos());
+			jugador.setNumMuertes(u.getNumMuertes());
+			jugador.setTiempoJugado(u.getTiempoJugado());
+			
+		}
 		
 		this.setPreferredSize(new Dimension(pantallaAnchuta, pantallaAltura)); // Esto establece el tamaño de esta clase
 																				// (JPanel)
@@ -144,6 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
 		cargarEmemigos();
 		//Cargamos un txt de npcs ya hecho 
 		cargarNPCs();
+		
 		musicPlayer.playMusic();
 		//cargamos el primer mapa XD
 		mapa.updateMapa(tamañoBaldosa);
@@ -240,6 +266,12 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// Para hacer las dos cosas dentro del bucle tenemos que crear dos metodos
 	public void update() {
+		
+		contadorTiempo--;
+		if(contadorTiempo==0) {
+			jugador.setTiempoJugado(jugador.getTiempoJugado()+1);
+			contadorTiempo=60;
+		}
 		musicPlayer.cambiarVolumen(volumenMusica);
 		// Recomiendo comentar jugador.muerte para debugging
 		jugador.muerte(this, gameThread);
@@ -336,9 +368,13 @@ public class GamePanel extends JPanel implements Runnable {
 				enemigo.dibujarEnemigo(g2);
 			}
 		}
+		
+		//muestra tiempo de juego TOTAL
+		g2.setColor(Color.BLACK);
+		g2.drawString(""+jugador.getTiempoJugado()+"", 60, 60);
 		//dibuja los mensajes de looteo
 		int alturaDibujadoTexto =700;
-		
+
 		for (Mensaje mensaje : mensajes) {
 			g2.setColor(mensaje.getColorMensaje());
 				g2.drawString(mensaje.getTexto(), 750, alturaDibujadoTexto);

@@ -13,7 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import main.GamePanel;
 import main.GestorBD;
+import main.Usuario;
 
 public class GameOverScreen extends JFrame {
 
@@ -22,7 +24,7 @@ public class GameOverScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public GameOverScreen(int puntos,String usuarioActual)  {
+	public GameOverScreen(int puntos,GamePanel gp, String usuarioActual)  {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -57,6 +59,16 @@ public class GameOverScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GestorBD gbd = new GestorBD();
+				
+
+					
+				int choice = JOptionPane.showConfirmDialog(botonGuardar, "Quieres guardar el progreso? El juego después se cerrará", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null);
+				if (choice==0) {
+					gbd.actualizarUsuario(new Usuario(usuarioActual, gp.getJugador().getNumMuertes(), gp.getJugador().getEnemigosDerrotados(), gp.getJugador().getTiempoJugado()));
+					System.exit(0);
+					dispose();
+					
+				}
 				
 				
 			}

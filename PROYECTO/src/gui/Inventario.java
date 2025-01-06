@@ -78,8 +78,6 @@ public class Inventario extends JFrame {
 		// Esto hace que que se pueda escuchar el evento de tecla esc añadido abajo
 		setFocusable(true);
 
-		// Nombres de las columnas
-		String[] columnaNombres = { "Objeto", "Cantidad" };
 
 		// Crear el modelo de la tabla
 		DefaultTableModel model = createTableModel(jugador);

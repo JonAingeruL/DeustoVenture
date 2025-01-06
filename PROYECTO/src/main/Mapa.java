@@ -30,6 +30,20 @@ public class Mapa {
 	//valor 5 = casa.txt
 	private int numeroMapa;
 
+	
+	
+	
+	
+	
+	
+	public String getArchivoACargar() {
+		return archivoACargar;
+	}
+
+	public void setArchivoACargar(String archivoACargar) {
+		this.archivoACargar = archivoACargar;
+	}
+
 	public Mapa(int[][] celda, int numCelda, GamePanel gp) {
 		super();
 		this.celda = celda;

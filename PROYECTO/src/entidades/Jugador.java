@@ -1,6 +1,5 @@
 package entidades;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
-import javax.swing.table.DefaultTableModel;
 
 import gui.GameOverScreen;
 import gui.Inventario;
@@ -32,14 +30,38 @@ public class Jugador extends Personaje {
 	boolean interaccionDisponible = false;
 	public boolean hablarConNPC = false;
 	private HashMap<String, Integer> inventario = new HashMap<String, Integer>();
-	private int enemigosDerrotados = 0;
+
+
 	public String objetoEnMano = "";
 	public int danoJugador = 0;
-	private String nombreJugador;
+	
 	//guia numMapa
 	//mapa tutorial =0 ; mapa principal =1 ;mapa dungeon1 = 2;  mapa dungeon2 = 3;  mapa dungeon3 =4 ; mapa casa =5;
 	
+	//estadísticas jugador
+	private String nombreJugador;
+	private int enemigosDerrotados;
+	private int numMuertes;
+	private int tiempoJugado;
 	
+	
+	
+	public int getNumMuertes() {
+		return numMuertes;
+	}
+
+	public void setNumMuertes(int numMuertes) {
+		this.numMuertes = numMuertes;
+	}
+
+	public int getTiempoJugado() {
+		return tiempoJugado;
+	}
+
+	public void setTiempoJugado(int tiempoJugado) {
+		this.tiempoJugado = tiempoJugado;
+	}
+
 	public String getNombreJugador() {
 		return nombreJugador;
 	}
@@ -696,8 +718,9 @@ public class Jugador extends Personaje {
 	public void muerte(GamePanel gp, Thread t) {
 		if(vidas[0] == false) {
 			t.interrupt();
-			new GameOverScreen(getEnemigosDerrotados(),nombreJugador);
+			numMuertes++;
+			new GameOverScreen(enemigosDerrotados,gp,nombreJugador);
 		}
 	}
-
+	
 }

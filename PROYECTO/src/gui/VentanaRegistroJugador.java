@@ -15,11 +15,14 @@ import javax.swing.JTextField;
 
 import main.GamePanel;
 import main.GestorBD;
+import main.Usuario;
 
 public class VentanaRegistroJugador extends JFrame {
 	private static final long serialVersionUID = 1L;
+	private String usuarioActual;
+	private boolean esnuevoUsuario;
 	
-	public VentanaRegistroJugador(String usuarioActual) {
+	public VentanaRegistroJugador() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Usuario");
 		setSize(300, 150);
@@ -76,19 +79,22 @@ public class VentanaRegistroJugador extends JFrame {
 				GestorBD gbd = new GestorBD();
 				
 				
-				
-				/*if (zonaEscribir.getText().equals("") || zonaEscribir.equals(null)) {
+				usuarioActual = zonaEscribir.getText();
+				if (usuarioActual.equals("") || usuarioActual.equals(null)) {
 					JOptionPane.showMessageDialog(botonIniciarJuego, "Tienes que poner un usuario para iniciar el juego");
 				} else if (gbd.existeUsuario(usuarioActual)) {
 						int choice = JOptionPane.showConfirmDialog(botonIniciarJuego, "El usuario "+usuarioActual+ " ya existe, quiere reescribir su progreso? "
-								, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+								, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);	
 						if (choice ==0) {
+							esnuevoUsuario=false;
+							iniciarJuego(usuarioActual,esnuevoUsuario);
 							dispose();
 						}
 				} else {
-						iniciarJuego(usuarioActual);
-					}*/
-				iniciarJuego(usuarioActual);
+					esnuevoUsuario = true;
+						iniciarJuego(usuarioActual,esnuevoUsuario);
+					}
+				
 				dispose();
 				
 			}
@@ -108,14 +114,14 @@ public class VentanaRegistroJugador extends JFrame {
 	
 	
 	
-	public void iniciarJuego(String usuarioActual) {
+	public void iniciarJuego(String usuarioActual, Boolean esnuevoUsuario) {
 		JFrame window = new JFrame(); //Creamos la ventana
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Esto permite cerrar bien la ventana cuando le demos a la X
 		window.setResizable(false); //Para que no se le pueda cambiar el tamaño a la ventana
 		window.setTitle("DeustoVenture"); //Le damos un nombre a la ventana
 		
 		//Despues de crear la JPanel en la clase GamePanel la añadimos al main para poder verla
-		GamePanel gamePanel = new GamePanel(usuarioActual); //creanmos el gamepanel
+		GamePanel gamePanel = new GamePanel(usuarioActual,esnuevoUsuario); //creanmos el gamepanel
 		window.add(gamePanel); //Añandimos el gamepanel a la ventana
 		
 		window.pack(); //Con esto hace que se ajuste al tamaño y diseño preferidos de su subcomponente (el gamepanel)

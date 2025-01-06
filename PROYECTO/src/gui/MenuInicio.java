@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,6 +19,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import main.GestorBD;
+import main.Usuario;
+
 
 public class MenuInicio extends JFrame {
 
@@ -26,7 +30,7 @@ public class MenuInicio extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Image imagenFondo = new ImageIcon("resources/texturas/extra/fondoMenuInicial.png").getImage();
-	private String usuarioActual;
+
 	
 	public MenuInicio() {
 		setTitle("Deusto Venture");
@@ -92,7 +96,7 @@ public class MenuInicio extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new VentanaRegistroJugador(usuarioActual);
+				new VentanaRegistroJugador();
 				dispose();
 			}
 		});
@@ -109,13 +113,17 @@ public class MenuInicio extends JFrame {
 		add(botonRecords);
 		botonRecords.setAlignmentX(CENTER_ALIGNMENT);
 		botonRecords.setPreferredSize(new Dimension(100,50));
+		botonRecords.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GestorBD gbd = new GestorBD();
+				ArrayList<Usuario> usuarios = (ArrayList<Usuario>) gbd.listarUsuarios();
+				new TablaDePuntuaciones(usuarios);
+				
+			}
+		});
 		
-		
-		//Configuracion
-		add(Box.createVerticalGlue());
-		add(botonConfiguracion);
-		botonConfiguracion.setAlignmentX(CENTER_ALIGNMENT);
-		botonConfiguracion.setPreferredSize(new Dimension(100, 50));
 		
 		//Salir
 		add(Box.createVerticalGlue());
