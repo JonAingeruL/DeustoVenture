@@ -25,6 +25,8 @@ public class Mapa {
 	public static List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
 			37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 50, 60);
 	
+	public static List<Integer> numerosSinUtilizar = List.of(3,18,19,25,26,27,28,29,34);
+	
 	//Esta variable sirve para controlar el nº de mapa AL CARGAR ENEMIGOS
 	//valor 0 = tutorial.txt, valor 1 = mapa.txt, valor 2 = dungeon1.txt, valor 3 = dungeon2.txt, valor 4= dungeon3.txt
 	//valor 5 = casa.txt
@@ -172,7 +174,7 @@ public class Mapa {
 			for (int i = 0; i < 12; i++) {
 				for (int j = 0; j < 16; j++) {
 					//Dibujamos las texturas que ya tenemos
-					if (celda[j][i]<=15 && !(celda[j][i]==3)) {
+					if (celda[j][i]<=33 && !(numerosSinUtilizar.contains(celda[j][i]))) {
 						try {
 							//Creo un randomizador
 							Random rand = new Random();
@@ -200,14 +202,10 @@ public class Mapa {
 						// Por cada celda, dependiendo de su número, voy dibujando bloques donde
 						// corresponde
 						//Estos dibujos son la representación temporal de los materiales que todavía no tienen textura
-						case 3, 16,17,18,19:
+						case 3:
 							g.setColor(Color.GREEN);
 							break;
-						
-						case 20,21,22,23,24:
-							g.setColor(Color.MAGENTA);
-							break;
-						case 30,31,32,33,35,36,37,38,39,40,41,42,43,44,45,46:
+						case 35,36,37,38,39,40,41,42,43,44,45,46:
 							g.setColor(Color.ORANGE.darker());
 							break;
 						case 50:

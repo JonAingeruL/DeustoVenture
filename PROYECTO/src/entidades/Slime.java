@@ -13,5 +13,5 @@ public class Slime extends Enemigo{
 		
 		
 	}
-
+ 
 }
