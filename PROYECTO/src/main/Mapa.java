@@ -112,6 +112,25 @@ public class Mapa {
 	 * @return Una celda int[][] sacada del indice correspondiente de un fichero
 	 */
 	public void cargarCelda(String celda, int num) {
+		ArrayList <Integer> celdasEspeciales = new ArrayList<Integer>() {
+			{
+				add(41);
+				add(84);
+				add(57);
+				}
+			};
+			ArrayList <String> llaves = new ArrayList<String>() {
+				{
+					add("Llave del bosque");
+					add("Llave de la montaña");
+					add("Llave del volcán");
+					}
+				};
+		if (celdasEspeciales.contains(num)) {
+			if (gp.getJugador().getInventario().containsKey(llaves.get(celdasEspeciales.indexOf(num)))) {
+				num = num*1000;
+			}
+		}
 		// Creo un array donde se guardarán los números
 		int[][] map = new int[16][12];
 
@@ -157,6 +176,7 @@ public class Mapa {
 			
 		}
 	}
+
 	
 	
 	

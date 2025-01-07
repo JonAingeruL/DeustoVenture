@@ -58,8 +58,8 @@ public class MenuPausa extends JFrame {
 		salir.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		salir.addActionListener(e -> salir());
 		salir.setForeground(Color.RED);
-		// Ayuda a que la parte de abajo no parezca muy vacía y puede ser interesante.
-		JLabel hora = new JLabel("" + LocalDate.now());
+		// TODO Poner esto en algún formato tiempo
+		JLabel tiempo = new JLabel(""+gp.getJugador().getTiempoJugado()+"segundos");
 		
 		add(Box.createVerticalGlue());
 		add(informacion);
@@ -89,8 +89,8 @@ public class MenuPausa extends JFrame {
 		salir.setAlignmentX(CENTER_ALIGNMENT);
 		salir.setPreferredSize(new Dimension(100, 50));
 		add(Box.createVerticalGlue());
-		add(hora);
-		hora.setAlignmentX(CENTER_ALIGNMENT);
+		add(tiempo);
+		tiempo.setAlignmentX(CENTER_ALIGNMENT);
 		add(Box.createVerticalGlue());
 		setBackground(Color.BLACK);
 		setVisible(true);

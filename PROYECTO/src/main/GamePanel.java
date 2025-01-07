@@ -95,13 +95,13 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// Despues de crear el ManejoTeclado y los controles de movimiento del juego y
 	// hacer que lo pueda leer el GamePanel, hay que crear el mapa y el jugador
-	//Creo el mapa
-	Mapa mapa = new Mapa(1,this);
-
+	
 	// Creo el jugador
 	// TODO Pensar el esquema de herencias de la clase personaje y crear una clase
 	// personajeJugable (PJ) que sea la que controla el jugador
 	Jugador jugador = new Jugador(this, tecladoM);
+	//Creo el mapa
+		Mapa mapa = new Mapa(41,this);
 	HashMap<String,ArrayList<Enemigo>> enemigos;
 	int contadorBoss = 180;
 	
@@ -371,7 +371,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		//muestra tiempo de juego TOTAL
 		g2.setColor(Color.BLACK);
-		g2.drawString(""+jugador.getTiempoJugado()+"", 60, 60);
+		//g2.drawString(""+jugador.getTiempoJugado()+"", 60, 60);
 		//dibuja los mensajes de looteo
 		int alturaDibujadoTexto =700;
 
