@@ -86,7 +86,7 @@ public class VentanaRegistroJugador extends JFrame {
 						int choice = JOptionPane.showConfirmDialog(botonIniciarJuego, "El usuario "+usuarioActual+ " ya existe, quiere reescribir su progreso? "
 								, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);	
 						if (choice ==0) {
-							esnuevoUsuario=false;
+							esnuevoUsuario=true;
 							iniciarJuego(usuarioActual,esnuevoUsuario);
 							dispose();
 						} else {
@@ -94,7 +94,7 @@ public class VentanaRegistroJugador extends JFrame {
 							dispose();
 						}
 				} else {
-					esnuevoUsuario = true;
+					esnuevoUsuario = false;
 						iniciarJuego(usuarioActual,esnuevoUsuario);
 					}
 				
