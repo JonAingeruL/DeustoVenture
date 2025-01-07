@@ -101,7 +101,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// personajeJugable (PJ) que sea la que controla el jugador
 	Jugador jugador = new Jugador(this, tecladoM);
 	//Creo el mapa
-		Mapa mapa = new Mapa(41,this);
+		Mapa mapa = new Mapa(1,this);
 	HashMap<String,ArrayList<Enemigo>> enemigos;
 	int contadorBoss = 180;
 	
