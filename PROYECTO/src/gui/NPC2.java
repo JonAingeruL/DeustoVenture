@@ -37,15 +37,41 @@ public class NPC2 extends JFrame{
 		
 		setBounds(x, y, ancho, largo); 
 
-    	//Esto hace que que se pueda escuchar el evento de tecla esc añadido abajo
-    	setFocusable(true);
-    	setResizable(false);
-        
-    	JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Diseño vertical
-        		
-        add(panel);
+		// Esto hace que que se pueda escuchar el evento de tecla esc añadido abajo
+	    setFocusable(true);
+	    setResizable(false);
 
+	    // Crear el panel principal
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Diseño vertical
+	    panel.setBorder(BorderFactory.createCompoundBorder(
+	        BorderFactory.createLineBorder(Color.YELLOW, 5), // Borde amarillo grueso
+	        BorderFactory.createEmptyBorder(10, 10, 10, 10) // Espacio interno
+	    ));
+	    panel.setBackground(Color.BLACK); // Fondo negro del panel
+
+	    // Agregar un JLabel con la frase del NPC
+	    JLabel fraseLabel = new JLabel(marcador != null ? marcador : "No hay frase disponible");
+	    fraseLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar el texto
+	    fraseLabel.setFont(new Font("Georgia", Font.BOLD, 18)); // Fuente bonita (Georgia)
+	    fraseLabel.setForeground(Color.YELLOW); // Texto amarillo
+	    fraseLabel.setOpaque(true);
+	    fraseLabel.setBackground(Color.BLACK); // Fondo negro para el texto
+	    fraseLabel.setBorder(BorderFactory.createCompoundBorder(
+	        BorderFactory.createLineBorder(Color.YELLOW, 2), // Borde amarillo para el texto
+	        BorderFactory.createEmptyBorder(5, 5, 5, 5) // Espaciado interno del texto
+	    ));
+	    panel.add(fraseLabel);
+
+	    // Agregar instrucción para cerrar
+	    JLabel instruccion = new JLabel("Pulse ESC para cerrar");
+	    instruccion.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    instruccion.setFont(new Font("Arial", Font.ITALIC, 14));
+	    instruccion.setForeground(Color.LIGHT_GRAY);
+	    panel.add(instruccion);
+
+	    // Agregar el panel a la ventana
+	    add(panel);
 		addWindowListener(new WindowAdapter() {
 
 			@Override
@@ -77,9 +103,6 @@ public class NPC2 extends JFrame{
 		});
 		
 //		leerFichero(marcador);
-		JLabel instruccion = new JLabel("Pulse esc para cerrar");
-		add(instruccion, BorderLayout.NORTH);
-		setResizable(false);
 		setVisible(true);
 
     }
