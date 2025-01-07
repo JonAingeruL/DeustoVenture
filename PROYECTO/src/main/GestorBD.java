@@ -698,4 +698,64 @@ public class GestorBD {
 	        System.err.format("\n* Error al eliminar el ítem: %s", e.getMessage());
 	    }
 	}
+	
+	//Metodo para actulizar los items de la BD
+	public void actualizarItemInventario(int id, String usuario, String nombreObjeto, int cantidad) {
+	    // SQL para actualizar los datos del ítem en la tabla INVENTARIO
+	    String actualizarItemSQL = """
+	        UPDATE INVENTARIO
+	        SET usuario = ?, nombreObjeto = ?, cantidad = ?
+	        WHERE id = ?;
+	    	""";
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(actualizarItemSQL)
+	    ) {
+	        // Asignar valores al PreparedStatement
+	        pstmt.setString(1, usuario);       // Nombre del usuario
+	        pstmt.setString(2, nombreObjeto); // Nombre del objeto
+	        pstmt.setInt(3, cantidad);        // Cantidad del objeto
+	        pstmt.setInt(4, id);              // ID del ítem a actualizar
+
+	        // Ejecutar la actualización
+	        int filasActualizadas = pstmt.executeUpdate();
+	        if (filasActualizadas > 0) {
+	            System.out.println("Ítem del inventario con ID " + id + " actualizado correctamente.");
+	        } else {
+	            System.out.println("No se encontró ningún ítem con el ID " + id + ".");
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al actualizar el ítem del inventario: %s", e.getMessage());
+	    }
+	}
+	
+	//Metodo qeu verifica si un usuario tiene objetos en el inventario
+	public boolean usuarioTieneInventario(String usuario) {
+	    // SQL para contar el número de objetos del usuario en la tabla INVENTARIO
+	    String contarItemsSQL = """
+	        SELECT COUNT(*) AS total
+	        FROM INVENTARIO
+	        WHERE usuario = ?;
+	    	""";
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(contarItemsSQL)
+	    ) {
+	        // Establecer el usuario como parámetro en el PreparedStatement
+	        pstmt.setString(1, usuario);
+
+	        // Ejecutar la consulta
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            int total = rs.getInt("total"); // Obtener el conteo de filas
+	            return total > 0; // Si hay al menos un ítem, devuelve true
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al verificar el inventario del usuario '%s': %s", usuario, e.getMessage());
+	    }
+	    return false; // En caso de error o si no se encuentra nada, devuelve false
+	}
 }
