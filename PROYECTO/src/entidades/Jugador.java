@@ -43,6 +43,7 @@ public class Jugador extends Personaje {
 	private int enemigosDerrotados;
 	private int numMuertes;
 	private int tiempoJugado;
+	private String frase;
 	
 	
 	
@@ -455,14 +456,10 @@ public class Jugador extends Personaje {
 									|| ((y + tamanobaldosa <= (j * tamanobaldosa) + tamanobaldosa)
 											&& (y + tamanobaldosa >= j * tamanobaldosa))))) {
 						System.out.println("Hay colision");
-						if(mapa.getCelda()[i][j] == 50  || mapa.getCelda()[i][j] == 60) {
-							interaccionDisponible = true;
-						if (mapa.getCelda()[i][j] == 60) {
-							hablarConNPC = true;
-							}
+						if(mapa.getCelda()[i][j] == 50 ) {
+							interaccionDisponible = true;		
 						}else {
 							interaccionDisponible = false;
-							hablarConNPC = false;
 						}
 						return true;
 					}
@@ -691,6 +688,12 @@ public class Jugador extends Personaje {
 						&& (((npc.getPosY() <= this.getY() + tamanobaldosa) && (npc.getPosY() >= this.getY()))
 								|| ((npc.getPosY() + tamanobaldosa <= this.getY() + tamanobaldosa)
 										&& (npc.getPosY() + tamanobaldosa >= this.getY()))))) {
+
+					System.out.println("npc");
+					frase = npc.getFrase();
+					interaccionDisponible = true;
+					hablarConNPC = true;
+					
 					return true;
 					
 					
@@ -709,7 +712,7 @@ public class Jugador extends Personaje {
 			new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda(), this);
 			}else{
 			mt.empezarConversacion = true;
-			new NPC2(mt, gp, "-1-");
+			new NPC2(mt, gp, frase);
 			
 		}
 			mt.hablarNPCPulsado = false;
