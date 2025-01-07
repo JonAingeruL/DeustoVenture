@@ -110,16 +110,23 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	
 	
+	public Mapa getMapa() {
+		return mapa;
+	}
+
+	public void setMapa(Mapa mapa) {
+		this.mapa = mapa;
+	}
+
 	private ArrayList<Mensaje> mensajes = new ArrayList<Mensaje>();
 	
 	
 	
 	
-	
 	// Creamos un constructor de este GamePanel
-	public GamePanel(String usuarioActual, Boolean esnuevoUsuario) {
+	public GamePanel(String usuarioActual, Boolean esnuevoUsuario, GestorBD gbd) {
 		//creo un gestor nuevo en gamePanel
-		GestorBD gbd = new GestorBD();
+		
 		//hago que el jugador tenga este nombre (se utiliza ya que el gameOverScreen utiliza a un jugador
 		jugador.setNombreJugador(usuarioActual);
 		if (esnuevoUsuario) {
@@ -130,13 +137,22 @@ public class GamePanel extends JPanel implements Runnable {
 			//si está el jugador ya en la base de datos, se le cambian los valores a 0 (ya que es una nueva partida)
 			if (gbd.existeUsuario(usuarioActual)) {
 				gbd.actualizarUsuario(new Usuario(usuarioActual,0,0,0));
+				
+
 
 				//en caso de que no, se añade un nuevo usuario a la BD
 			} else {
 				gbd.guardarUsuarioConValidacion(new Usuario(usuarioActual,0,0,0));	
 				
+				
+				
 			}
-		} else { //en caso de que le demos a continuar, todavía no está del todo hecho
+			if (gbd.existeUsuarioPos(usuarioActual)) {
+				gbd.resetearPosicionUsuario(usuarioActual, "resources/mapas/tutorial.txt");
+			} else {
+				gbd.insertarPosicionUsuario(usuarioActual, 475, 400, 1, 0, "resources/mapas/tutorial.txt");
+			}
+		} else { //en caso de que le demos a continuar
 			Usuario u = gbd.obtenerEstadisticasUsuario(usuarioActual);
 			jugador.setEnemigosDerrotados(u.getNumAsesinatos());
 			jugador.setNumMuertes(u.getNumMuertes());
@@ -161,7 +177,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	// vamos a crear un nuevo metodo para iniciar el juego
-	public void iniciarJuegoHilo() {
+	public void iniciarJuegoHilo(String usuarioActual, Boolean esNuevoUsuario, GestorBD gbd) {
 		
 		//AVISO: El loot de prueba todavía no hace nada en el inventario
 		InventarioCofre.inicializarLoot();
@@ -172,7 +188,21 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		musicPlayer.playMusic();
 		//cargamos el primer mapa XD
-		mapa.updateMapa(tamañoBaldosa);
+		if (esNuevoUsuario) {
+			mapa.updateMapa(tamañoBaldosa);
+		} else {
+			 //datosACargar esta ordenado así: {usuario, x,y,numCelda,numMapa, direccionMapa}
+			List<Object> datosACargar = gbd.buscarDatosUsuarioPOS(usuarioActual);
+			boolean empiezaDentroDeMazmorra;
+			String archivo = (String) datosACargar.get(5);
+			if (archivo.equals("resources/mapas/mapa.txt")) {
+				empiezaDentroDeMazmorra = false;
+			} else {
+				empiezaDentroDeMazmorra= true;
+			}
+			jugador.cambioMapa((String) datosACargar.get(5), (Integer) datosACargar.get(3), (Integer) datosACargar.get(4), tamañoBaldosa, (Integer) datosACargar.get(1), (Integer) datosACargar.get(2), empiezaDentroDeMazmorra, mapa);
+		}
+		
 		// Vamos a instanciar el gameThread
 		gameThread = new Thread(this); // Cuando ponemos this nos referimos a esta clase (GamePanel), basicamente
 										// estamos pasando la clase GamePanel a este constructor de hilo para

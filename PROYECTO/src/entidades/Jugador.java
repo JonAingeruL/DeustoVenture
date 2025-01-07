@@ -540,6 +540,8 @@ public class Jugador extends Personaje {
 		return false;
 	}
 	public void cambioMapa(String archivoACargar, int numeroCelda, int numeroMapa, int tamanoBaldosa, int posx, int posy, boolean estaDentro, Mapa mapa) {
+		mapa.setArchivoACargar(archivoACargar);
+		this.archivoACargar = archivoACargar;
 		mapa.setNumcelda(numeroCelda);
 		mapa.setNumeroMapa(numeroMapa);
 		mapa.cargarCelda(archivoACargar, mapa.getNumcelda());

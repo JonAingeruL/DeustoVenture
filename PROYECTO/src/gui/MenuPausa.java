@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import main.GamePanel;
+import main.GestorBD;
+import main.Usuario;
 
 
 public class MenuPausa extends JFrame {
@@ -25,6 +27,7 @@ public class MenuPausa extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private boolean isOpen = true;
+	GestorBD gbd = new GestorBD();
 
 	public MenuPausa(GamePanel gp) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -46,10 +49,14 @@ public class MenuPausa extends JFrame {
 			}
 
 		});
-
+		
 		JButton reanudar = new JButton("Reanudar partida");
 		reanudar.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		reanudar.addActionListener(e -> reanudar(gp));
+		
+		
+		
+		
 		// Placeholder podría ser un menú de instrucciones, un menú de opciones o
 		// incluso un diario de objetivos
 		JButton botonConfiguracion = new JButton("Configuracion");
@@ -59,7 +66,7 @@ public class MenuPausa extends JFrame {
 		salir.addActionListener(e -> salir());
 		salir.setForeground(Color.RED);
 		// TODO Poner esto en algún formato tiempo
-		JLabel tiempo = new JLabel(""+gp.getJugador().getTiempoJugado()+"segundos");
+		JLabel tiempo = new JLabel(""+gp.getJugador().getTiempoJugado()+" segundos");
 		
 		add(Box.createVerticalGlue());
 		add(informacion);
@@ -68,6 +75,29 @@ public class MenuPausa extends JFrame {
 		add(reanudar);
 		reanudar.setAlignmentX(CENTER_ALIGNMENT);
 		reanudar.setPreferredSize(new Dimension(100, 50));
+		add(Box.createVerticalGlue());
+		
+		JButton botonGuardar = new JButton("Guardar Partida");
+		botonGuardar.setAlignmentX(CENTER_ALIGNMENT);
+		botonGuardar.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+		botonGuardar.setPreferredSize(new Dimension(100,50));
+		botonGuardar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int choice = JOptionPane.showConfirmDialog(botonGuardar, "Seguro que quieres guardar? Reescribirás tu guardado anterior", "Confirmar", JOptionPane.YES_NO_OPTION);
+				if (choice ==0) {
+					gbd.actualizarUsuario(new Usuario(gp.getJugador().getNombreJugador(), gp.getJugador().getNumMuertes(), gp.getJugador().getEnemigosDerrotados(), gp.getJugador().getTiempoJugado()));
+					gbd.actualizarPosicionUsuarioPos(gp.getJugador().getNombreJugador(), gp.getJugador().getX(), gp.getJugador().getY(), gp.getMapa().getNumcelda(), gp.getMapa().getNumeroMapa(), gp.getJugador().getArchivoACargar());
+					JOptionPane.showMessageDialog(botonGuardar, "Partida guardada, ya puedes seguir jugando o cerrar el juego!");
+				}
+			
+				
+			}
+		});
+		
+		
+		add(botonGuardar);
 		add(Box.createVerticalGlue());
 		add(botonConfiguracion);
 		botonConfiguracion.setAlignmentX(CENTER_ALIGNMENT);
@@ -78,7 +108,6 @@ public class MenuPausa extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MenuConfiguracion(gp);
-				
 			}
 		});
 		

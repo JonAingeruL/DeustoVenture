@@ -106,6 +106,16 @@ public class MenuInicio extends JFrame {
 		botonContinuar.setAlignmentX(CENTER_ALIGNMENT);
 		botonContinuar.setPreferredSize(new Dimension(100, 50));
 		
+		botonContinuar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaContinuarJugador();
+				dispose();
+				
+			}
+		});
+		
 		
 		//Records 
 		add(Box.createVerticalGlue());

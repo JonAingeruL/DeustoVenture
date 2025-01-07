@@ -430,32 +430,92 @@ public class GestorBD {
 	    return datosUsuario; // Devolverá una lista vacía si no se encuentra nada
 	}
 	
-	//Metodo para resetear posiciones
-	public boolean resetearPosicionUsuario(String usuario) {
-	    String sql = """
-	        UPDATE POSICION_USUARIO
-	        SET x = 0, y = 0, numCelda = 1, numMapa = 0, mapaCargar = 0
-	        WHERE usuario = ?;
-	        """;
+	public boolean existeUsuarioPos(String nomUsuario) {
+	    String sql = "SELECT COUNT(*) AS total FROM POSICION_USUARIO WHERE usuario = ?";
+	    boolean existe = false;
 
 	    try (
 	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
 	        PreparedStatement pstmt = con.prepareStatement(sql)
 	    ) {
-	        pstmt.setString(1, usuario);
+	        pstmt.setString(1, nomUsuario);
 
-	        int filasAfectadas = pstmt.executeUpdate();
-	        if (filasAfectadas > 0) {
-	            System.out.println("Posición reseteada para el usuario: " + usuario);
-	            return true;
-	        } else {
-	            System.out.println("El usuario no existe: " + usuario);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next() && rs.getInt("total") > 0) {
+	                existe = true;
+	            }
 	        }
-	    } catch (SQLException e) {
-	        System.err.format("\n* Error al resetear los datos del usuario: %s", e.getMessage());
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al verificar existencia del usuario: %s", e.getMessage());
+	        e.printStackTrace();
 	    }
 
-	    return false;
+	    return existe;
+	}
+	
+	//Metodo para resetear posiciones
+	public boolean resetearPosicionUsuario(String usuario,String mapaCargar) {
+	    String sql = """
+	        UPDATE POSICION_USUARIO
+	        SET x = 475, y = 400, numCelda = 1, numMapa = 0, mapaCargar = ?
+	        WHERE usuario = ?;
+	        """;
+	    
+		    try (
+			        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+			        PreparedStatement pstmt = con.prepareStatement(sql)
+			    ) {
+			    	pstmt.setString(1, mapaCargar);
+			        pstmt.setString(2, usuario);
+
+			        int filasAfectadas = pstmt.executeUpdate();
+			        if (filasAfectadas > 0) {
+			            System.out.println("Posición reseteada para el usuario: " + usuario);
+			            return true;
+			        } else {
+			            System.out.println("El usuario no existe: " + usuario);
+			        }
+			    } catch (SQLException e) {
+			        System.err.format("\n* Error al resetear los datos del usuario: %s", e.getMessage());
+			    }
+
+	    
+	    return false;	
+	    
+	}
+	//metodo para actualizar posicion usuario
+	public boolean actualizarPosicionUsuarioPos(String usuario,int x, int y, int numCelda, int numMapa, String mapaCargar) {
+	    String sql = """
+	        UPDATE POSICION_USUARIO
+	        SET x = ?, y = ?, numCelda = ?, numMapa = ?, mapaCargar = ?
+	        WHERE usuario = ?;
+	        """;
+	    
+		    try (
+			        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+			        PreparedStatement pstmt = con.prepareStatement(sql)
+			    ) {
+		    		pstmt.setInt(1, x);
+		    		pstmt.setInt(2, y);
+		    		pstmt.setInt(3, numCelda);
+		    		pstmt.setInt(4, numMapa);
+			    	pstmt.setString(5, mapaCargar);
+			        pstmt.setString(6, usuario);
+
+			        int filasAfectadas = pstmt.executeUpdate();
+			        if (filasAfectadas > 0) {
+			            System.out.println("Posición modificada para el usuario: " + usuario);
+			            return true;
+			        } else {
+			            System.out.println("El usuario no existe: " + usuario);
+			        }
+			    } catch (SQLException e) {
+			        System.err.format("\n* Error al resetear los datos del usuario: %s", e.getMessage());
+			    }
+
+	    
+	    return false;	
+	    
 	}
 	
 	//Metodo para verificar si la el nombre de usuario en la tabla 2 
