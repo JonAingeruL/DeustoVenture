@@ -275,7 +275,7 @@ public class Jugador extends Personaje {
 			//Descomentar para ver colisiones ataque
 			//g2.fillRect(x, y - 20, 20, 60);
 			if (atacando) {
-				g2.drawImage(espada, x, y - 20, 20, 60, null);
+				g2.drawImage(espada, x+22, y - 20, 20, 60, null);
 			}
 			break;
 		case "abajo":
@@ -288,7 +288,7 @@ public class Jugador extends Personaje {
 				imagen = abajo3;
 			}
 			if (atacando) {
-				g2.drawImage(espada, x + 40, y + 100, 20, -60, null);
+				g2.drawImage(espada, x + 22, y + 100, 20, -60, null);
 			}
 			break;
 		case "izquierda":
@@ -302,7 +302,7 @@ public class Jugador extends Personaje {
 			}
 			//g2.fillRect(x + -50, y + 25, 60, 20);
 			if (atacando) {
-				g2.drawImage(espada, x + 10, y + 25, -60, 20, null);
+				g2.drawImage(espada, x + 18, y + 25, -60, 20, null);
 			}
 			break;
 		case "derecha":
@@ -607,16 +607,16 @@ public class Jugador extends Personaje {
 		int[] posicionEspada = null;
 		switch (direccion) {
 		case "arriba":
-			posicionEspada = new int[]{x, y - 20, 20, 60};
+			posicionEspada = new int[]{x+22, y - 20, 20, 60};
 			break;
 		case "derecha":
 			posicionEspada = new int[]{x + 40, y + 25, 60, 20};
 			break;
 		case "izquierda":
-			posicionEspada = new int[]{x + -50, y + 25, 60, 20};
+			posicionEspada = new int[]{x + -42, y + 25, 60, 20};
 			break;
 		case "abajo":
-			posicionEspada = new int[]{ x + 40, y +40, 20, 60,};
+			posicionEspada = new int[]{ x + 22, y +100, 20, 60};
 			break;
 			
 		}

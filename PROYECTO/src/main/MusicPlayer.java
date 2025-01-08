@@ -105,4 +105,7 @@ public class MusicPlayer {
 			}
 		}
 	}
+	public boolean isPlaying() {
+		return playing;
+	}
 }

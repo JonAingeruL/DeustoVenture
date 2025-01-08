@@ -22,22 +22,17 @@ public class Mapa {
 	private GamePanel gp;
 	// en caso de que se quieran añadir más números que tengan colision, se añaden a
 	// esta lista
-	public static List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33, 35, 36,
-			37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 50, 60);
-	
-	public static List<Integer> numerosSinUtilizar = List.of(3,18,19,25,26,27,28,29,34);
-	
-	//Esta variable sirve para controlar el nº de mapa AL CARGAR ENEMIGOS
-	//valor 0 = tutorial.txt, valor 1 = mapa.txt, valor 2 = dungeon1.txt, valor 3 = dungeon2.txt, valor 4= dungeon3.txt
-	//valor 5 = casa.txt
+	public static List<Integer> zonasConColision = List.of(1, 4, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 30, 31, 32, 33,
+			35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 50, 60);
+
+	public static List<Integer> numerosSinUtilizar = List.of(3, 18, 19, 25, 26, 27, 28, 29, 34);
+
+	// Esta variable sirve para controlar el nº de mapa AL CARGAR ENEMIGOS
+	// valor 0 = tutorial.txt, valor 1 = mapa.txt, valor 2 = dungeon1.txt, valor 3 =
+	// dungeon2.txt, valor 4= dungeon3.txt
+	// valor 5 = casa.txt
 	private int numeroMapa;
 
-	
-	
-	
-	
-	
-	
 	public String getArchivoACargar() {
 		return archivoACargar;
 	}
@@ -53,15 +48,14 @@ public class Mapa {
 		this.gp = gp;
 	}
 
-	public Mapa(int[][] celda , GamePanel gp) {
+	public Mapa(int[][] celda, GamePanel gp) {
 		super();
 		this.celda = celda;
 		this.gp = gp;
-		
 
 	}
 
-	public Mapa(int numCelda,GamePanel gp) {
+	public Mapa(int numCelda, GamePanel gp) {
 		super();
 		this.numCelda = numCelda;
 		this.gp = gp;
@@ -112,23 +106,23 @@ public class Mapa {
 	 * @return Una celda int[][] sacada del indice correspondiente de un fichero
 	 */
 	public void cargarCelda(String celda, int num) {
-		ArrayList <Integer> celdasEspeciales = new ArrayList<Integer>() {
+		ArrayList<Integer> celdasEspeciales = new ArrayList<Integer>() {
 			{
 				add(41);
 				add(84);
 				add(57);
-				}
-			};
-			ArrayList <String> llaves = new ArrayList<String>() {
-				{
-					add("Llave del bosque");
-					add("Llave de la montaña");
-					add("Llave del volcán");
-					}
-				};
+			}
+		};
+		ArrayList<String> llaves = new ArrayList<String>() {
+			{
+				add("Llave del bosque");
+				add("Llave de la montaña");
+				add("Llave del volcán");
+			}
+		};
 		if (celdasEspeciales.contains(num)) {
 			if (gp.getJugador().getInventario().containsKey(llaves.get(celdasEspeciales.indexOf(num)))) {
-				num = num*1000;
+				num = num * 1000;
 			}
 		}
 		// Creo un array donde se guardarán los números
@@ -161,90 +155,108 @@ public class Mapa {
 			e.printStackTrace();
 		}
 		setCelda(map);
-		if(gp.getMusicPlayer().getPath().equals("resources/musica/boss.mp3")) {
-			gp.getMusicPlayer().stopMusic();
-			gp.setMusicPlayer(new MusicPlayer("resources/musica/1.mp3"));
-			gp.getMusicPlayer().playMusic();
+		if (gp.getMusicPlayer() == null) {
+			if ((numCelda == 5) && celda.equals("resources/mapas/mapa.txt")) {
+				gp.setMusicPlayer(new MusicPlayer("resources/musica/boss.mp3"));
+			} else {
+				gp.setMusicPlayer(new MusicPlayer("resources/musica/1.mp3"));
+				
 			}
-		if ((numCelda == 5)&&celda.equals("resources/mapas/mapa.txt")){
-			if(!gp.getMusicPlayer().getPath().equals("resources/musica/boss.mp3")) {
-			System.out.println("done");
-			gp.getMusicPlayer().stopMusic();
-			gp.setMusicPlayer(new MusicPlayer("resources/musica/boss.mp3"));
-			gp.getMusicPlayer().playMusic();
+
+		} else { 
+			if (gp.getMusicPlayer().getPath().equals("resources/musica/boss.mp3")) {
+				if(gp.getMusicPlayer().isPlaying()) gp.getMusicPlayer().stopMusic();
+				gp.setMusicPlayer(new MusicPlayer("resources/musica/1.mp3"));
+				gp.getMusicPlayer().playMusic();
 			}
-			
+			if ((numCelda == 5) && celda.equals("resources/mapas/mapa.txt")) {
+				if (!gp.getMusicPlayer().getPath().equals("resources/musica/boss.mp3")) {
+					System.out.println("done");
+					if(gp.getMusicPlayer().isPlaying()) gp.getMusicPlayer().stopMusic();
+					gp.setMusicPlayer(new MusicPlayer("resources/musica/boss.mp3"));
+					gp.getMusicPlayer().playMusic();
+				}
+
+			}
 		}
 	}
 
-	
-	
-	
 	/**
-	 * Este metodo se ocupa de dibujar la celda actual del mapa.
-	 * También gira de forma aleatoria las texturas que se pueden girar para evitar homogeneidad
+	 * Este metodo se ocupa de dibujar la celda actual del mapa. También gira de
+	 * forma aleatoria las texturas que se pueden girar para evitar homogeneidad
+	 * 
 	 * @param g             El objeto Graphics2D que se va a utilizar.
 	 * @param tamanoBaldosa El tamaño de cada baldosa del juego.
 	 */
 	public void dibujarCelda(Graphics2D g, int tamanoBaldosa) {
-		//En estas listas metemos las texturas que se puedan rotar en el eje x o en el x e y.
-		List<Integer> flipeableX = Arrays.asList(0,1,2,4,5,6,7,8,14,15);
-		List<Integer> flipeableY = Arrays.asList(0,4,5,7,8,14,15);
+		// En estas listas metemos las texturas que se puedan rotar en el eje x o en el
+		// x e y.
+		List<Integer> flipeableX = Arrays.asList(0, 1, 2, 4, 5, 6, 7, 8, 14, 15);
+		List<Integer> flipeableY = Arrays.asList(0, 4, 5, 7, 8, 14, 15);
 		// Recorro todo el array que contienen la celda
-			for (int i = 0; i < 12; i++) {
-				for (int j = 0; j < 16; j++) {
-					//Dibujamos las texturas que ya tenemos
-					if (celda[j][i]<=33 && !(numerosSinUtilizar.contains(celda[j][i]))) {
-						try {
-							//Creo un randomizador
-							Random rand = new Random();
-							BufferedImage texturaCasilla = ImageIO.read(getClass().getResourceAsStream("/texturas/texMapa/"+celda[j][i]+".png"));
-							//Dibujo la imagen girada, dependiendo de en qué ejes hemos establecido que se puede girar
-							//Si el random da = 0, no se gira, y si da = 1 se gira.
-							//hago esto moviendo la imagen una baldosa en el eje que se va a girar e invirtiendo el dibujado (tamaño del eje en negativo)
-							if (flipeableX.contains(celda[j][i])) {
-								int flipX = rand.nextInt(0, 2);
-								if (flipeableY.contains(celda[j][i])) {
-									int flipY = rand.nextInt(0, 2);
-									g.drawImage(texturaCasilla,j*tamanoBaldosa+tamanoBaldosa*flipX,i*tamanoBaldosa+tamanoBaldosa*flipY, tamanoBaldosa-tamanoBaldosa*2*flipX,tamanoBaldosa-tamanoBaldosa*2*flipY,null);
-								}else {
-									g.drawImage(texturaCasilla,j*tamanoBaldosa+tamanoBaldosa*flipX,i*tamanoBaldosa, tamanoBaldosa-tamanoBaldosa*2*flipX,tamanoBaldosa,null);
-									}
-								}else {
-									//Si la textura no se puede girar en ningún eje, la dibujo sin transformaciones de posición o tamaño.
-									g.drawImage(texturaCasilla,j*tamanoBaldosa,i*tamanoBaldosa, tamanoBaldosa,tamanoBaldosa,null);
-								}
-						} catch (Exception e) {
-							e.printStackTrace();
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 16; j++) {
+				// Dibujamos las texturas que ya tenemos
+				if (celda[j][i] <= 33 && !(numerosSinUtilizar.contains(celda[j][i]))) {
+					try {
+						// Creo un randomizador
+						Random rand = new Random();
+						BufferedImage texturaCasilla = ImageIO
+								.read(getClass().getResourceAsStream("/texturas/texMapa/" + celda[j][i] + ".png"));
+						// Dibujo la imagen girada, dependiendo de en qué ejes hemos establecido que se
+						// puede girar
+						// Si el random da = 0, no se gira, y si da = 1 se gira.
+						// hago esto moviendo la imagen una baldosa en el eje que se va a girar e
+						// invirtiendo el dibujado (tamaño del eje en negativo)
+						if (flipeableX.contains(celda[j][i])) {
+							int flipX = rand.nextInt(0, 2);
+							if (flipeableY.contains(celda[j][i])) {
+								int flipY = rand.nextInt(0, 2);
+								g.drawImage(texturaCasilla, j * tamanoBaldosa + tamanoBaldosa * flipX,
+										i * tamanoBaldosa + tamanoBaldosa * flipY,
+										tamanoBaldosa - tamanoBaldosa * 2 * flipX,
+										tamanoBaldosa - tamanoBaldosa * 2 * flipY, null);
+							} else {
+								g.drawImage(texturaCasilla, j * tamanoBaldosa + tamanoBaldosa * flipX,
+										i * tamanoBaldosa, tamanoBaldosa - tamanoBaldosa * 2 * flipX, tamanoBaldosa,
+										null);
+							}
+						} else {
+							// Si la textura no se puede girar en ningún eje, la dibujo sin transformaciones
+							// de posición o tamaño.
+							g.drawImage(texturaCasilla, j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa,
+									tamanoBaldosa, null);
 						}
-					} else {
-						switch (celda[j][i]) {
-						// Por cada celda, dependiendo de su número, voy dibujando bloques donde
-						// corresponde
-						//Estos dibujos son la representación temporal de los materiales que todavía no tienen textura
-						case 3:
-							g.setColor(Color.GREEN);
-							break;
-						case 35,36,37,38,39,40,41,42,43,44,45,46:
-							g.setColor(Color.ORANGE.darker());
-							break;
-						case 50:
-							g.setColor(new Color(180,100,20).brighter());
-							break;
-						case 60:
-							g.setColor(Color.white);
-							break;
-						default:
-							g.setColor(Color.WHITE.darker());
-
-						}
-						g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					
-					
-					
+				} else {
+					switch (celda[j][i]) {
+					// Por cada celda, dependiendo de su número, voy dibujando bloques donde
+					// corresponde
+					// Estos dibujos son la representación temporal de los materiales que todavía no
+					// tienen textura
+					case 3:
+						g.setColor(Color.GREEN);
+						break;
+					case 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46:
+						g.setColor(Color.ORANGE.darker());
+						break;
+					case 50:
+						g.setColor(new Color(180, 100, 20).brighter());
+						break;
+					case 60:
+						g.setColor(Color.white);
+						break;
+					default:
+						g.setColor(Color.WHITE.darker());
+
+					}
+					g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 				}
+
 			}
+		}
 	}
 
 	/**
@@ -284,7 +296,8 @@ public class Mapa {
 		// Si se ha detectado algún cambio, se cambia la celda a la que corresponda
 		if (hayCambio) {
 			cargarCelda(jugador.getArchivoACargar(), numCelda);
-			//Se actualiza también la imagen a dibujar del mapa para que coincida con la celda actual
+			// Se actualiza también la imagen a dibujar del mapa para que coincida con la
+			// celda actual
 			updateMapa(tamanoBaldosa);
 		}
 	}
@@ -311,7 +324,6 @@ public class Mapa {
 		g.drawImage(i, 0, 0, null);
 	}
 
-	
 	public int getNumeroMapa() {
 		return numeroMapa;
 	}
@@ -319,5 +331,5 @@ public class Mapa {
 	public void setNumeroMapa(int numeroMapa) {
 		this.numeroMapa = numeroMapa;
 	}
-	
+
 }

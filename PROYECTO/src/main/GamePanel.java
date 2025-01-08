@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private long tiempoPausa = 0;
 	private float volumenAudio = 1;
 	private float volumenMusica = 1f;
-	private MusicPlayer musicPlayer = new MusicPlayer("Resources/musica/1.mp3");
+	private MusicPlayer musicPlayer;
 	// establecemos los fps como variable
 	// FPS
 	int FPS = 60;
@@ -186,7 +186,6 @@ public class GamePanel extends JPanel implements Runnable {
 		//Cargamos un txt de npcs ya hecho 
 		cargarNPCs();
 		
-		musicPlayer.playMusic();
 		//cargamos el primer mapa XD
 		if (esNuevoUsuario) {
 			mapa.updateMapa(tamañoBaldosa);
@@ -201,6 +200,7 @@ public class GamePanel extends JPanel implements Runnable {
 				empiezaDentroDeMazmorra= true;
 			}
 			jugador.cambioMapa((String) datosACargar.get(5), (Integer) datosACargar.get(3), (Integer) datosACargar.get(4), tamañoBaldosa, (Integer) datosACargar.get(1), (Integer) datosACargar.get(2), empiezaDentroDeMazmorra, mapa);
+			if (musicPlayer.getPath().equals("resources/musica/1.mp3")&& !musicPlayer.isPlaying()) musicPlayer.playMusic();
 		}
 		
 		// Vamos a instanciar el gameThread

@@ -1,8 +1,4 @@
 -resources/mapas/tutorial.txt,1-
-Manzana;1
-Espada de Madera;1
-Espada de Piedra;1
-Pocion de salud;1
 -resources/mapas/tutorial.txt,2-
 Espada de Hielo;1
 -resources/mapas/mapa.txt,1-
