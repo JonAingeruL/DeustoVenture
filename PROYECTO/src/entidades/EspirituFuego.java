@@ -18,6 +18,7 @@ public class EspirituFuego extends Enemigo {
 		this.direccion = r.nextInt(1,5);
 	}
 	
+	//Esto hace que solo se pueda mover en el eje y
 	public void movimiento(Mapa mapa, int tamanoBaldosa, Jugador jugador) {
 		switch(this.direccion) {
 		case 1,3: y+=velocidad;

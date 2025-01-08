@@ -18,6 +18,7 @@ public class CangrejoFuego extends Enemigo {
 		this.direccion = r.nextInt(1,5);
 	}
 	
+	//Esto hace que solo se pueda mover en el eje x
 	public void movimiento(Mapa mapa, int tamanoBaldosa, Jugador jugador) {
 		switch(this.direccion) {
 		case 1,3: x+=velocidad;
@@ -46,7 +47,6 @@ public class CangrejoFuego extends Enemigo {
 			}
 			Random r= new Random();
 			direccion = r.nextInt(1,5);
-			
 		}
 	}
 }
