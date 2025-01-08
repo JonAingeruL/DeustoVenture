@@ -129,7 +129,6 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		//hago que el jugador tenga este nombre (se utiliza ya que el gameOverScreen utiliza a un jugador
 		jugador.setNombreJugador(usuarioActual);
-		jugador.setInventario(Jugador.leerBD(gbd, usuarioActual));
 		if (esnuevoUsuario) {
 			//en caso de ser un usuarioNuevo (se verifica antes), se ponen todos los valores en 0
 			jugador.setEnemigosDerrotados(0);
@@ -138,6 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
 			//si está el jugador ya en la base de datos, se le cambian los valores a 0 (ya que es una nueva partida)
 			if (gbd.existeUsuario(usuarioActual)) {
 				gbd.actualizarUsuario(new Usuario(usuarioActual,0,0,0));
+				gbd.resetearInventario(usuarioActual);
 				
 
 
@@ -160,7 +160,7 @@ public class GamePanel extends JPanel implements Runnable {
 			jugador.setTiempoJugado(u.getTiempoJugado());
 			
 		}
-		
+		jugador.setInventario(Jugador.leerBD(gbd, usuarioActual));
 		this.setPreferredSize(new Dimension(pantallaAnchuta, pantallaAltura)); // Esto establece el tamaño de esta clase
 																				// (JPanel)
 		this.setBackground(Color.black); // Para que el fondo de la pantalla sea negro (esto no importa mucho porque no
