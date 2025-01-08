@@ -65,13 +65,16 @@ public class GameOverScreen extends JFrame {
 				if (choice==0) {
 					gbd.actualizarUsuario(new Usuario(usuarioActual, gp.getJugador().getNumMuertes(), gp.getJugador().getEnemigosDerrotados(), gp.getJugador().getTiempoJugado()));
 					gbd.actualizarPosicionUsuarioPos(usuarioActual, gp.getJugador().getX(), gp.getJugador().getY(), gp.getMapa().getNumcelda(), gp.getMapa().getNumeroMapa(), gp.getJugador().getArchivoACargar());
+					gbd.resetearInventario(usuarioActual);
 					HashMap<String, Integer> inventario = gp.getJugador().getInventario();
 					for (HashMap.Entry<String, Integer> entry : inventario.entrySet()) {
 						String key = entry.getKey();
 						Integer val = entry.getValue();
 						gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), key, val);
 					}
-					gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), gp.getJugador().objetoEnMano, 1);
+					if(!gp.getJugador().objetoEnMano.equals("")) {
+						gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), gp.getJugador().objetoEnMano, 1);
+						}
 					System.exit(0);
 					dispose();
 					

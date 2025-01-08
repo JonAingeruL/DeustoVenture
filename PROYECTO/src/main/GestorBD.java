@@ -698,6 +698,30 @@ public class GestorBD {
 	        System.err.format("\n* Error al eliminar el ítem: %s", e.getMessage());
 	    }
 	}
+	public void resetearInventario(String usuario) {
+	    String eliminarItemSQL = """
+	        DELETE FROM INVENTARIO_JUGADORES
+	        WHERE usuario = ?;
+	    """;
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(eliminarItemSQL)
+	    ) {
+	        // Establece los valores en el PreparedStatement
+	        pstmt.setString(1, usuario);  // id_posicion
+
+	        // Ejecuta la eliminación
+	        int rowsAffected = pstmt.executeUpdate();
+	        if (rowsAffected > 0) {
+	            System.out.println("Ítems eliminados correctamente para el usuario " + usuario);
+	        } else {
+	            System.out.println("No se encontraron los items para el usuario " + usuario);
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al eliminar ítems: %s", e.getMessage());
+	    }
+	}
 	
 	//Metodo para actulizar los items de la BD
 	public void actualizarItemInventario(int id, String usuario, String nombreObjeto, int cantidad) {

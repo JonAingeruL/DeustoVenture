@@ -87,6 +87,7 @@ public class MenuPausa extends JFrame {
 				if (choice ==0) {
 					gbd.actualizarUsuario(new Usuario(gp.getJugador().getNombreJugador(), gp.getJugador().getNumMuertes(), gp.getJugador().getEnemigosDerrotados(), gp.getJugador().getTiempoJugado()));
 					gbd.actualizarPosicionUsuarioPos(gp.getJugador().getNombreJugador(), gp.getJugador().getX(), gp.getJugador().getY(), gp.getMapa().getNumcelda(), gp.getMapa().getNumeroMapa(), gp.getJugador().getArchivoACargar());
+					gbd.resetearInventario(gp.getJugador().getNombreJugador());
 					HashMap<String, Integer> inventario = gp.getJugador().getInventario();
 					for (HashMap.Entry<String, Integer> entry : inventario.entrySet()) {
 						String key = entry.getKey();
@@ -94,7 +95,9 @@ public class MenuPausa extends JFrame {
 						gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), key, val);
 						
 					}
+					if(!gp.getJugador().objetoEnMano.equals("")) {
 					gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), gp.getJugador().objetoEnMano, 1);
+					}
 					JOptionPane.showMessageDialog(botonGuardar, "Partida guardada, ya puedes seguir jugando o cerrar el juego!");
 				}
 			
