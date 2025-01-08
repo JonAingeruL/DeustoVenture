@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -60,11 +61,17 @@ public class GameOverScreen extends JFrame {
 				GestorBD gbd = new GestorBD();
 				
 
-					
 				int choice = JOptionPane.showConfirmDialog(botonGuardar, "Quieres guardar el progreso? El juego después se cerrará", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null);
 				if (choice==0) {
 					gbd.actualizarUsuario(new Usuario(usuarioActual, gp.getJugador().getNumMuertes(), gp.getJugador().getEnemigosDerrotados(), gp.getJugador().getTiempoJugado()));
 					gbd.actualizarPosicionUsuarioPos(usuarioActual, gp.getJugador().getX(), gp.getJugador().getY(), gp.getMapa().getNumcelda(), gp.getMapa().getNumeroMapa(), gp.getJugador().getArchivoACargar());
+					HashMap<String, Integer> inventario = gp.getJugador().getInventario();
+					for (HashMap.Entry<String, Integer> entry : inventario.entrySet()) {
+						String key = entry.getKey();
+						Integer val = entry.getValue();
+						gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), key, val);
+					}
+					gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), gp.getJugador().objetoEnMano, 1);
 					System.exit(0);
 					dispose();
 					

@@ -90,7 +90,7 @@ public class VentanaRegistroJugador extends JFrame {
 							dispose();
 						}
 				} else {
-					esnuevoUsuario = false;
+					esnuevoUsuario = true;
 						iniciarJuego(usuarioActual,esnuevoUsuario);
 					}
 				

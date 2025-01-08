@@ -230,10 +230,12 @@ public class InventarioCofre extends JFrame{
 		 try {
 	            PrintStream ps = new PrintStream("src/lootCofre.txt");
 	            ps.println("-resources/mapas/tutorial.txt,1-");
-	            ps.println("Manzana;2");
-	            ps.println("Espada de Hielo;1");
+	            ps.println("Manzana;1");
+	            ps.println("Espada de Madera;1");
+	            ps.println("Espada de Piedra;1");
+	            ps.println("Pocion de salud;1");
 	            ps.println("-resources/mapas/tutorial.txt,2-");
-	            ps.println("Hacha;1");
+	            ps.println("Espada de Hielo;1");
 	            ps.println("-resources/mapas/mapa.txt,1-");
 	            ps.println("Oro;500");
 	            ps.println("-resources/mapas/mapa.txt,31-");

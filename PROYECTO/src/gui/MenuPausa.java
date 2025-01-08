@@ -7,7 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.time.LocalDate;
+import java.util.HashMap;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -36,10 +37,7 @@ public class MenuPausa extends JFrame {
 		setResizable(false);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setLocationRelativeTo(null);
-		// En el futuro, información puede contener información útil, como la celda
-		// actual, las coordenadas del jugador
-		// o incluso el objetivo principal actual
-		JLabel informacion = new JLabel("Información");
+		JLabel informacion = new JLabel(gp.getJugador().getNombreJugador());
 		informacion.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
 		addWindowListener(new WindowAdapter() {
 
@@ -89,6 +87,14 @@ public class MenuPausa extends JFrame {
 				if (choice ==0) {
 					gbd.actualizarUsuario(new Usuario(gp.getJugador().getNombreJugador(), gp.getJugador().getNumMuertes(), gp.getJugador().getEnemigosDerrotados(), gp.getJugador().getTiempoJugado()));
 					gbd.actualizarPosicionUsuarioPos(gp.getJugador().getNombreJugador(), gp.getJugador().getX(), gp.getJugador().getY(), gp.getMapa().getNumcelda(), gp.getMapa().getNumeroMapa(), gp.getJugador().getArchivoACargar());
+					HashMap<String, Integer> inventario = gp.getJugador().getInventario();
+					for (HashMap.Entry<String, Integer> entry : inventario.entrySet()) {
+						String key = entry.getKey();
+						Integer val = entry.getValue();
+						gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), key, val);
+						
+					}
+					gbd.guardarItemEnInventario(gp.getJugador().getNombreJugador(), gp.getJugador().objetoEnMano, 1);
 					JOptionPane.showMessageDialog(botonGuardar, "Partida guardada, ya puedes seguir jugando o cerrar el juego!");
 				}
 			

@@ -758,4 +758,32 @@ public class GestorBD {
 	    }
 	    return false; // En caso de error o si no se encuentra nada, devuelve false
 	}
+	/**
+	 * Saca de la base de datos el inventario guardado de un usuario concreto.
+	 * @param usuario El nombre del usuario dueño del inventario
+	 * @return HashMap inventario.
+	 */
+	public HashMap<String, Integer> obtenerInventarioUsuario(String usuario) {
+		HashMap<String, Integer> inv = new HashMap<String, Integer>();
+		String select = "Select nombreObjeto, cantidad"
+				+ " From Inventario_Jugadores"
+				+ " Where usuario = ?";
+		try(Connection con = DriverManager.getConnection(CONNECTION_STRING);
+			PreparedStatement pstmt = con.prepareStatement(select)) {
+			pstmt.setString(1, usuario);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String nombreObj = rs.getString("nombreObjeto");
+				Integer cant = rs.getInt("cantidad");
+				inv.put(nombreObj, cant);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.print("Error cargando el inventario del usuario");
+		}
+		return inv;
+	}
 }

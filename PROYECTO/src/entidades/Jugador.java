@@ -101,9 +101,7 @@ public class Jugador extends Personaje {
 
 		valoresDefault();
 		conseguirImagenJugador();
-		String nombreFich = "src/inventario.txt";
 		Inventario.inicializarInventarioPrueba();
-        setInventario(leerFichero(nombreFich));
 	}
 
 	public void valoresDefault() {
@@ -660,22 +658,9 @@ public class Jugador extends Personaje {
 
 	}
 	
-	public static  HashMap<String, Integer> leerFichero(String nombreFich) {
+	public static  HashMap<String, Integer> leerFichero(GestorBD gb, String nombre) {
     	HashMap<String,Integer> inventario = new HashMap<>();
-  
-    	try(BufferedReader br = new BufferedReader(new FileReader(nombreFich))){
-    		String linea;
-    		while ((linea = br.readLine())!=null) {
-    			String[] datos = linea.split(";");
-    			inventario.put(datos[0], Integer.parseInt(datos[1]));
-    		}
-    	} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	inventario = gb.obtenerInventarioUsuario(nombre);
     	return inventario;
     }
 	
