@@ -430,32 +430,92 @@ public class GestorBD {
 	    return datosUsuario; // Devolverá una lista vacía si no se encuentra nada
 	}
 	
-	//Metodo para resetear posiciones
-	public boolean resetearPosicionUsuario(String usuario) {
-	    String sql = """
-	        UPDATE POSICION_USUARIO
-	        SET x = 0, y = 0, numCelda = 1, numMapa = 0, mapaCargar = 0
-	        WHERE usuario = ?;
-	        """;
+	public boolean existeUsuarioPos(String nomUsuario) {
+	    String sql = "SELECT COUNT(*) AS total FROM POSICION_USUARIO WHERE usuario = ?";
+	    boolean existe = false;
 
 	    try (
 	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
 	        PreparedStatement pstmt = con.prepareStatement(sql)
 	    ) {
-	        pstmt.setString(1, usuario);
+	        pstmt.setString(1, nomUsuario);
 
-	        int filasAfectadas = pstmt.executeUpdate();
-	        if (filasAfectadas > 0) {
-	            System.out.println("Posición reseteada para el usuario: " + usuario);
-	            return true;
-	        } else {
-	            System.out.println("El usuario no existe: " + usuario);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next() && rs.getInt("total") > 0) {
+	                existe = true;
+	            }
 	        }
-	    } catch (SQLException e) {
-	        System.err.format("\n* Error al resetear los datos del usuario: %s", e.getMessage());
+	    } catch (Exception e) {
+	        System.err.format("\n* Error al verificar existencia del usuario: %s", e.getMessage());
+	        e.printStackTrace();
 	    }
 
-	    return false;
+	    return existe;
+	}
+	
+	//Metodo para resetear posiciones
+	public boolean resetearPosicionUsuario(String usuario,String mapaCargar) {
+	    String sql = """
+	        UPDATE POSICION_USUARIO
+	        SET x = 475, y = 400, numCelda = 1, numMapa = 0, mapaCargar = ?
+	        WHERE usuario = ?;
+	        """;
+	    
+		    try (
+			        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+			        PreparedStatement pstmt = con.prepareStatement(sql)
+			    ) {
+			    	pstmt.setString(1, mapaCargar);
+			        pstmt.setString(2, usuario);
+
+			        int filasAfectadas = pstmt.executeUpdate();
+			        if (filasAfectadas > 0) {
+			            System.out.println("Posición reseteada para el usuario: " + usuario);
+			            return true;
+			        } else {
+			            System.out.println("El usuario no existe: " + usuario);
+			        }
+			    } catch (SQLException e) {
+			        System.err.format("\n* Error al resetear los datos del usuario: %s", e.getMessage());
+			    }
+
+	    
+	    return false;	
+	    
+	}
+	//metodo para actualizar posicion usuario
+	public boolean actualizarPosicionUsuarioPos(String usuario,int x, int y, int numCelda, int numMapa, String mapaCargar) {
+	    String sql = """
+	        UPDATE POSICION_USUARIO
+	        SET x = ?, y = ?, numCelda = ?, numMapa = ?, mapaCargar = ?
+	        WHERE usuario = ?;
+	        """;
+	    
+		    try (
+			        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+			        PreparedStatement pstmt = con.prepareStatement(sql)
+			    ) {
+		    		pstmt.setInt(1, x);
+		    		pstmt.setInt(2, y);
+		    		pstmt.setInt(3, numCelda);
+		    		pstmt.setInt(4, numMapa);
+			    	pstmt.setString(5, mapaCargar);
+			        pstmt.setString(6, usuario);
+
+			        int filasAfectadas = pstmt.executeUpdate();
+			        if (filasAfectadas > 0) {
+			            System.out.println("Posición modificada para el usuario: " + usuario);
+			            return true;
+			        } else {
+			            System.out.println("El usuario no existe: " + usuario);
+			        }
+			    } catch (SQLException e) {
+			        System.err.format("\n* Error al resetear los datos del usuario: %s", e.getMessage());
+			    }
+
+	    
+	    return false;	
+	    
 	}
 	
 	//Metodo para verificar si la el nombre de usuario en la tabla 2 
@@ -637,5 +697,65 @@ public class GestorBD {
 	    } catch (SQLException e) {
 	        System.err.format("\n* Error al eliminar el ítem: %s", e.getMessage());
 	    }
+	}
+	
+	//Metodo para actulizar los items de la BD
+	public void actualizarItemInventario(int id, String usuario, String nombreObjeto, int cantidad) {
+	    // SQL para actualizar los datos del ítem en la tabla INVENTARIO
+	    String actualizarItemSQL = """
+	        UPDATE INVENTARIO
+	        SET usuario = ?, nombreObjeto = ?, cantidad = ?
+	        WHERE id = ?;
+	    	""";
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(actualizarItemSQL)
+	    ) {
+	        // Asignar valores al PreparedStatement
+	        pstmt.setString(1, usuario);       // Nombre del usuario
+	        pstmt.setString(2, nombreObjeto); // Nombre del objeto
+	        pstmt.setInt(3, cantidad);        // Cantidad del objeto
+	        pstmt.setInt(4, id);              // ID del ítem a actualizar
+
+	        // Ejecutar la actualización
+	        int filasActualizadas = pstmt.executeUpdate();
+	        if (filasActualizadas > 0) {
+	            System.out.println("Ítem del inventario con ID " + id + " actualizado correctamente.");
+	        } else {
+	            System.out.println("No se encontró ningún ítem con el ID " + id + ".");
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al actualizar el ítem del inventario: %s", e.getMessage());
+	    }
+	}
+	
+	//Metodo qeu verifica si un usuario tiene objetos en el inventario
+	public boolean usuarioTieneInventario(String usuario) {
+	    // SQL para contar el número de objetos del usuario en la tabla INVENTARIO
+	    String contarItemsSQL = """
+	        SELECT COUNT(*) AS total
+	        FROM INVENTARIO
+	        WHERE usuario = ?;
+	    	""";
+
+	    try (
+	        Connection con = DriverManager.getConnection(CONNECTION_STRING);
+	        PreparedStatement pstmt = con.prepareStatement(contarItemsSQL)
+	    ) {
+	        // Establecer el usuario como parámetro en el PreparedStatement
+	        pstmt.setString(1, usuario);
+
+	        // Ejecutar la consulta
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            int total = rs.getInt("total"); // Obtener el conteo de filas
+	            return total > 0; // Si hay al menos un ítem, devuelve true
+	        }
+	    } catch (SQLException e) {
+	        System.err.format("\n* Error al verificar el inventario del usuario '%s': %s", usuario, e.getMessage());
+	    }
+	    return false; // En caso de error o si no se encuentra nada, devuelve false
 	}
 }

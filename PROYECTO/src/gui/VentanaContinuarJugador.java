@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,14 +16,15 @@ import javax.swing.JTextField;
 
 import main.GamePanel;
 import main.GestorBD;
-import main.Usuario;
 
-public class VentanaRegistroJugador extends JFrame {
+public class VentanaContinuarJugador extends JFrame{
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	private String usuarioActual;
-	private boolean esnuevoUsuario;
-	
-	public VentanaRegistroJugador() {
+	private String usuarioContinuar;
+
+	public VentanaContinuarJugador() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Usuario");
 		setSize(300, 150);
@@ -44,8 +46,7 @@ public class VentanaRegistroJugador extends JFrame {
 		zonaEscribir.setFont(new Font(Font.DIALOG,Font.PLAIN,14));
 		add(zonaEscribir);
 		
-
-
+		
 		//Panel con botones Cancelar y Iniciar
 		JPanel panelBotones = new JPanel();
 		panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 0));
@@ -71,30 +72,15 @@ public class VentanaRegistroJugador extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				GestorBD gbd = new GestorBD();
-				
-				
-				usuarioActual = zonaEscribir.getText();
-				if (usuarioActual.equals("") || usuarioActual.equals(null)) {
-					JOptionPane.showMessageDialog(botonIniciarJuego, "Tienes que poner un usuario para iniciar el juego");
-				} else if (gbd.existeUsuario(usuarioActual)) {
-						int choice = JOptionPane.showConfirmDialog(botonIniciarJuego, "El usuario "+usuarioActual+ " ya existe, quiere reescribir su progreso? "
-								, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);	
-						if (choice ==0) {
-							esnuevoUsuario=true;
-							iniciarJuego(usuarioActual,esnuevoUsuario);
-							dispose();
-						} else {
-							new VentanaRegistroJugador();
-							dispose();
-						}
-				} else {
-					esnuevoUsuario = false;
-						iniciarJuego(usuarioActual,esnuevoUsuario);
-					}
-				
-				dispose();
+				usuarioContinuar = zonaEscribir.getText();
+				if (usuarioContinuar.equals("") || usuarioContinuar.equals(null)) {
+					JOptionPane.showMessageDialog(botonIniciarJuego, "Tienes que poner un usuario para iniciar el juego","Error",JOptionPane.ERROR_MESSAGE);
+				} else if (!gbd.existeUsuario(usuarioContinuar)) {
+					JOptionPane.showMessageDialog(botonIniciarJuego, "El jugador "+usuarioContinuar+" no existe", "Error", JOptionPane.ERROR_MESSAGE);
+				} else if (gbd.existeUsuario(usuarioContinuar)) {
+					iniciarJuego(usuarioContinuar, false);
+				}
 				
 			}
 		});
@@ -138,4 +124,12 @@ public class VentanaRegistroJugador extends JFrame {
 	
 
 	
+	public static void main(String[] args) {
+		new VentanaContinuarJugador();
+	}
 }
+	
+
+
+
+

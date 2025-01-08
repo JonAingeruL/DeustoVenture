@@ -7,17 +7,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -242,6 +236,12 @@ public class InventarioCofre extends JFrame{
 	            ps.println("Hacha;1");
 	            ps.println("-resources/mapas/mapa.txt,1-");
 	            ps.println("Oro;500");
+	            ps.println("-resources/mapas/mapa.txt,31-");
+	            ps.println("Llave del bosque;1");
+	            ps.println("-resources/mapas/mapa.txt,83-");
+	            ps.println("Llave de la montaña;1");
+	            ps.println("-resources/mapas/mapa.txt,67-");
+	            ps.println("Llave del volcán;1");
 	            ps.println("-");
 	            ps.close();
 	        } catch (FileNotFoundException e) {

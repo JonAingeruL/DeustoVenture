@@ -5,4 +5,10 @@ Espada de Hielo;1
 Hacha;1
 -resources/mapas/mapa.txt,1-
 Oro;500
+-resources/mapas/mapa.txt,31-
+Llave del bosque;1
+-resources/mapas/mapa.txt,83-
+Llave de la montaña;1
+-resources/mapas/mapa.txt,67-
+Llave del volcán;1
 -

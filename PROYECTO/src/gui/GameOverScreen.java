@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -65,6 +64,7 @@ public class GameOverScreen extends JFrame {
 				int choice = JOptionPane.showConfirmDialog(botonGuardar, "Quieres guardar el progreso? El juego después se cerrará", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null);
 				if (choice==0) {
 					gbd.actualizarUsuario(new Usuario(usuarioActual, gp.getJugador().getNumMuertes(), gp.getJugador().getEnemigosDerrotados(), gp.getJugador().getTiempoJugado()));
+					gbd.actualizarPosicionUsuarioPos(usuarioActual, gp.getJugador().getX(), gp.getJugador().getY(), gp.getMapa().getNumcelda(), gp.getMapa().getNumeroMapa(), gp.getJugador().getArchivoACargar());
 					System.exit(0);
 					dispose();
 					
