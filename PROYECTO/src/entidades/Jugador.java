@@ -657,10 +657,33 @@ public class Jugador extends Personaje {
 		}
 
 	}
-	
-	public static  HashMap<String, Integer> leerFichero(GestorBD gb, String nombre) {
+	/**
+	 * Carga el inventario de la base de datos
+	 * @param gb base de datos a utilizar
+	 * @param nombre El nombre de usuario del jugador
+	 * @return HashMap<String,Integer> inventario del jugador
+	 */
+	public static  HashMap<String, Integer> leerBD(GestorBD gb, String nombre) {
     	HashMap<String,Integer> inventario = new HashMap<>();
     	inventario = gb.obtenerInventarioUsuario(nombre);
+    	return inventario;
+    }
+	public static  HashMap<String, Integer> leerFichero(String nombreFich) {
+    	HashMap<String,Integer> inventario = new HashMap<>();
+  
+    	try(BufferedReader br = new BufferedReader(new FileReader(nombreFich))){
+    		String linea;
+    		while ((linea = br.readLine())!=null) {
+    			String[] datos = linea.split(";");
+    			inventario.put(datos[0], Integer.parseInt(datos[1]));
+    		}
+    	} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	return inventario;
     }
 	

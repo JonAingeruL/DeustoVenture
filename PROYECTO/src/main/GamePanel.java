@@ -129,7 +129,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		//hago que el jugador tenga este nombre (se utiliza ya que el gameOverScreen utiliza a un jugador
 		jugador.setNombreJugador(usuarioActual);
-		jugador.setInventario(Jugador.leerFichero(gbd, usuarioActual));
+		jugador.setInventario(Jugador.leerBD(gbd, usuarioActual));
 		if (esnuevoUsuario) {
 			//en caso de ser un usuarioNuevo (se verifica antes), se ponen todos los valores en 0
 			jugador.setEnemigosDerrotados(0);
@@ -180,10 +180,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// vamos a crear un nuevo metodo para iniciar el juego
 	public void iniciarJuegoHilo(String usuarioActual, Boolean esNuevoUsuario, GestorBD gbd) {
 		
-		//AVISO: El loot de prueba todavía no hace nada en el inventario
-		if(esNuevoUsuario) {
 		InventarioCofre.inicializarLoot();
-		}
 		//Cargamos un txt de enemigos ya hecho
 		cargarEmemigos();
 		//Cargamos un txt de npcs ya hecho 
