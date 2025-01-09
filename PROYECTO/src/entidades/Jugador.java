@@ -44,6 +44,7 @@ public class Jugador extends Personaje {
 	private int numMuertes;
 	private int tiempoJugado;
 	private String frase;
+	private String fraseRecursiva;
 	
 	
 	
@@ -701,6 +702,7 @@ public class Jugador extends Personaje {
 
 					System.out.println("npc");
 					frase = npc.getFrase();
+					fraseRecursiva = npc.invertirFraseRecursiva(frase);
 					interaccionDisponible = true;
 					hablarConNPC = true;
 					
@@ -719,15 +721,17 @@ public class Jugador extends Personaje {
 	public void interaccion(ManejoTeclado mt, Mapa mapa) {
 		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
 			if(!this.hablarConNPC) {
-			new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda(), this);
-			}else{
-			mt.empezarConversacion = true;
-			new NPC2(mt, gp, frase);
-			
+				new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda(), this);
+				}else{
+				mt.empezarConversacion = true;
+				String fraseFinal = mt.invertirFrasePulsado ? fraseRecursiva : frase;
+	            new NPC2(mt, gp, fraseFinal); // Mostrar frase final (invertida o normal)
+	        
+				
+			}
+				mt.hablarNPCPulsado = false;
+			}
 		}
-			mt.hablarNPCPulsado = false;
-		}
-	}
 	public void muerte(GamePanel gp, Thread t) {
 		if(vidas[0] == false) {
 			t.interrupt();

@@ -37,5 +37,13 @@ public class NPC {
 		g2.fillRect(posX, posY, gp.tamañoBaldosa, gp.tamañoBaldosa);
 
 }
+    
+    public String invertirFraseRecursiva(String frase) {
+        if (frase == null || frase.length() <= 1) {
+            return frase;
+        }
+        // Primer carácter se mueve al final, y se llama recursivamente con el resto
+        return invertirFraseRecursiva(frase.substring(1)) + frase.charAt(0);
+    }
 
 }

@@ -12,7 +12,7 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 	//Despuesd de la asignacion de botones creamos unas variables booleanas para saber si estan siendo pulsados o no
 
 	public boolean arribaPulsado, abajoPulsado, izquierdaPulsado, derechaPulsado, shiftPulsado, escPulsado, iPulsado,hablarNPCPulsado, fPulsado,unopulsado,dospulsado,trespulsado,cuatropulsado,
-					cincopulsado,seispulsado,sietepulsado,ochopulsado,nuevepulsado;
+					cincopulsado,seispulsado,sietepulsado,ochopulsado,nuevepulsado, invertirFrasePulsado;
 	public boolean abrirInventario, abrirPausa, empezarConversacion = false;
 
 
@@ -54,6 +54,10 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if(code == KeyEvent.VK_F) {
 			fPulsado = true;
 		}
+		if (code == KeyEvent.VK_R) { // Al presionar la tecla R
+	        invertirFrasePulsado = true; // Alternar el estado
+	    }
+		
 		//estos 9 atajos se utilizan para los teletransportes rápidos a zonas
 		if (code == KeyEvent.VK_1) { //tecla 1-> Tutorial
 			unopulsado = true;
@@ -121,6 +125,10 @@ public class ManejoTeclado implements KeyListener{ //KeyListener es la interfaz 
 		if(code ==KeyEvent.VK_1) {
 			unopulsado=false;
 		}
+		if (code == KeyEvent.VK_R) { // Al presionar la tecla R
+	        invertirFrasePulsado = false; // Alternar el estado
+	    }
+		
 		if (code == KeyEvent.VK_1) { //tecla 1-> Tutorial
 			unopulsado = false;
 		}
