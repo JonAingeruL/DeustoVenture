@@ -104,6 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Mapa mapa = new Mapa(1,this);
 	HashMap<String,ArrayList<Enemigo>> enemigos;
 	int contadorBoss = 180;
+	int contadorVoladores =300;
 	
 	HashMap<String,ArrayList<NPC>> npcs;
 	
@@ -326,7 +327,12 @@ public class GamePanel extends JPanel implements Runnable {
 					
 					
 				} else {
+					
 					enemigo.movimiento(mapa,tamañoBaldosa, jugador);
+					if (enemigo.getContadorTiempoMovimiento() ==0) {
+						enemigo.setContadorTiempoMovimiento(60);
+					}
+					enemigo.setContadorTiempoMovimiento(enemigo.getContadorTiempoMovimiento()-1);
 				}
 				
 			}
@@ -395,7 +401,7 @@ public class GamePanel extends JPanel implements Runnable {
 		//vamos a pintar todos los enemigos
 		if (enemigos.containsKey(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
 			for (Enemigo enemigo : enemigos.get(mapa.getNumeroMapa()+","+mapa.getNumcelda())) {
-				enemigo.dibujarEnemigo(g2);
+				enemigo.dibujarEnemigo(g2, mapa);
 			}
 		}
 		
@@ -461,6 +467,8 @@ public class GamePanel extends JPanel implements Runnable {
 					case "Dummy": e = new Dummy(posXEnemigo, posYEnemigo, this);
 					break;
 					case "Boss": e = new Boss(posXEnemigo,posYEnemigo,this);
+					break;
+					case "Murcielago": e = new Murcielago(posXEnemigo, posYEnemigo, this);
 					break;
 					default: e= new Slime(posXEnemigo, posYEnemigo, this);
 					}

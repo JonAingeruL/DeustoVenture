@@ -4,3 +4,4 @@
 1;11;Slime;10;7;
 1;11;Slime;10;6;
 1;5;Boss;7;8;
+0;2;Murcielago;7;7;

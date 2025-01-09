@@ -11,6 +11,8 @@ public class Murcielago extends Enemigo{
 		this.velocidad = 7;
 		this.x = x;
 		this.y = y;
+		setContadorTiempoMovimiento(60);
+		setPatronMovimiento(2);
 	}
 
 }

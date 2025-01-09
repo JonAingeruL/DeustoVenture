@@ -18,6 +18,27 @@ public abstract class Enemigo extends Personaje{
 	GamePanel gp;
 	private int vida;
 	private String nombre;
+	private int patronMovimiento;
+	private int contadorTiempoMovimiento;
+	
+	
+	
+
+	public int getContadorTiempoMovimiento() {
+		return contadorTiempoMovimiento;
+	}
+
+	public void setContadorTiempoMovimiento(int contadorTiempoMovimiento) {
+		this.contadorTiempoMovimiento = contadorTiempoMovimiento;
+	}
+
+	public int getPatronMovimiento() {
+		return patronMovimiento;
+	}
+
+	public void setPatronMovimiento(int patronMovimiento) {
+		this.patronMovimiento = patronMovimiento;
+	}
 
 	protected int direccion;
 	private HashMap<String,Integer> objetosLooteados;
@@ -52,77 +73,128 @@ public abstract class Enemigo extends Personaje{
 	}
 	
 	
-	public void dibujarEnemigo(Graphics2D g2) {
 
-			g2.setColor(new Color(50*vida,0,0));
+ public void dibujarEnemigo(Graphics2D g2, Mapa mapa) {
+ 
+ 	if (this instanceof Boss) {
+ 		Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
+			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+ 		} else {
+ 			
+			g2.setColor(new Color(25*vida,0,0));
 
 			g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
-		
+		}
 	}
-//	public void dibujarEnemigo(Graphics2D g2) {
-//
-//		if (this instanceof Boss) {
-//			Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
-//			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
-//		} else {
-//			g2.setColor(new Color(50*vida,0,0));
-//
-//			g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
-//		}
-//	}
 		
 	//generador aleatorio de movimiento, mediante una Random que genera un numero del 1 al 4
 	//Dependiendo del numero, se moverá en un eje, y en caso de que haya colisión, el jugador se moverá al lado contrario
 	public void movimiento(Mapa mapa, int tamanoBaldosa, Jugador jugador) {
-		
-		switch(this.direccion) {
-		case 1: x+=velocidad;
-		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			jugador.cambiarVidas(-1);
-		}
-		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			x-=1;
-		}
-		break;
-		case 2: x-=velocidad;
-		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			jugador.cambiarVidas(-1);
-		}
-		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			x+=1;
-		}
-		break;
-		case 3: y+=velocidad;
-		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			jugador.cambiarVidas(-1);
-		}
-		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			y-=1;
-		}
-		break;
-		case 4: y-=velocidad;
-		if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			jugador.cambiarVidas(-1);
-		}
-		while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
-			y+=1;
-		}
-		break;
-		}
-		if (detectaColision(mapa,tamanoBaldosa) || x<0 || x>16*tamanoBaldosa || y> 12*tamanoBaldosa || y<0 ) {
+		 //si todos los enemigos con el patron de movimiento en 1 hacen un movimiento básico
+		if (patronMovimiento ==1) {
 			switch(this.direccion) {
-			case 1: x-=velocidad;
+			case 1: x+=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				x-=1;
+			}
 			break;
-			case 2: x+=velocidad;
+			case 2: x-=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				x+=1;
+			}
 			break;
-			case 3: y-=velocidad;
+			case 3: y+=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				y-=1;
+			}
 			break;
-			case 4: y+=velocidad;
+			case 4: y-=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				y+=1;
+			}
 			break;
 			}
-			Random r = new Random();
-			direccion = r.nextInt(1, 5);
+			if (detectaColision(mapa,tamanoBaldosa) || x<0 || x>15*tamanoBaldosa || y> 11*tamanoBaldosa || y<0 ) {
+				switch(this.direccion) {
+				case 1: x-=velocidad;
+				break;
+				case 2: x+=velocidad;
+				break;
+				case 3: y-=velocidad;
+				break;
+				case 4: y+=velocidad;
+				break;
+				}
+				Random r = new Random();
+				direccion = r.nextInt(1, 5);
+			}
+			
+			//Patron de movimiento para fantasmas y murcielagos
+		} else if (patronMovimiento ==2) {
+			switch(this.direccion) {
+			case 1: x+=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				x-=1;
+			}
+			break;
+			case 2: x-=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				x+=1;
+			}
+			break;
+			case 3: y+=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				y-=1;
+			}
+			break;
+			case 4: y-=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				y+=1;
+			}
+			break;
+			}
+			//la diferencia está en que no cambia de dirección al detectar una colision
+			if (x<0 || x>15*tamanoBaldosa || y> 11*tamanoBaldosa || y<0 || getContadorTiempoMovimiento() ==0) {
+				switch(this.direccion) {
+				case 1: x-=velocidad;
+				break;
+				case 2: x+=velocidad;
+				break;
+				case 3: y-=velocidad;
+				break;
+				case 4: y+=velocidad;
+				break;
+				}
+				//los de este segundo patrón tienen un contador de tiempo de 300 segundos. Este también se tiene que definir al crear el enemigo nuevo que tenga este patron en su clase.
+				Random r = new Random();
+				direccion = r.nextInt(1, 5);
+			}
 		}
+
 	
 	}
 
