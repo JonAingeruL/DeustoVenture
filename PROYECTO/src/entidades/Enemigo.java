@@ -54,19 +54,23 @@ public abstract class Enemigo extends Personaje{
 	
 	public void dibujarEnemigo(Graphics2D g2) {
 
-		if (this instanceof Boss) {
-			Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
-			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
-		} else {
 			g2.setColor(new Color(50*vida,0,0));
 
 			g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
-		}
-		//BufferedImage imagen = null;
 		
-		
-		//
 	}
+//	public void dibujarEnemigo(Graphics2D g2) {
+//
+//		if (this instanceof Boss) {
+//			Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
+//			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+//		} else {
+//			g2.setColor(new Color(50*vida,0,0));
+//
+//			g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
+//		}
+//	}
+		
 	//generador aleatorio de movimiento, mediante una Random que genera un numero del 1 al 4
 	//Dependiendo del numero, se moverá en un eje, y en caso de que haya colisión, el jugador se moverá al lado contrario
 	public void movimiento(Mapa mapa, int tamanoBaldosa, Jugador jugador) {

@@ -1,4 +1,8 @@
 -resources/mapas/tutorial.txt,1-
+Manzana;1
+Espada de Madera;1
+Espada de Piedra;1
+Pocion de salud;1
 -resources/mapas/tutorial.txt,2-
 Espada de Hielo;1
 -resources/mapas/mapa.txt,1-
@@ -9,4 +13,6 @@ Llave del bosque;1
 Llave de la montaña;1
 -resources/mapas/mapa.txt,67-
 Llave del volcán;1
+-resources/mapas/dungeon1.txt,3-
+Llave del bosque;1
 -

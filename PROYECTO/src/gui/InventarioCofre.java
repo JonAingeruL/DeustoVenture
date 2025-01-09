@@ -244,6 +244,8 @@ public class InventarioCofre extends JFrame{
 	            ps.println("Llave de la montaña;1");
 	            ps.println("-resources/mapas/mapa.txt,67-");
 	            ps.println("Llave del volcán;1");
+	            ps.println("-resources/mapas/dungeon1.txt,3-");
+	            ps.println("Llave del bosque;1");
 	            ps.println("-");
 	            ps.close();
 	        } catch (FileNotFoundException e) {

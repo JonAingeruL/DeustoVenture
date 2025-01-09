@@ -191,8 +191,8 @@ public class Mapa {
 	public void dibujarCelda(Graphics2D g, int tamanoBaldosa) {
 		// En estas listas metemos las texturas que se puedan rotar en el eje x o en el
 		// x e y.
-		List<Integer> flipeableX = Arrays.asList(0, 1, 2, 4, 5, 6, 7, 8, 14, 15);
-		List<Integer> flipeableY = Arrays.asList(0, 4, 5, 7, 8, 14, 15);
+		List<Integer> flipeableX = Arrays.asList(0, 1, 2, 4, 5, 6, 7, 8, 14, 15, 16, 17, 24);
+		List<Integer> flipeableY = Arrays.asList(0, 4, 5, 7, 8, 14, 15, 24);
 		// Recorro todo el array que contienen la celda
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 16; j++) {

@@ -1,6 +1,10 @@
 package entidades;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
 
 import main.GamePanel;
 import main.Mapa;
@@ -125,6 +129,18 @@ public class Boss extends Enemigo {
 			return false;
 		}
 	}
+
+	@Override
+	public void dibujarEnemigo(Graphics2D g2) {
+		if (direccion==1||direccion==5||direccion==7) {
+		Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
+		g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+		}else {
+			Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
+			g2.drawImage(i, x+gp.tamañoBaldosa, y, -gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+		}
+	}
+	
 	
 	
 	

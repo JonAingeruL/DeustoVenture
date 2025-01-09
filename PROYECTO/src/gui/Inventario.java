@@ -114,13 +114,13 @@ public class Inventario extends JFrame {
 						jugador.getInventario().put(objetoSeleccionado,
 								jugador.getInventario().get(objetoSeleccionado) - 1);
 					}
-					//Si el jugador tenía algún objeto en mano, se sustituye por el nuevo y el viejo
-					//vuelve al inventario
-					if (!jugador.objetoEnMano.equals("")) {
-						jugador.getInventario().put(jugador.objetoEnMano, 1);
-					}
 					//Si el objeto es una espada, se equipa al jugador
 					if (espadasDisponibles.containsKey(objetoSeleccionado)) {
+						//Si el jugador tenía algún objeto en mano, se sustituye por el nuevo y el viejo
+						//vuelve al inventario
+						if (!jugador.objetoEnMano.equals("")) {
+							jugador.getInventario().put(jugador.objetoEnMano, 1);
+						}
 						jugador.objetoEnMano = objetoSeleccionado;
 						jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
 						//Si el objeto es curativo, el jugador se cura el valor que corresponda al objeto
