@@ -500,18 +500,39 @@ public class GamePanel extends JPanel implements Runnable {
 					String clave = numMapa+","+numCelda;
 					int posXNpc = Integer.parseInt(campos[2])*tamañoBaldosa;
 					int posYNpc = Integer.parseInt(campos[3])*tamañoBaldosa;
-					String frase = campos[4];
-					NPC n = new NPC(posXNpc, posYNpc, frase, this);
-					
-					if (!npcs.containsKey(clave)) {
-						npcs.put(clave, new ArrayList<NPC>());
-					}
-					npcs.get(clave).add(n);
-					
-			
-				}
+					if ("NPC COMERCIANTE".equals(campos[4])) {
+	                    // Parsear productos y precios
+	                    String[] productos = campos[5].split(",");
+	                    String[] preciosStr = campos[6].split(",");
+	                    HashMap<String, Integer> productosMap = new HashMap<>();
 
-			}
+	                    for (int i = 0; i < productos.length; i++) {
+	                        productosMap.put(productos[i], Integer.parseInt(preciosStr[i]));
+	                    }
+
+	                    // Crear comerciante y asignar productos
+	                    NPCcomerciante comerciante = new NPCcomerciante(posXNpc, posYNpc, "Comerciante en el mapa", this);
+	                    for (String producto : productosMap.keySet()) {
+	                        comerciante.agregarProducto(producto, productosMap.get(producto));
+	                    }
+
+	                    // Agregar comerciante al HashMap de NPCs
+	                    if (!npcs.containsKey(clave)) {
+	                        npcs.put(clave, new ArrayList<NPC>());
+	                    }
+	                    npcs.get(clave).add(comerciante);
+
+	                } else {
+	                    // Crear un NPC normal
+	                    String frase = campos[4];
+	                    NPC npc = new NPC(posXNpc, posYNpc, frase, this);
+	                    if (!npcs.containsKey(clave)) {
+	                        npcs.put(clave, new ArrayList<NPC>());
+	                    }
+	                    npcs.get(clave).add(npc);
+	                }
+	            }
+	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
