@@ -1,7 +1,6 @@
 package gui;
 
-public class Item { //para saber el precio y nombre de los objertos en el comercio
-
+public class Item {
 	private String nombre;
     private int precio;
 
@@ -17,4 +16,5 @@ public class Item { //para saber el precio y nombre de los objertos en el comerc
     public int getPrecio() {
         return precio;
     }
+
 }
