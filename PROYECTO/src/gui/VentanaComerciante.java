@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.*;
 
+import entidades.Jugador;
 import main.GamePanel;
 import main.ManejoTeclado;
 
@@ -21,7 +22,7 @@ public class VentanaComerciante extends JFrame {
     private int dineroJugador;
     private HashMap<String, Integer> productos;
 
-    public VentanaComerciante(int dineroJugador, ManejoTeclado mt, GamePanel gp, HashMap<String, Integer> productos) {
+    public VentanaComerciante(int dineroJugador, ManejoTeclado mt, GamePanel gp, HashMap<String, Integer> productos, Jugador jugador) {
         this.dineroJugador = dineroJugador;
         this.productos = productos;
 
@@ -69,7 +70,7 @@ public class VentanaComerciante extends JFrame {
 
         // Renderizar columna de botones
         tabla.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
-        tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox()));
+        tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox(), jugador));
 
         // Panel con tabla
         JScrollPane scrollPane = new JScrollPane(tabla);
@@ -102,7 +103,7 @@ public class VentanaComerciante extends JFrame {
         private int precioSeleccionado;
         private boolean clicked;
 
-        public ButtonEditor(JCheckBox checkBox) {
+        public ButtonEditor(JCheckBox checkBox, Jugador jugador) {
             super(checkBox);
             button = new JButton();
             button.setOpaque(true);
@@ -112,6 +113,7 @@ public class VentanaComerciante extends JFrame {
                     if (dineroJugador >= precioSeleccionado) {
                         dineroJugador -= precioSeleccionado;
                         JOptionPane.showMessageDialog(button, "Has comprado: " + productoSeleccionado);
+                        jugador.getInventario().put(productoSeleccionado, +1);
                     } else {
                         JOptionPane.showMessageDialog(button, "No tienes suficiente dinero", "Error", JOptionPane.ERROR_MESSAGE);
                     }

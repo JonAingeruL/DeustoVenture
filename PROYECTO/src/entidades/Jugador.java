@@ -746,7 +746,7 @@ public class Jugador extends Personaje {
 			if(!this.hablarConNPC) {
 				new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda(), this);
 				}else if (this.comerciar && this.hablarConNPC) {
-					new VentanaComerciante(dineroJugador, mt, gp, productos);	
+					new VentanaComerciante(dineroJugador, mt, gp, productos, this);	
 				}
 			
 			else{
