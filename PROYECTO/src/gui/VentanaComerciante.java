@@ -1,4 +1,4 @@
-package entidades;
+package gui;
 
 	import java.awt.BorderLayout;
 	import java.awt.Component;
@@ -19,8 +19,6 @@ package entidades;
 	import javax.swing.JTable;
 	import javax.swing.table.DefaultTableModel;
 	import javax.swing.table.TableCellRenderer;
-
-import gui.Item;
 
 	public class VentanaComerciante extends JFrame {
 	    private JTable tabla;
