@@ -10,7 +10,7 @@ public class Slime extends Enemigo{
 		this.velocidad =2;
 		this.x = x;
 		this.y =y;
-		setPatronMovimiento(y);
+		setPatronMovimiento(1);
 		
 		
 	}
