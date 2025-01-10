@@ -1,154 +1,149 @@
 package gui;
 
-	import java.awt.BorderLayout;
-	import java.awt.Component;
-	import java.awt.FlowLayout;
-	import java.awt.Font;
-	import java.awt.event.ActionEvent;
-	import java.awt.event.ActionListener;
-	import java.util.ArrayList;
 
-	import javax.swing.DefaultCellEditor;
-	import javax.swing.JButton;
-	import javax.swing.JCheckBox;
-	import javax.swing.JFrame;
-	import javax.swing.JLabel;
-	import javax.swing.JOptionPane;
-	import javax.swing.JPanel;
-	import javax.swing.JScrollPane;
-	import javax.swing.JTable;
-	import javax.swing.table.DefaultTableModel;
-	import javax.swing.table.TableCellRenderer;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.*;
 
-	public class VentanaComerciante extends JFrame {
-	    private JTable tabla;
-	    private DefaultTableModel modeloTabla;
-	    private JLabel lblDinero;
-	    private int dineroJugador;
-	    private ArrayList<Item> inventarioNPC;
+import main.GamePanel;
+import main.ManejoTeclado;
 
-	    public VentanaComerciante(int dineroJugador, ArrayList<Item> inventarioNPC) {
-	        this.dineroJugador = dineroJugador;
-	        this.inventarioNPC = inventarioNPC;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.HashMap;
 
-	        setTitle("Comercio con el NPC");
-	        setSize(500, 300);
-	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	        setLayout(new BorderLayout());
+public class VentanaComerciante extends JFrame {
+    private int dineroJugador;
+    private HashMap<String, Integer> productos;
 
-	        // Panel de dinero del jugador
-	        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	        lblDinero = new JLabel("Dinero: " + dineroJugador);
-	        lblDinero.setFont(new Font("Arial", Font.BOLD, 16));
-	        panelSuperior.add(lblDinero);
+    public VentanaComerciante(int dineroJugador, ManejoTeclado mt, GamePanel gp, HashMap<String, Integer> productos) {
+        this.dineroJugador = dineroJugador;
+        this.productos = productos;
 
-	        // Crear tabla
-	        String[] columnas = {"Nombre", "Precio", "Comprar"};
-	        modeloTabla = new DefaultTableModel(columnas, 0);
-	        tabla = new JTable(modeloTabla) {
-	            @Override
-	            public boolean isCellEditable(int row, int column) {
-	                return column == 2; // Solo la columna de "Comprar" es editable
-	            }
-	        };
+        setTitle("Comercio con el NPC");
+        setSize(600, 400);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-	        // Renderizar botón en la columna "Comprar"
-	        tabla.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
-	        tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox()));
+        // Añadir KeyListener para cerrar con ESC
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    dispose(); // Cerrar la ventana
+                }
+            }
+        });
 
-	        // Agregar ítems a la tabla
-	        for (Item item : inventarioNPC) {
-	            modeloTabla.addRow(new Object[]{item.getNombre(), item.getPrecio(), "Comprar"});
-	        }
+        // Crear tabla personalizada
+        String[] columnas = {"Producto", "Precio", "Comprar"};
+        Object[][] datos = new Object[productos.size()][3];
+        int i = 0;
+        for (String producto : productos.keySet()) {
+            datos[i][0] = producto;
+            datos[i][1] = productos.get(producto) + " monedas";
+            datos[i][2] = "Comprar"; // Botón textual
+            i++;
+        }
 
-	        // Scroll para la tabla
-	        JScrollPane scroll = new JScrollPane(tabla);
+        DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 2; // Solo la columna de "Comprar" es editable
+            }
+        };
 
-	        // Agregar componentes al frame
-	        add(panelSuperior, BorderLayout.NORTH);
-	        add(scroll, BorderLayout.CENTER);
-	        setVisible(true);
-	    }
+        JTable tabla = new JTable(modeloTabla);
+        tabla.setRowHeight(30);
 
-	    // Actualizar dinero del jugador
-	    private void actualizarDinero(int nuevoDinero) {
-	        dineroJugador = nuevoDinero;
-	        lblDinero.setText("Dinero: " + dineroJugador);
-	    }
+        // Personalizar encabezados
+        JTableHeader encabezado = tabla.getTableHeader();
+        encabezado.setFont(new Font("Arial", Font.BOLD, 14));
+        encabezado.setBackground(Color.DARK_GRAY);
+        encabezado.setForeground(Color.WHITE);
 
-	    // Clase para renderizar botones en la tabla
-	    class ButtonRenderer extends JButton implements TableCellRenderer {
-	        public ButtonRenderer() {
-	            setOpaque(true);
-	        }
+        // Renderizar columna de botones
+        tabla.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
+        tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox()));
 
-	        @Override
-	        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-	            setText((value == null) ? "" : value.toString());
-	            return this;
-	        }
-	    }
+        // Panel con tabla
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        add(scrollPane, BorderLayout.CENTER);
 
-	    // Clase para manejar clics en los botones
-	    class ButtonEditor extends DefaultCellEditor {
-	        private JButton button;
-	        private String label;
-	        private boolean isPushed;
+        setVisible(true);
 
-	        public ButtonEditor(JCheckBox checkBox) {
-	            super(checkBox);
-	            button = new JButton();
-	            button.setOpaque(true);
-	            button.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						int fila = tabla.getSelectedRow();
-	                    int precio = (int) modeloTabla.getValueAt(fila, 1);
+        // Solicitar foco para capturar teclas
+        this.requestFocus();
+    }
 
-	                    if (dineroJugador >= precio) {
-	                        // Comprar ítem
-	                        actualizarDinero(dineroJugador - precio);
-	                        JOptionPane.showMessageDialog(null, "¡Has comprado " + modeloTabla.getValueAt(fila, 0) + "!");
-	                    } else {
-	                        // Dinero insuficiente
-	                        JOptionPane.showMessageDialog(null, "No tienes suficiente dinero.", "Error", JOptionPane.ERROR_MESSAGE);
-	                    }
-						
-					}
-				}); 
-	            
-	        }
-	              
+    // Renderizador personalizado para la columna de botones
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
 
-	        @Override
-	        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-	            label = (value == null) ? "" : value.toString();
-	            button.setText(label);
-	            isPushed = true;
-	            return button;
-	        }
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                       boolean hasFocus, int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
 
-	        @Override
-	        public Object getCellEditorValue() {
-	            isPushed = false;
-	            return label;
-	        }
+    // Editor personalizado para manejar compras
+    class ButtonEditor extends DefaultCellEditor {
+        private JButton button;
+        private String productoSeleccionado;
+        private int precioSeleccionado;
+        private boolean clicked;
 
-	        @Override
-	        public boolean stopCellEditing() {
-	            isPushed = false;
-	            return super.stopCellEditing();
-	        }
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (dineroJugador >= precioSeleccionado) {
+                        dineroJugador -= precioSeleccionado;
+                        JOptionPane.showMessageDialog(button, "Has comprado: " + productoSeleccionado);
+                    } else {
+                        JOptionPane.showMessageDialog(button, "No tienes suficiente dinero", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        }
 
-	        @Override
-	        protected void fireEditingStopped() {
-	            super.fireEditingStopped();
-	        }
-	    }
-	}
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            productoSeleccionado = (String) table.getValueAt(row, 0);
+            String precioStr = (String) table.getValueAt(row, 1);
+            precioSeleccionado = Integer.parseInt(precioStr.split(" ")[0]); // Extraer precio
+            button.setText((value == null) ? "" : value.toString());
+            clicked = true;
+            return button;
+        }
 
+        @Override
+        public Object getCellEditorValue() {
+            clicked = false;
+            return button.getText();
+        }
 
+        @Override
+        public boolean stopCellEditing() {
+            clicked = false;
+            return super.stopCellEditing();
+        }
 
-
-
+        @Override
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
+}

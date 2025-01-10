@@ -24,12 +24,6 @@ public class NPCcomerciante extends NPC{
         return productos;
     }
 
-    // Mostrar productos del comerciante
-    public void mostrarProductos() {
-        System.out.println("Productos disponibles:");
-        for (String producto : productos.keySet()) {
-            System.out.println(producto + " - Precio: " + productos.get(producto));
-        }
-    }
+
 
 }
