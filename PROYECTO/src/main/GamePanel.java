@@ -511,7 +511,7 @@ public class GamePanel extends JPanel implements Runnable {
 	                    }
 
 	                    // Crear comerciante y asignar productos
-	                    NPCcomerciante comerciante = new NPCcomerciante(posXNpc, posYNpc, "Comerciante en el mapa", true, this);
+	                    NPCcomerciante comerciante = new NPCcomerciante(posXNpc, posYNpc, "Comerciante en el mapa", this);
 	                    for (String producto : productosMap.keySet()) {
 	                        comerciante.agregarProducto(producto, productosMap.get(producto));
 	                    }
@@ -525,7 +525,7 @@ public class GamePanel extends JPanel implements Runnable {
 	                } else {
 	                    // Crear un NPC normal
 	                    String frase = campos[4];
-	                    NPC npc = new NPC(posXNpc, posYNpc, frase,false, this);
+	                    NPC npc = new NPC(posXNpc, posYNpc, frase, this);
 	                    if (!npcs.containsKey(clave)) {
 	                        npcs.put(clave, new ArrayList<NPC>());
 	                    }

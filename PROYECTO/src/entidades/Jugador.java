@@ -17,6 +17,7 @@ import gui.GameOverScreen;
 import gui.Inventario;
 import gui.InventarioCofre;
 import gui.Mensaje;
+import gui.VentanaComerciante;
 import gui.VentanaInteractuarNPC;
 
 public class Jugador extends Personaje {
@@ -33,6 +34,7 @@ public class Jugador extends Personaje {
 	private String frase;
 	private String fraseRecursiva;
 	private boolean comerciar;
+	private HashMap<String, Integer> productos;
 
 	public String objetoEnMano = "";
 	public int danoJugador = 0;
@@ -714,13 +716,14 @@ public class Jugador extends Personaje {
 
 					System.out.println("npc");
 					interaccionDisponible = true;
+					hablarConNPC = true;
 					
 					
-					if (npc.esComerciante()) { // Comprobar si el NPC es un comerciante
-	                    hablarConNPC = false; // Esto puede indicar que abre comercio, no diálogo normal
+					if (npc instanceof NPCcomerciante) { // Comprobar si el NPC es un comerciante
 	                    comerciar = true;  // Llama a un método para abrir la ventana de comercio
+	                    productos = ((NPCcomerciante) npc).getProductos();
 	                } else {
-	                    hablarConNPC = true;
+	                    
 	                    comerciar = false;
 	                    frase = npc.getFrase();
 						fraseRecursiva = npc.invertirFraseRecursiva(frase);
@@ -742,7 +745,11 @@ public class Jugador extends Personaje {
 		if(this.interaccionDisponible && mt.hablarNPCPulsado) {
 			if(!this.hablarConNPC) {
 				new InventarioCofre(mt,gp,archivoACargar,mapa.getNumcelda(), this);
-				}else{
+				}else if (this.comerciar && this.hablarConNPC) {
+					new VentanaComerciante(dineroJugador, mt, gp, productos);	
+				}
+			
+			else{
 				mt.empezarConversacion = true;
 				String fraseFinal = mt.invertirFrasePulsado ? fraseRecursiva : frase;
 	            new VentanaInteractuarNPC(mt, gp, fraseFinal); // Mostrar frase final (invertida o normal)
