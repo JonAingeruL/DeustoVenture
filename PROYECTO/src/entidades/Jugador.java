@@ -17,7 +17,7 @@ import gui.GameOverScreen;
 import gui.Inventario;
 import gui.InventarioCofre;
 import gui.Mensaje;
-import gui.NPC2;
+import gui.VentanaInteractuarNPC;
 
 public class Jugador extends Personaje {
 	GamePanel gp;
@@ -725,7 +725,7 @@ public class Jugador extends Personaje {
 				}else{
 				mt.empezarConversacion = true;
 				String fraseFinal = mt.invertirFrasePulsado ? fraseRecursiva : frase;
-	            new NPC2(mt, gp, fraseFinal); // Mostrar frase final (invertida o normal)
+	            new VentanaInteractuarNPC(mt, gp, fraseFinal); // Mostrar frase final (invertida o normal)
 	        
 				
 			}

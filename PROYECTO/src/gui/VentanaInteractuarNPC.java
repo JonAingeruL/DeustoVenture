@@ -20,11 +20,12 @@ import javax.swing.JPanel;
 import main.GamePanel;
 import main.ManejoTeclado;
 
-public class NPC2 extends JFrame{
+public class VentanaInteractuarNPC extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private ManejoTeclado tecladoM;
 	
-    public NPC2(ManejoTeclado tecladoM, GamePanel gp, String marcador) {
+    public VentanaInteractuarNPC(ManejoTeclado tecladoM, GamePanel gp, String marcador) {
+		
     	this.tecladoM =tecladoM;
         setTitle("NPC");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -172,5 +173,6 @@ public class NPC2 extends JFrame{
 	
 
 }
+
 
 
