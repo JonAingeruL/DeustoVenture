@@ -30,7 +30,9 @@ public class Jugador extends Personaje {
 	boolean interaccionDisponible = false;
 	public boolean hablarConNPC = false;
 	private HashMap<String, Integer> inventario = new HashMap<String, Integer>();
-
+	private String frase;
+	private String fraseRecursiva;
+	private boolean comerciar;
 
 	public String objetoEnMano = "";
 	public int danoJugador = 0;
@@ -43,8 +45,8 @@ public class Jugador extends Personaje {
 	private int enemigosDerrotados;
 	private int numMuertes;
 	private int tiempoJugado;
-	private String frase;
-	private String fraseRecursiva;
+	private int dineroJugador;
+
 	
 	
 	
@@ -75,6 +77,10 @@ public class Jugador extends Personaje {
 	public int getEnemigosDerrotados() {
 		return enemigosDerrotados;
 	}
+	
+	public int getDineroJugador() {
+		return dineroJugador;
+	}
 
 	public HashMap<String, Integer> getInventario() {
 		return inventario;
@@ -87,6 +93,11 @@ public class Jugador extends Personaje {
 	public void setEnemigosDerrotados(int enemigosDerrotados) {
 		this.enemigosDerrotados = enemigosDerrotados;
 	}
+	
+	public void setDineroJugador(int dineroJugador) {
+		this.dineroJugador = dineroJugador;
+	}
+	
 	long cooldownAtaque = 0; // De momento, cooldown servirá para almacenar en qué momento
 	// e ataca. Con esto se puede calcular cuanto tiempo ha pasado
 	// TODO Método que cierre todo lo que se abra al cerrar el juego, tanto en
@@ -648,6 +659,7 @@ public class Jugador extends Personaje {
 					if(enemigo.getVida()<=0) {
 						mensajes.add(new Mensaje("Has matado a "+enemigo.getNombre()+"!", tamanobaldosa, Color.BLUE));
 						this.setEnemigosDerrotados(this.getEnemigosDerrotados()+1);
+						this.setDineroJugador(this.getDineroJugador() +1);
 						enemigo.looteoEnemigo(inventario, this, gp);
 						enemigos.get(mapa.getNumeroMapa() + "," + mapa.getNumcelda()).remove(enemigo);
 					}
@@ -701,10 +713,18 @@ public class Jugador extends Personaje {
 										&& (npc.getPosY() + tamanobaldosa >= this.getY()))))) {
 
 					System.out.println("npc");
-					frase = npc.getFrase();
-					fraseRecursiva = npc.invertirFraseRecursiva(frase);
 					interaccionDisponible = true;
-					hablarConNPC = true;
+					
+					
+					if (npc.esComerciante()) { // Comprobar si el NPC es un comerciante
+	                    hablarConNPC = false; // Esto puede indicar que abre comercio, no diálogo normal
+	                    comerciar = true;  // Llama a un método para abrir la ventana de comercio
+	                } else {
+	                    hablarConNPC = true;
+	                    comerciar = false;
+	                    frase = npc.getFrase();
+						fraseRecursiva = npc.invertirFraseRecursiva(frase);
+	                }
 					
 					return true;
 					

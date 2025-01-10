@@ -10,11 +10,13 @@ public class NPC {
     private int posX;
     private int posY;
     private String frase;
+    private boolean esComerciante;
 
-    public NPC(int posX, int posY, String frase, GamePanel gp) {
+    public NPC(int posX, int posY, String frase, boolean esComerciante, GamePanel gp) {
         this.posX = posX;
         this.posY = posY;
         this.frase = frase;
+        this.esComerciante = esComerciante;
         this.gp =gp;
     }
 
@@ -29,6 +31,9 @@ public class NPC {
 
     public String getFrase() {
         return frase;
+    }
+    public boolean esComerciante() {
+        return esComerciante;
     }
     
     public void dibujarNpc(Graphics2D g2) {
