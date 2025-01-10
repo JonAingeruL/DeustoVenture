@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -100,41 +101,47 @@ public class Inventario extends JFrame {
 		botonUsar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String objetoSeleccionado = (String) tabla.getValueAt(tabla.getSelectedRow(), 0);
-				//Si el objeto está en algún hashmap de objetos utilizables, se activa su uso.
-				if (espadasDisponibles.containsKey(objetoSeleccionado)
-						|| objetosCurativos.containsKey(objetoSeleccionado)) {
+				try {
+					String objetoSeleccionado = (String) tabla.getValueAt(tabla.getSelectedRow(), 0);
+					//Si el objeto está en algún hashmap de objetos utilizables, se activa su uso.
+					
+					if (espadasDisponibles.containsKey(objetoSeleccionado)
+							|| objetosCurativos.containsKey(objetoSeleccionado)) {
 
-					String numObjetosSeleccionados = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
-					//Si el objeto es el último, se elimina
-					if (Integer.parseInt(numObjetosSeleccionados) - 1 == 0) {
-						jugador.getInventario().remove(objetoSeleccionado);
-					} else {
-						//Si hay más de uno, se reduce la cantidad
-						jugador.getInventario().put(objetoSeleccionado,
-								jugador.getInventario().get(objetoSeleccionado) - 1);
-					}
-					//Si el objeto es una espada, se equipa al jugador
-					if (espadasDisponibles.containsKey(objetoSeleccionado)) {
-						//Si el jugador tenía algún objeto en mano, se sustituye por el nuevo y el viejo
-						//vuelve al inventario
-						if (!jugador.objetoEnMano.equals("")) {
-							jugador.getInventario().put(jugador.objetoEnMano, 1);
+						String numObjetosSeleccionados = (String) tabla.getValueAt(tabla.getSelectedRow(), 1);
+						//Si el objeto es el último, se elimina
+						if (Integer.parseInt(numObjetosSeleccionados) - 1 == 0) {
+							jugador.getInventario().remove(objetoSeleccionado);
+						} else {
+							//Si hay más de uno, se reduce la cantidad
+							jugador.getInventario().put(objetoSeleccionado,
+									jugador.getInventario().get(objetoSeleccionado) - 1);
 						}
-						jugador.objetoEnMano = objetoSeleccionado;
-						jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
-						//Si el objeto es curativo, el jugador se cura el valor que corresponda al objeto
-					} else if (objetosCurativos.containsKey(objetoSeleccionado)) {
-						jugador.cambiarVidas(objetosCurativos.get(objetoSeleccionado));
-					} else {
-						jugador.objetoEnMano = "";
-					}
-					audio.closeClip();
-					cerrarInventario();
-				}else {
-					//Si el objeto no es utilizable, se avisa al jugador con un mensaje
-					gp.anadirMensaje(new Mensaje("Este objeto no es utilizable", 60,Color.RED));
-			}
+						//Si el objeto es una espada, se equipa al jugador
+						if (espadasDisponibles.containsKey(objetoSeleccionado)) {
+							//Si el jugador tenía algún objeto en mano, se sustituye por el nuevo y el viejo
+							//vuelve al inventario
+							if (!jugador.objetoEnMano.equals("")) {
+								jugador.getInventario().put(jugador.objetoEnMano, 1);
+							}
+							jugador.objetoEnMano = objetoSeleccionado;
+							jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
+							//Si el objeto es curativo, el jugador se cura el valor que corresponda al objeto
+						} else if (objetosCurativos.containsKey(objetoSeleccionado)) {
+							jugador.cambiarVidas(objetosCurativos.get(objetoSeleccionado));
+						} else {
+							jugador.objetoEnMano = "";
+						}
+						audio.closeClip();
+						cerrarInventario();
+					}else {
+						//Si el objeto no es utilizable, se avisa al jugador con un mensaje
+						gp.anadirMensaje(new Mensaje("Este objeto no es utilizable", 60,Color.RED));
+				}
+				} catch (IndexOutOfBoundsException e2) {
+					JOptionPane.showMessageDialog(panelBotones, "Tienes que seleccionar un objeto", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+
 				
 			}
 			
@@ -145,7 +152,7 @@ public class Inventario extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// reinicia ambas variables a false, para que no se vuelva a abrir hasta que se
-				// vuelva a pulsar la tecla I
+				// vuelva a pulsar la tecla Iddddddd
 				cerrarInventario();
 			}
 		});
