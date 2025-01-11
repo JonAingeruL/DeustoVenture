@@ -482,6 +482,18 @@ public class GamePanel extends JPanel implements Runnable {
 					break;
 					case "EspirituFuego": e = new EspirituFuego(posXEnemigo, posYEnemigo, this);
 					break;
+					case "Fantasma": e = new Fantasma(posXEnemigo, posYEnemigo, this);
+					break;
+					case "Golem": e = new Golem(posXEnemigo, posYEnemigo, this);
+					break;
+					case "HombreBomba": e = new HombreBomba(posXEnemigo, posYEnemigo, this);
+					break;
+					case "MantisReligiosa": e = new MantisReligiosa(posXEnemigo, posYEnemigo, this);
+					break;
+					case "Skorpion": e = new Skorpion(posXEnemigo, posYEnemigo, this);
+					break;
+					case "SlimeFuego": e = new SlimeFuego(posXEnemigo, posYEnemigo, this);
+					break;
 					default: e= new Slime(posXEnemigo, posYEnemigo, this);
 					}
 					if (!enemigos.containsKey(clave)) {
