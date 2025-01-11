@@ -194,6 +194,71 @@ public abstract class Enemigo extends Personaje{
 				direccion = r.nextInt(1, 5);
 			}
 		}
+		//Patron de movimineto para el espiritu de fuego
+		//Solo se mueve en el eje y
+		else if(patronMovimiento == 3) {
+			switch(this.direccion) {
+			case 1,3: y+=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				y-=1;
+			}
+			break;
+			case 2,4: y-=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				y+=1;
+			}
+			break;
+			}
+			if(detectaColision(mapa, tamanoBaldosa) || x<0 || x>16*tamanoBaldosa || y>12*tamanoBaldosa || y<0 ) {
+				switch(this.direccion) {
+					case 1,3: y-=velocidad;
+					break;
+					case 2,4: y+=velocidad;
+					break;
+				}
+				Random r = new Random();
+				direccion = r.nextInt(1,5);
+			}
+		}
+		//Patron de movimiento para el Cangrejo
+		//Solo se mueve en el eje x
+		else if(patronMovimiento == 4) {
+			switch(this.direccion) {
+			case 1,3: x+=velocidad;
+			if(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa,jugador,tamanoBaldosa)) {
+				x-=1;
+			}
+			break;
+			case 2,4: x-=velocidad;
+			if(detectaColisionJugador(mapa,jugador, tamanoBaldosa)) {
+				jugador.cambiarVidas(-1);
+			}
+			while(detectaColisionJugador(mapa, jugador, tamanoBaldosa)) {
+				x+=1;
+			}
+			break;
+			}
+			if(detectaColision(mapa, tamanoBaldosa) || x<0 || x>16*tamanoBaldosa || y>12*tamanoBaldosa || y<0 ) {
+				switch(this.direccion) {
+				case 1,3: x-=velocidad;
+				break;
+				case 2,4: x+=velocidad;
+				break;
+				}
+				Random r= new Random();
+				direccion = r.nextInt(1,5);
+			}
+		}
+		
 
 	
 	}
