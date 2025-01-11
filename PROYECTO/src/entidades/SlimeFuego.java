@@ -10,6 +10,7 @@ public class SlimeFuego extends Enemigo {
 		this.velocidad = 4;
 		this.x = x;
 		this.y = y;
+		setPatronMovimiento(1);
 	}
 
 }

@@ -11,6 +11,7 @@ public class Golem extends Enemigo {
 		this.velocidad = 2;
 		this.x = x;
 		this.y = y;
+		setPatronMovimiento(1);
 		
 	}
 

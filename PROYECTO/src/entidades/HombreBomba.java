@@ -11,6 +11,7 @@ public class HombreBomba extends Enemigo {
 		this.velocidad = 10;
 		this.x = x;
 		this.y = y;
+		setPatronMovimiento(1);
 	}
 
 }

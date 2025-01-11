@@ -11,6 +11,7 @@ public class BabosaFuego extends Enemigo{
 		this.velocidad = 1;
 		this.x = x;
 		this.y = y;
+		setPatronMovimiento(1);
 	}
 	
 

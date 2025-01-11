@@ -11,5 +11,6 @@ public class ArmaduraEncantada extends Enemigo {
 		this.velocidad = 5;
 		this.x = x;
 		this.y = y;
+		setPatronMovimiento(1);
 	}
 }
