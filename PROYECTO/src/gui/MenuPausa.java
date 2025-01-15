@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -69,9 +71,13 @@ public class MenuPausa extends JFrame {
 		salir.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		salir.addActionListener(e -> salir());
 		salir.setForeground(Color.RED);
-		// TODO Poner esto en algún formato tiempo
-		JLabel tiempo = new JLabel(""+gp.getJugador().getTiempoJugado()+" segundos");
-		
+		int segundos = gp.getJugador().getTiempoJugado();
+		int horas = segundos/3600;
+		int minutos = segundos/60;
+		System.out.println(gp.getJugador().getTiempoJugado());
+		if (minutos> 60) minutos=minutos%60;
+		if (segundos> 60) segundos=segundos%60;
+		JLabel tiempo = new JLabel("Tiempo de juego: "+horas+":"+minutos+":"+segundos);
 		add(Box.createVerticalGlue());
 		add(informacion);
 		informacion.setAlignmentX(CENTER_ALIGNMENT);

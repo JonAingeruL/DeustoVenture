@@ -34,6 +34,7 @@ public class MenuInicio extends JFrame {
 	public MenuInicio() {
 		setTitle("Deusto Venture");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
         setSize(400,360);
         setLocationRelativeTo(null);
 		//setBackground(Color.BLACK);
