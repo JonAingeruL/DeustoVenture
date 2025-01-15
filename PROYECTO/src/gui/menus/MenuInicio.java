@@ -1,4 +1,4 @@
-package gui;
+package gui.menus;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import gui.VentanaContinuarJugador;
+import gui.VentanaRegistroJugador;
 import main.GestorBD;
 import main.Usuario;
 
@@ -37,7 +39,6 @@ public class MenuInicio extends JFrame {
 		setResizable(false);
         setSize(400,360);
         setLocationRelativeTo(null);
-        setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		//setBackground(Color.BLACK);
        //setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         //setIconImage(imagenFondo);

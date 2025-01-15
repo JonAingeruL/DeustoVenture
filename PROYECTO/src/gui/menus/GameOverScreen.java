@@ -1,4 +1,4 @@
-package gui;
+package gui.menus;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,8 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-
-import javax.swing.ImageIcon;
+import db.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,8 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import main.GamePanel;
-import main.GestorBD;
-import main.Usuario;
 
 public class GameOverScreen extends JFrame {
 
@@ -27,7 +24,6 @@ public class GameOverScreen extends JFrame {
 
 	public GameOverScreen(int puntos,GamePanel gp, String usuarioActual)  {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setSize(500, 500);

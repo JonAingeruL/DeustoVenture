@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 
-import gui.GameOverScreen;
-import gui.Inventario;
-import gui.InventarioCofre;
+import gui.menus.*;
+import gui.inventario.*;
 import gui.Mensaje;
 import gui.VentanaComerciante;
 import gui.VentanaInteractuarNPC;

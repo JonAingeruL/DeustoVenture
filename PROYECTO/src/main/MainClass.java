@@ -1,6 +1,6 @@
 package main;
 
-import gui.MenuInicio;
+import gui.menus.*;
 
 public class MainClass {
 

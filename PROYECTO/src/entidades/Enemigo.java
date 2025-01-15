@@ -8,7 +8,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 
-import gui.Inventario;
+import gui.inventario.*;
 import gui.Mensaje;
 import main.AudioPlayer;
 import main.GamePanel;

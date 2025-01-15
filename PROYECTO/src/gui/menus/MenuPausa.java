@@ -1,4 +1,4 @@
-package gui;
+package gui.menus;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,17 +8,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
-
+import db.*;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import main.GamePanel;
-import main.GestorBD;
-import main.Usuario;
 
 
 public class MenuPausa extends JFrame {
@@ -37,7 +34,6 @@ public class MenuPausa extends JFrame {
 		setSize(300, 400);
 		setResizable(false);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		setLocationRelativeTo(null);
 		JLabel informacion = new JLabel(gp.getJugador().getNombreJugador());
 		informacion.setFont(new Font(Font.DIALOG, Font.BOLD, 20));

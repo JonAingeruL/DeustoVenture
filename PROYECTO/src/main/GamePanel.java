@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import gui.menus.*;
+import gui.inventario.*;
 
 
 import javax.swing.JPanel;

@@ -1,4 +1,4 @@
-package gui;
+package gui.inventario;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -13,7 +13,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import entidades.Jugador;
-import main.AudioPlayer;
+import main.sonido.*;
 import main.GamePanel;
 import main.ManejoTeclado;
 
@@ -47,7 +46,6 @@ public class InventarioCofre extends JFrame{
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
-        setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
         
     	JButton botonUsar = new JButton("Coger todo");
     	JButton botonSalir = new JButton("Salir");
