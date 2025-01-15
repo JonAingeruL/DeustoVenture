@@ -1,6 +1,7 @@
 package gui;
 
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -128,12 +129,20 @@ public class VentanaComerciante extends JFrame {
             setBackground(new Color(30, 144, 255));
             setForeground(Color.BLACK); // Texto en negro
             setFont(new Font("Arial", Font.BOLD, 12));
+            setBorder(BorderFactory.createRaisedBevelBorder()); // Borde elevado
+            setFocusPainted(false); // Evita el borde de enfoque
+            setContentAreaFilled(true); // El área del botón es rellenable
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                        boolean hasFocus, int row, int column) {
             setText((value == null) ? "" : value.toString());
+            if (isSelected) {
+                setBackground(new Color(70, 130, 180)); // Color más oscuro cuando está seleccionado
+            } else {
+                setBackground(new Color(30, 144, 255)); // Azul cuando no está seleccionado
+            }
             return this;
         }
     }
@@ -156,6 +165,9 @@ public class VentanaComerciante extends JFrame {
             button.setBackground(new Color(34, 139, 34)); // Verde
             button.setForeground(Color.BLACK); // Texto en negro
             button.setFont(new Font("Arial", Font.BOLD, 12));
+            button.setBorder(BorderFactory.createRaisedBevelBorder()); // Borde elevado
+            button.setFocusPainted(false); // Evitar borde de enfoque
+            button.setContentAreaFilled(true);
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
