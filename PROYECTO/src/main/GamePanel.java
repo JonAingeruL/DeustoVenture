@@ -494,7 +494,7 @@ public class GamePanel extends JPanel implements Runnable {
 					break;
 					case "SlimeFuego": e = new SlimeFuego(posXEnemigo, posYEnemigo, this);
 					break;
-					case "CangrejoFuego": e = new CangrejoFuego(posXEnemigo, posYEnemigo, null);
+					case "CangrejoFuego": e = new CangrejoFuego(posXEnemigo, posYEnemigo, this);
 					break;
 					default: e= new Slime(posXEnemigo, posYEnemigo, this);
 					}
