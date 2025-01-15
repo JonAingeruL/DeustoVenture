@@ -73,7 +73,10 @@ public class MusicPlayer {
 	public void stopMusic() {
 		cambiarVolumen(0);
 		playing = false;
-		t.interrupt();
+		if (t!=null) {
+			t.interrupt();
+		}
+		
 	}
 	
 	
