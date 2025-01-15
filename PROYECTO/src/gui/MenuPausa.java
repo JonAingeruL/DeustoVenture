@@ -53,7 +53,7 @@ public class MenuPausa extends JFrame {
 		reanudar.addActionListener(e -> reanudar(gp));
 		
 		// Dinero del jugador (nuevo JLabel)
-				JLabel dineroJugador = new JLabel("Dinero: " + gp.getJugador().getDineroJugador() + " monedas");
+				JLabel dineroJugador = new JLabel("Dinero: " + gp.getJugador().getDineroJugador() + " oro");
 				dineroJugador.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
 				dineroJugador.setForeground(Color.black);
 				dineroJugador.setAlignmentX(CENTER_ALIGNMENT);
