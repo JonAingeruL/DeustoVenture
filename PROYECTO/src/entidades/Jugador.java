@@ -3,8 +3,10 @@ package entidades;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
+
 import main.*;
-import java.awt.image.BufferedImage;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import db.*;
 import gui.menus.*;
 import gui.inventario.*;
@@ -25,7 +29,7 @@ public class Jugador extends Personaje {
 	ManejoTeclado maneT;
 	private boolean estaDentroDeMazmorra = true;
 	private String archivoACargar = "resources/mapas/tutorial.txt";
-	private BufferedImage corazonVida, corazonSinVida, corazonAMedias, espada;
+	private Image corazonVida, corazonSinVida, corazonAMedias, espada;
 	private boolean[] vidas = { true, true, true, true, true, true };
 	private boolean atacando = false;
 	boolean interaccionDisponible = false;
@@ -143,34 +147,34 @@ public class Jugador extends Personaje {
 
 		try {
 
-			arriba1 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/arribaPers1.png"));
-			arriba2 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/arribaPers2.png"));
-			arriba3 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/arribaPers3.png"));
-			abajo1 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/abajoPers1.png"));
-			abajo2 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/abajoPers2.png"));
-			abajo3 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/abajoPers3.png"));
-			derecha1 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/derechaPers1.png"));
-			derecha2 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/derechaPers2.png"));
-			derecha3 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/derechaPers3.png"));
-			izquierda1 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/izquierdaPers1.png"));
-			izquierda2 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/izquierdaPers2.png"));
-			izquierda3 = ImageIO.read(getClass().getResourceAsStream("/texturas/texJugador/izquierdaPers3.png"));
-			corazonVida = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/corazonConVida.png")); // el
+			arriba1 = new ImageIcon("resources/texturas/texJugador/arribaPers1.png").getImage();
+			arriba2 = new ImageIcon("resources/texturas/texJugador/arribaPers2.png").getImage();
+			arriba3 = new ImageIcon("resources/texturas/texJugador/arribaPers3.png").getImage();
+			abajo1 = new ImageIcon("resources/texturas/texJugador/abajoPers1.png").getImage();
+			abajo2 = new ImageIcon("resources/texturas/texJugador/abajoPers2.png").getImage();
+			abajo3 = new ImageIcon("resources/texturas/texJugador/abajoPers3.png").getImage();
+			derecha1 = new ImageIcon("resources/texturas/texJugador/derechaPers1.png").getImage();
+			derecha2 = new ImageIcon("resources/texturas/texJugador/derechaPers2.png").getImage();
+			derecha3 = new ImageIcon("resources/texturas/texJugador/derechaPers3.png").getImage();
+			izquierda1 = new ImageIcon("resources/texturas/texJugador/izquierdaPers1.png").getImage();
+			izquierda2 = new ImageIcon("resources/texturas/texJugador/izquierdaPers2.png").getImage();
+			izquierda3 = new ImageIcon("resources/texturas/texJugador/izquierdaPers3.png").getImage();
+			corazonVida = new ImageIcon("resources/texturas/vida/corazonConVida.png").getImage(); // el
 																												// corazon
 																												// con
 			// vida y su ruta
-			corazonSinVida = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonSinVida.png")); // el
+			corazonSinVida = new ImageIcon("/texturas/vida/CorazonSinVida.png").getImage(); // el
 																												// corazon
 																												// sin
 			// vida y su
 			// ruta
-			corazonAMedias = ImageIO.read(getClass().getResourceAsStream("/texturas/vida/CorazonAMedias.png")); // El
+			corazonAMedias = new ImageIcon("/texturas/vida/CorazonAMedias.png").getImage(); // El
 																												// corazón
 																												// a
 																												// medias
-			espada = ImageIO.read(getClass().getResourceAsStream("/texturas/texInventario/espada.png"));
+			espada = new ImageIcon("/texturas/texInventario/espada.png").getImage();
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -286,7 +290,7 @@ public class Jugador extends Personaje {
 
 		// g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
 
-		BufferedImage imagen = null;
+		Image imagen = null;
 
 		switch (direccion) {
 		case "arriba":

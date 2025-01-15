@@ -1,6 +1,9 @@
 package entidades;
 
-import java.awt.image.BufferedImage;
+import java.awt.Image;
+
+
+
 
 public class Personaje {
 	// POSICION
@@ -8,7 +11,7 @@ public class Personaje {
 	// velocidad
 	public int velocidad;
 	
-	public BufferedImage arriba1, arriba2, arriba3,  abajo1, abajo2, abajo3, derecha1, derecha2, derecha3, izquierda1, izquierda2, izquierda3;
+	public Image arriba1, arriba2, arriba3,  abajo1, abajo2, abajo3, derecha1, derecha2, derecha3, izquierda1, izquierda2, izquierda3;
 	public String direccion;
 	
 	public int contadorSprites = 0;
