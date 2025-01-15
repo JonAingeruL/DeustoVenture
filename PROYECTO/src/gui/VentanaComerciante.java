@@ -8,14 +8,22 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 
 import entidades.Jugador;
 import main.GamePanel;
 import main.ManejoTeclado;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 public class VentanaComerciante extends JFrame {
@@ -37,6 +45,7 @@ public class VentanaComerciante extends JFrame {
 
         // Añadir KeyListener para cerrar con ESC
         addKeyListener(new KeyAdapter() {
+		
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -68,8 +77,24 @@ public class VentanaComerciante extends JFrame {
             }
         };
 
-        JTable tabla = new JTable(modeloTabla);
+        JTable tabla = new JTable(modeloTabla) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                if (!isRowSelected(row)) {
+                    c.setBackground(row % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
+                } else {
+                    c.setBackground(Color.CYAN);
+                }
+                return c;
+            }
+        };
         tabla.setRowHeight(30);
+        tabla.setFont(new Font("Arial", Font.PLAIN, 14));
+        tabla.setSelectionBackground(new Color(184, 207, 229));
+        tabla.setSelectionForeground(Color.BLACK);
 
         // Personalizar encabezados
         JTableHeader encabezado = tabla.getTableHeader();
@@ -100,6 +125,9 @@ public class VentanaComerciante extends JFrame {
 
 		public ButtonRenderer() {
             setOpaque(true);
+            setBackground(new Color(30, 144, 255));
+            setForeground(Color.BLACK); // Texto en negro
+            setFont(new Font("Arial", Font.BOLD, 12));
         }
 
         @Override
@@ -125,6 +153,9 @@ public class VentanaComerciante extends JFrame {
             super(checkBox);
             button = new JButton();
             button.setOpaque(true);
+            button.setBackground(new Color(34, 139, 34)); // Verde
+            button.setForeground(Color.BLACK); // Texto en negro
+            button.setFont(new Font("Arial", Font.BOLD, 12));
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
