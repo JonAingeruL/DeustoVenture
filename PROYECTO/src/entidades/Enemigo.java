@@ -77,8 +77,13 @@ public abstract class Enemigo extends Personaje{
  public void dibujarEnemigo(Graphics2D g2, Mapa mapa) {
  
  	if (this instanceof Boss) {
- 		Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
-			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+ 		if (this.direccion==1||this.direccion==5||this.direccion==7) {
+ 			Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
+ 			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+ 			}else {
+ 				Image i = new ImageIcon("resources/texturas/texEnemigos/JavaFinalBoss.png").getImage();
+ 				g2.drawImage(i, x+gp.tamañoBaldosa, y, -gp.tamañoBaldosa, gp.tamañoBaldosa, null);
+ 			}
  		} else {
  			
 			g2.setColor(Color.RED);

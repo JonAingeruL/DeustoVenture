@@ -12,9 +12,9 @@ import main.Mapa;
 public class Boss extends Enemigo {
 	
 	public Boss(int x, int y, GamePanel gp) {
-		super(200, gp);
+		super(350, gp);
 		this.setNombre("JavaBoss");
-		velocidad = 2;
+		velocidad = 4;
 		this.x = x;
 		this.y =y;
 		Random r = new Random();
