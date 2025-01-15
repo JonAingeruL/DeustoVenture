@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +27,7 @@ public class GameOverScreen extends JFrame {
 
 	public GameOverScreen(int puntos,GamePanel gp, String usuarioActual)  {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setSize(500, 500);

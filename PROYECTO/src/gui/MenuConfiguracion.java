@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,6 +31,7 @@ public class MenuConfiguracion extends JFrame {
 	
 	public MenuConfiguracion(GamePanel gp) {
 		//tamaño, metodo de cerrado y sitio de aparición de ventana
+		setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		setSize(300, 400);
 		setTitle("Opciones");
 		setLocationRelativeTo(null);

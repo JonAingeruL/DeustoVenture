@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +27,7 @@ public class VentanaRegistroJugador extends JFrame {
 		setTitle("Usuario");
 		setSize(300, 150);
 		setLocationRelativeTo(null);
+		setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		
 		setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		
@@ -118,7 +120,7 @@ public class VentanaRegistroJugador extends JFrame {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Esto permite cerrar bien la ventana cuando le demos a la X
 		window.setResizable(false); //Para que no se le pueda cambiar el tamaño a la ventana
 		window.setTitle("DeustoVenture"); //Le damos un nombre a la ventana
-		
+		window.setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		//Despues de crear la JPanel en la clase GamePanel la añadimos al main para poder verla
 		GamePanel gamePanel = new GamePanel(usuarioActual,esnuevoUsuario,gbd); //creanmos el gamepanel
 		window.add(gamePanel); //Añandimos el gamepanel a la ventana

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,6 +30,7 @@ public class VentanaContinuarJugador extends JFrame{
 		setTitle("Usuario");
 		setSize(300, 150);
 		setLocationRelativeTo(null);
+		setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		
 		setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		

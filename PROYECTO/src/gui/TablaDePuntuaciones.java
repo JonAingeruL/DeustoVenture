@@ -1,6 +1,8 @@
 package gui;
 
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,7 +20,7 @@ public class TablaDePuntuaciones extends JFrame {
 		setSize(600,400);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
+		setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		
 		DefaultTableModel modelo = new DefaultTableModel(headers,0) {
 			private static final long serialVersionUID = 1L;

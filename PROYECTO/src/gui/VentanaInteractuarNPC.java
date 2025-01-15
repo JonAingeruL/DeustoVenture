@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,6 +30,7 @@ public class VentanaInteractuarNPC extends JFrame{
     	this.tecladoM =tecladoM;
         setTitle("NPC");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
         int x = 275; 
 		int y = (gp.maxPantallaFila - gp.maxPantallaFila/3) * gp.tamañoBaldosa - 15; //hay q * para pasarlo a la unidad correcta
 		int ancho = gp.maxPantallaColu * (gp.tamañoBaldosa -2); 

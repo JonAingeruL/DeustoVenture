@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,6 +37,7 @@ public class MenuPausa extends JFrame {
 		setSize(300, 400);
 		setResizable(false);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		setLocationRelativeTo(null);
 		JLabel informacion = new JLabel(gp.getJugador().getNombreJugador());
 		informacion.setFont(new Font(Font.DIALOG, Font.BOLD, 20));

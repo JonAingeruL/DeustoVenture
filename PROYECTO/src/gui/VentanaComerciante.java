@@ -3,6 +3,7 @@ package gui;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -43,6 +44,7 @@ public class VentanaComerciante extends JFrame {
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 
         // Añadir KeyListener para cerrar con ESC
         addKeyListener(new KeyAdapter() {
