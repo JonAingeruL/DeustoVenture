@@ -332,24 +332,117 @@ public abstract class Enemigo extends Personaje{
 		if (this instanceof Slime) {
 			//el jugador recibirá entre 1 y 10 de oro por matar un Slime
 			oroRecibido+=r.nextInt(1, 11);
-			if (r.nextInt(1, 11)==1) {
+			if (r.nextInt(1, 4)==1) {
 				//con un 10% de probabilidad suelta una manzana (la cantidad es 1)
 				objetosLooteados.put("Manzana", 1);
-				
 			}
+			if (r.nextInt(1,16)==1) {
+				objetosLooteados.put("Espada de Piedra", 1);
+			}
+		} else if (this instanceof Esqueleto) {
+			oroRecibido+=r.nextInt(5,21);
+			if (r.nextInt(1,5) ==1) {
+				objetosLooteados.put("Manzana", 1);
+			}
+			if (r.nextInt(1,5)==1) {
+				objetosLooteados.put("Pera", 1);
+			}
+		} else if (this instanceof Murcielago) {
+			oroRecibido+=r.nextInt(3,16);
+			if (r.nextInt(1,10)==1) {
+				objetosLooteados.put("Chuleta", 2);
+			} 
+			objetosLooteados.put("Platano", 1);
+		} else if (this instanceof Fantasma) {
+			oroRecibido += r.nextInt(10,25);
+			if (r.nextInt(1,6) ==1) {
+				objetosLooteados.put("Naranja", 1);
+				objetosLooteados.put("Limon", 1);
+			}
+			objetosLooteados.put("Colacao", 1);
+		} else if (this instanceof ArmaduraEncantada) {
+			oroRecibido += r.nextInt(1, 31);
+			if (r.nextInt(1,4)==1) {
+				objetosLooteados.put("Espada de Hierro", 1);
+			}
+			objetosLooteados.put("Cacaolat",1);
+		} else if (this instanceof EsqueletoConArmadura) {
+			oroRecibido += r.nextInt(30,41);
+			if (r.nextInt(1,6) == 1) {
+				objetosLooteados.put("Monster Java", 1);
+			}
+			if(r.nextInt(1,11)==10) {
+				objetosLooteados.put("Espada de Oro", 1);
+			}
+		} else if (this instanceof Golem) {
+			oroRecibido += r.nextInt(35,51);
+			if (r.nextInt(1,5)==1) {
+				objetosLooteados.put("Radler Limon", 1);
+			}
+			if (r.nextInt(1,10)==1) {
+				objetosLooteados.put("Espada de Oro", 1);
+			}
+		} else if (this instanceof HombreBomba) {
+			oroRecibido +=100;
+			if (r.nextInt(1,3)==1) {
+				objetosLooteados.put("Tarta de Tarta", 1);
+			} 
+			objetosLooteados.put("Tarta de Fresa", 1);
+			objetosLooteados.put("Chuleta", 2);
+			objetosLooteados.put("Pera", 3);
+		} else if (this instanceof BabosaFuego) {
+			oroRecibido += r.nextInt(60,76);
+			if (r.nextInt(1,6)==1) {
+				objetosLooteados.put("RonCola", 3);
+			} 
+			if (r.nextInt(1,6)==1) {
+				objetosLooteados.put("Espada de Platino", 1);
+			}
+			objetosLooteados.put("Manzana", 1);
+		} else if (this instanceof CangrejoFuego) {
+			oroRecibido+=r.nextInt(1,200);
+			
+		} else if (this instanceof EspirituFuego) {
+			oroRecibido+=r.nextInt(50, 91);
+			if (r.nextInt(1,6)==1) {
+				objetosLooteados.put("Platano", r.nextInt(1,4));
+			}
+			if (r.nextInt(1,15)==1) {
+				objetosLooteados.put("Espada de Diamante", 1);
+			}
+		} else if (this instanceof SlimeFuego) {
+			oroRecibido+=r.nextInt(60,101);
+			if (r.nextInt(1,10)==1) {
+				objetosLooteados.put("Pocion de Salud", 1);
+			}
+		} else if (this instanceof Skorpion) {
+			oroRecibido+=r.nextInt(40,78);
+			if (r.nextInt(1,15)==1) {
+				objetosLooteados.put("Espada de Esmeralda", 1);
+			}
+			objetosLooteados.put("Cacaolat", 2);
+		} else if (this instanceof MantisReligiosa) {
+			objetosLooteados.put("Pera", 3);
+			objetosLooteados.put("Tarta de Chocolate", 1);
+		} else if (this instanceof ArmaduraEncantadaFuego) {
+			oroRecibido+=r.nextInt(100,150);
+			if (r.nextInt(1,15)==1) {
+				objetosLooteados.put("Espada de Obsidiana",1);
+			}
+			oroRecibido+=r.nextInt(100,150);
+			if (r.nextInt(1,7)==1) {
+				objetosLooteados.put("Durum solo Carne",1);
+			}
+			if (r.nextInt(1,7)==1) {
+				objetosLooteados.put("Pizza de Turco", 1);
+			}
+		} else if (this instanceof Boss) {
+			oroRecibido+=1000;
+			objetosLooteados.put("Espada de Javanita", 1);
+			objetosLooteados.put("Java en vena", r.nextInt(1,6));
 		}
-			//LOOT BOSS
-			if (this instanceof Boss) {
-				//el jugador recibirá entre 50 y 500 de oro por matar un Slime
-				oroRecibido+=r.nextInt(1, 11)*50;
-				if (r.nextInt(1, 11)==1) {
-					//con un 10% de probabilidad suelta una manzana (la cantidad es 1)
-					objetosLooteados.put("Pocion de salud", 1);
-					
-				}
-				objetosLooteados.put("Espada Debug", 1);
-			}
-		//se añade el oro del enemigo eliminado
+		
+		
 		loot.playClip(gp.getVolumenAudio());
 		objetosLooteados.put("Oro",oroRecibido);
 		//actualizamos el inventario

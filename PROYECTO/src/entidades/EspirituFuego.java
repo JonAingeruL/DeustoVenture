@@ -9,7 +9,7 @@ public class EspirituFuego extends Enemigo {
 	
 	public EspirituFuego(int x, int y, GamePanel gp) {
 		
-		super(6,gp);
+		super(40,gp);
 		this.setNombre("Espiritu de fuego");
 		this.velocidad = 5;
 		this.x = x;
