@@ -14,6 +14,7 @@ import java.util.Scanner;
 import gui.menus.*;
 import gui.inventario.*;
 import db.*;
+import main.sonido.*;
 
 
 import javax.swing.JPanel;

@@ -18,6 +18,7 @@ import gui.inventario.*;
 import gui.Mensaje;
 import gui.VentanaComerciante;
 import gui.VentanaInteractuarNPC;
+import main.sonido.*;
 
 public class Jugador extends Personaje {
 	GamePanel gp;

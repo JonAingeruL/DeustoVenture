@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 
 import gui.inventario.*;
 import gui.Mensaje;
-import main.AudioPlayer;
+import main.sonido.*;
 import main.GamePanel;
 import main.Mapa;
 

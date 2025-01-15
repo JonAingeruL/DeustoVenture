@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.imageio.ImageIO;
+import main.sonido.*;
 import entidades.Jugador;
 
 public class Mapa {
