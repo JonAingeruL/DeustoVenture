@@ -325,6 +325,7 @@ public abstract class Enemigo extends Personaje{
 		 objetosLooteados= new HashMap<String,Integer>();
 		Random r = new Random();
 		
+		@SuppressWarnings("unused")
 		int oroRecibido = 0; //metodo necesario
 		
 		//LOOT SLIME
