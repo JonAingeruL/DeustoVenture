@@ -98,7 +98,7 @@ public class Jugador extends Personaje {
 	
 	public void setDineroJugador(int dineroJugador, HashMap<String, Integer> objetosLooteados) {
 	    // Iterar por los objetos looteados
-	    for (String clave : objetosLooteados.keySet()) {
+	    for (@SuppressWarnings("unused") String clave : objetosLooteados.keySet()) {
 	        // Verificar si el inventario contiene la clave "Oro"
 	        if (getInventario().containsKey("Oro")) {
 	            // Obtener la cantidad de oro en el inventario

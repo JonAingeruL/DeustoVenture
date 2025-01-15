@@ -34,7 +34,8 @@ public class VentanaComerciante extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int dineroJugador;
-    private HashMap<String, Integer> productos; //es necesario
+    @SuppressWarnings("unused")
+	private HashMap<String, Integer> productos; //es necesario
 
     public VentanaComerciante(int dineroJugador, ManejoTeclado mt, GamePanel gp, HashMap<String, Integer> productos, Jugador jugador) {
         this.dineroJugador = dineroJugador;
@@ -158,7 +159,8 @@ public class VentanaComerciante extends JFrame {
 		private JButton button;
         private String productoSeleccionado;
         private int precioSeleccionado;
-        private boolean clicked;
+        @SuppressWarnings("unused")
+		private boolean clicked;
 
         public ButtonEditor(JCheckBox checkBox, Jugador jugador) {
             super(checkBox);
