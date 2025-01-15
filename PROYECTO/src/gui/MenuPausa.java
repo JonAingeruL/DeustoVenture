@@ -71,7 +71,6 @@ public class MenuPausa extends JFrame {
 		salir.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		salir.addActionListener(e -> salir());
 		salir.setForeground(Color.RED);
-		// TODO Poner esto en algún formato tiempo
 		int segundos = gp.getJugador().getTiempoJugado();
 		int horas = segundos/3600;
 		int minutos = segundos/60;
