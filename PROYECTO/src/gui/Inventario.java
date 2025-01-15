@@ -56,6 +56,7 @@ public class Inventario extends JFrame {
 			put("Espada de Rubi", 25);
 			put("Espada de Obsidiana", 40);
 			put("Espada de Javanita", 500);
+
 		}
 	};
 	// Hashmap de Pociones y su curación

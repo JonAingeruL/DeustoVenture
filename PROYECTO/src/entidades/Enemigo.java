@@ -441,10 +441,7 @@ public abstract class Enemigo extends Personaje{
 			objetosLooteados.put("Espada de Javanita", 1);
 			objetosLooteados.put("Java en vena", r.nextInt(1,6));
 		}
-		
-		
-		loot.playClip(gp.getVolumenAudio());
-		objetosLooteados.put("Oro",oroRecibido);
+
 		//actualizamos el inventario
 		actualizarInventario(inventario, objetosLooteados);
 		anadirMensajesLoot(objetosLooteados, gp);
