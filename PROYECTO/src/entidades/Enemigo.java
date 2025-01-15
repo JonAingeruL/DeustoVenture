@@ -347,7 +347,6 @@ public abstract class Enemigo extends Personaje{
 					objetosLooteados.put("Pocion de salud", 1);
 					
 				}
-				objetosLooteados.put("Espada Debug", 1);
 			}
 		//se añade el oro del enemigo eliminado
 		loot.playClip(gp.getVolumenAudio());
