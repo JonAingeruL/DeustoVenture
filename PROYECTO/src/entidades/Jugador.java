@@ -96,8 +96,21 @@ public class Jugador extends Personaje {
 		this.enemigosDerrotados = enemigosDerrotados;
 	}
 	
-	public void setDineroJugador(int dineroJugador) {
-		this.dineroJugador = dineroJugador;
+	public void setDineroJugador(int dineroJugador, HashMap<String, Integer> objetosLooteados) {
+	    // Iterar por los objetos looteados
+	    for (String clave : objetosLooteados.keySet()) {
+	        // Verificar si el inventario contiene la clave "Oro"
+	        if (getInventario().containsKey("Oro")) {
+	            // Obtener la cantidad de oro en el inventario
+	            int cantidadOro = getInventario().get("Oro");
+
+	            // Sumar la cantidad de oro al dinero del jugador
+	            this.dineroJugador = dineroJugador + cantidadOro;
+	        } else {
+	            // Si no hay oro, solo asignar el valor recibido
+	            this.dineroJugador = dineroJugador;
+	        }
+	    }
 	}
 	
 	long cooldownAtaque = 0; // De momento, cooldown servirá para almacenar en qué momento
@@ -661,7 +674,6 @@ public class Jugador extends Personaje {
 					if(enemigo.getVida()<=0) {
 						mensajes.add(new Mensaje("Has matado a "+enemigo.getNombre()+"!", tamanobaldosa, Color.BLUE));
 						this.setEnemigosDerrotados(this.getEnemigosDerrotados()+1);
-						this.setDineroJugador(this.getDineroJugador() +1);
 						enemigo.looteoEnemigo(inventario, this, gp);
 						enemigos.get(mapa.getNumeroMapa() + "," + mapa.getNumcelda()).remove(enemigo);
 					}

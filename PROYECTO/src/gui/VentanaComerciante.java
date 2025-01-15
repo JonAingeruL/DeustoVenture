@@ -24,7 +24,7 @@ public class VentanaComerciante extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int dineroJugador;
-    private HashMap<String, Integer> productos;
+    private HashMap<String, Integer> productos; //es necesario
 
     public VentanaComerciante(int dineroJugador, ManejoTeclado mt, GamePanel gp, HashMap<String, Integer> productos, Jugador jugador) {
         this.dineroJugador = dineroJugador;
@@ -128,12 +128,16 @@ public class VentanaComerciante extends JFrame {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (dineroJugador >= precioSeleccionado) {
+                    if (dineroJugador >= precioSeleccionado && jugador.getInventario().containsKey(productoSeleccionado)) {
                         dineroJugador -= precioSeleccionado;
+                        if(jugador.getInventario().containsKey("Oro")) {
+                        	int cantidadOro = jugador.getInventario().get("Oro") - precioSeleccionado;
+                        	jugador.getInventario().put("Oro", cantidadOro);
+                        }
                         JOptionPane.showMessageDialog(button, "Has comprado: " + productoSeleccionado);
                         jugador.getInventario().put(productoSeleccionado, +1);
                     } else {
-                        JOptionPane.showMessageDialog(button, "No tienes suficiente dinero", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(button, "Eres pobre o ya tienes este objeto", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
