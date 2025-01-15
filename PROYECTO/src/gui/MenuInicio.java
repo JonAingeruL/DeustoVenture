@@ -37,6 +37,7 @@ public class MenuInicio extends JFrame {
 		setResizable(false);
         setSize(400,360);
         setLocationRelativeTo(null);
+        setIconImage(new ImageIcon("resources/texturas/extra/LogoDeustoVenture.png").getImage());
 		//setBackground(Color.BLACK);
        //setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         //setIconImage(imagenFondo);
