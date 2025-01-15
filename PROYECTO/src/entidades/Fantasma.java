@@ -6,7 +6,7 @@ public class Fantasma extends Enemigo {
 	
 	public Fantasma(int x, int y, GamePanel gp) {
 		super(6,gp);
-		this.setNombre("Fantasma del bosque");
+		this.setNombre("FantasmaBosque");
 		this.velocidad = 4;
 		this.x = x;
 		this.y = y;

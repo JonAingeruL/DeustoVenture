@@ -85,10 +85,9 @@ public abstract class Enemigo extends Personaje{
  				g2.drawImage(i, x+gp.tamañoBaldosa, y, -gp.tamañoBaldosa, gp.tamañoBaldosa, null);
  			}
  		} else {
- 			
-			g2.setColor(Color.RED);
-
-			g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
+ 			String stringPintado = "resources/texturas/texEnemigos/"+this.getNombre()+".png";
+ 			Image i = new ImageIcon(stringPintado).getImage();
+ 			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
 		}
 	}
 		

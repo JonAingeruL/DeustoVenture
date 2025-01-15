@@ -7,7 +7,7 @@ public class ArmaduraEncantada extends Enemigo {
 	public ArmaduraEncantada(int x, int y, GamePanel gp) {
 		
 		super(14,gp);
-		this.setNombre("Caballero olvidado");
+		this.setNombre("CaballeroOlvidado");
 		this.velocidad = 5;
 		this.x = x;
 		this.y = y;
