@@ -4,15 +4,13 @@
 1;31;13;5;Hola, soy Paco, bienvenido al pueblo.;
 1;31;14;5;Hola, soy Antonio, esos comerciantes tienen objetos increibles.;
 1;41;13;5;Hola, soy Alberto. ¿Te gusta nuestro pueblo?.;
-1;41;11;5;Hola, soy Joselu, me encanta cocinar.;
+1;41;11;5;Hola, soy Joselu, me encanta cocinar y tomar cafe.;
 1;51;13;5;Hola, soy Isabel, que camino tan bonito.;
 1;51;3;5;Hola, soy Juliana. ¿Has visto a Isabel?.;
 1;61;3;5;Hola, soy Aitana, debajo de un puente hay un... .;
 1;32;3;4;Hola, soy Mike, ayer derrotamos a los tigers colega.;
 1;32;5;4;Hola, soy la Maeb. ¿Quieres venir al baile conmigo?.;
-1;42;3;4;Hola, soy Pepe. Somos trillizos.;
-1;42;2;4;Hola, soy Pepa. Somos trillizos.;
-1;42;1;4;Hola, soy Pepo. Somos trillizos.;
+1;42;3;4;Hola, soy Pepe. He perdido a mis trillizos.;
 //FORMATO: Num mapa; num celda; posicion X (del 0 al 15); posicion Y (del 0 al 11); tipo NPC;objeto,objeto,(se pueden meter los que quieras);precio objeto1,precio objeto2...;
 0;4;2;3;NPC COMERCIANTE;Espada de Madera,Espada de Piedra,Espada de Oro;10,12,20;
 1;31;2;5;NPC COMERCIANTE;Manzana,Pera,Limon,Naranja,Platano,Colacao,Cacaolat;5,5,5,5,5,8,8;
