@@ -9,7 +9,6 @@ import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -494,7 +493,7 @@ public class GamePanel extends JPanel implements Runnable {
 					break;
 					case "SlimeFuego": e = new SlimeFuego(posXEnemigo, posYEnemigo, this);
 					break;
-					case "CangrejoFuego": e = new CangrejoFuego(posXEnemigo, posYEnemigo, null);
+					case "CangrejoFuego": e = new CangrejoFuego(posXEnemigo, posYEnemigo, this);
 					break;
 					default: e= new Slime(posXEnemigo, posYEnemigo, this);
 					}

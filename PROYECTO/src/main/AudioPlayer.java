@@ -17,8 +17,7 @@ public class AudioPlayer {
 
 	public AudioPlayer(String path) {
 		super();
-		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));
+		try(AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));) {
 			this.clip = AudioSystem.getClip();
 			try {
 				this.clip.open(ais);

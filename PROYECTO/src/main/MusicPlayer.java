@@ -1,7 +1,6 @@
 package main;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javazoom.jl.decoder.JavaLayerException;
@@ -74,7 +73,10 @@ public class MusicPlayer {
 	public void stopMusic() {
 		cambiarVolumen(0);
 		playing = false;
-		t.interrupt();
+		if (t!=null) {
+			t.interrupt();
+		}
+		
 	}
 	
 	

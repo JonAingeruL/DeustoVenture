@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 
 import main.GamePanel;
 import main.GestorBD;
-import main.Usuario;
 
 public class VentanaRegistroJugador extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -131,7 +130,7 @@ public class VentanaRegistroJugador extends JFrame {
 		
 		window.setVisible(true); //Para poder ver la pantalla
 		
-		gamePanel.iniciarJuegoHilo(usuarioActual,esnuevoUsuario,gbd); //Iniciamos el hilo para iniciar el bucle
+		gamePanel.iniciarJuegoHilo(usuarioActual,esnuevoUsuario,gbd); //Iniciamos el hilo para iniciar el buclez
 		
 		
 	}

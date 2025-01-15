@@ -24,7 +24,11 @@ public class VentanaComerciante extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int dineroJugador;
+<<<<<<< HEAD
     private HashMap<String, Integer> productos; //es necesario
+=======
+    private HashMap<String, Integer> productos;
+>>>>>>> branch 'master' of https://github.com/JonAingeruL/DeustoVenture.git
 
     public VentanaComerciante(int dineroJugador, ManejoTeclado mt, GamePanel gp, HashMap<String, Integer> productos, Jugador jugador) {
         this.dineroJugador = dineroJugador;

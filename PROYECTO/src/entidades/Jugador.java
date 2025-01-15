@@ -550,7 +550,7 @@ public class Jugador extends Personaje {
 							//entrada y salida casa
 							if (!estaDentroDeMazmorra) {
 								archivoACargar = "resources/mapas/casa.txt";
-								cambioMapa(archivoACargar,1,5,tamanobaldosa,200,380,true,mapa);
+								cambioMapa(archivoACargar,1,5,tamanobaldosa,780,360,true,mapa);
 							} else {
 								archivoACargar = "resources/mapas/mapa.txt";
 								cambioMapa(archivoACargar,87,1,tamanobaldosa,780,370,false,mapa);

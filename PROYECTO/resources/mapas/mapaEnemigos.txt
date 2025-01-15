@@ -27,7 +27,6 @@
 1;73;HombreBomba;6;1;
 1;74;HombreBomba;14;5;
 1;76;BabosaFuego;3;4;
-1;56;BabosaFuego;2;6;
 1;67;BabosaFuego;7;2;
 1;66;CangrejoFuego;7;2;
 1;66;CangrejoFuego;7;9;
