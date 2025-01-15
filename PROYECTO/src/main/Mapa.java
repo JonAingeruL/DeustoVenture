@@ -202,12 +202,13 @@ public class Mapa {
 		// En estas listas metemos las texturas que se puedan rotar en el eje x o en el
 		// x e y.
 		List<Integer> flipeableX = Arrays.asList(0, 1, 2, 4, 5, 6, 7, 8, 14, 15, 16, 17, 24);
-		List<Integer> flipeableY = Arrays.asList(0, 4, 5, 7, 8, 14, 15, 24);
+		List<Integer> flipeableY = Arrays.asList(0, 4, 5, 7, 8, 14, 15, 18,19,26,27,28,29,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,51,52,53,54,
+				55,56,57,58,59);
 		// Recorro todo el array que contienen la celda
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 16; j++) {
 				// Dibujamos las texturas que ya tenemos
-				if (celda[j][i] <= 33 && !(numerosSinUtilizar.contains(celda[j][i]))) {
+				if (celda[j][i] <= 63 && !(numerosSinUtilizar.contains(celda[j][i]))) {
 					try {
 						// Creo un randomizador
 						Random rand = new Random();
@@ -240,31 +241,7 @@ public class Mapa {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				} else {
-					switch (celda[j][i]) {
-					// Por cada celda, dependiendo de su número, voy dibujando bloques donde
-					// corresponde
-					// Estos dibujos son la representación temporal de los materiales que todavía no
-					// tienen textura
-					case 3:
-						g.setColor(Color.GREEN);
-						break;
-					case 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46:
-						g.setColor(Color.ORANGE.darker());
-						break;
-					case 50:
-						g.setColor(new Color(180, 100, 20).brighter());
-						break;
-					case 60:
-						g.setColor(Color.white);
-						break;
-					default:
-						g.setColor(Color.WHITE.darker());
-
-					}
-					g.fillRect(j * tamanoBaldosa, i * tamanoBaldosa, tamanoBaldosa, tamanoBaldosa);
 				}
-
 			}
 		}
 	}

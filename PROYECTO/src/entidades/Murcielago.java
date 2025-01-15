@@ -7,7 +7,7 @@ public class Murcielago extends Enemigo{
 	public Murcielago(int x, int y, GamePanel gp) {
 		
 		super(2,gp);
-		this.setNombre("Mucielago");
+		this.setNombre("Murcielago");
 		this.velocidad = 7;
 		this.x = x;
 		this.y = y;
