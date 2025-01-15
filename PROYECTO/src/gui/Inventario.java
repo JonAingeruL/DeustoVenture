@@ -46,7 +46,17 @@ public class Inventario extends JFrame {
 		{
 			put("Espada de Madera", 1);
 			put("Espada de Piedra", 2);
-			put("Espada de Hielo", 1);
+			put("Espada de Hierro", 3);
+			put("Espada de Acero", 5);
+			put("Espada de Plata", 7);
+			put("Espada de Oro", 10);
+			put("Espada de Platino", 12);
+			put("Espada de Diamante", 15);
+			put("Espada de Esmeralda", 20);
+			put("Espada de Rubi", 25);
+			put("Espada de Obsidiana", 40);
+			put("Espada de Javanita", 500);
+
 		}
 	};
 	// Hashmap de Pociones y su curación
@@ -54,7 +64,26 @@ public class Inventario extends JFrame {
 		private static final long serialVersionUID = 1L;
 		{
 			put("Manzana", 1);
-			put("Pocion de salud", 6);
+			put("Pera", 1);
+			put("Limon", 1);
+			put("Naranja", 1);
+			put("Platano", 1);
+			put("Colacao", 2);
+			put("Cacaolat", 2);
+			put("Chuleta", 2);
+			put("Radler Limon", 2);
+			put("Monster Java", 2);
+			put("Tarta de Manzana", 3);
+			put("Tarta de Chocolate", 3);
+			put("Tarta de Fresa", 3);
+			put("RonCola", 3);
+			put("Pocion de Salud", 4);
+			put("Durum solo Carne", 4);
+			put("Pizza de Turco", 4);
+			put("Tarta de Tarta", 5);
+			put("Fabada asturiana", 5);
+			put("Java en vena", 6);
+			
 		}
 	};
 
