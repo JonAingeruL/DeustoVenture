@@ -52,6 +52,12 @@ public class MenuPausa extends JFrame {
 		reanudar.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		reanudar.addActionListener(e -> reanudar(gp));
 		
+		// Dinero del jugador (nuevo JLabel)
+				JLabel dineroJugador = new JLabel("Dinero: " + gp.getJugador().getDineroJugador() + " monedas");
+				dineroJugador.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
+				dineroJugador.setForeground(Color.black);
+				dineroJugador.setAlignmentX(CENTER_ALIGNMENT);
+		
 		
 		
 		
@@ -132,6 +138,10 @@ public class MenuPausa extends JFrame {
 		add(Box.createVerticalGlue());
 		setBackground(Color.BLACK);
 		setVisible(true);
+		
+		// Añadir el JLabel del dinero en la parte inferior
+				add(dineroJugador);
+				dineroJugador.setAlignmentX(CENTER_ALIGNMENT);
 
 	}
 
