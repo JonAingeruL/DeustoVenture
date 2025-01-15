@@ -81,7 +81,7 @@ public abstract class Enemigo extends Personaje{
 			g2.drawImage(i, x, y, gp.tamañoBaldosa, gp.tamañoBaldosa, null);
  		} else {
  			
-			g2.setColor(new Color(25*vida,0,0));
+			g2.setColor(Color.RED);
 
 			g2.fillRect(x, y, gp.tamañoBaldosa, gp.tamañoBaldosa);
 		}
