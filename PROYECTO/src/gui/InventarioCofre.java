@@ -241,8 +241,12 @@ public class InventarioCofre extends JFrame{
 	            ps.println("-resources/mapas/mapa.txt,74-");
 	            ps.println("Pocion de salud;1");
 	            ps.println("Manzana;2");
-	            ps.println("-resources/mapas/mapa.txt,67-");
-	            ps.println("Llave del volcán;1");
+	            ps.println("-resources/mapas/mapa.txt,77-");
+	            ps.println("Tarta de Tarta;1");
+	            ps.println("Platano;1");
+	            ps.println("-resources/mapas/mapa.txt,8-");
+	            ps.println("Java en vena;3");
+	            ps.println("Java Monster;1");
 	            ps.println("-resources/mapas/dungeon1.txt,3-");
 	            ps.println("Llave del bosque;1");
 	            ps.println("Chuleta;1");

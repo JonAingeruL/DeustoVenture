@@ -10,8 +10,12 @@ Espada de Piedra;1
 -resources/mapas/mapa.txt,74-
 Pocion de salud;1
 Manzana;2
--resources/mapas/mapa.txt,67-
-Llave del volcán;1
+-resources/mapas/mapa.txt,77-
+Tarta de Tarta;1
+Platano;1
+-resources/mapas/mapa.txt,8-
+Java en vena;3
+Java Monster;1
 -resources/mapas/dungeon1.txt,3-
 Llave del bosque;1
 Chuleta;1
