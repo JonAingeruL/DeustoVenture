@@ -19,7 +19,11 @@ import java.awt.event.*;
 import java.util.HashMap;
 
 public class VentanaComerciante extends JFrame {
-    private int dineroJugador;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int dineroJugador;
     private HashMap<String, Integer> productos;
 
     public VentanaComerciante(int dineroJugador, ManejoTeclado mt, GamePanel gp, HashMap<String, Integer> productos, Jugador jugador) {
@@ -53,7 +57,12 @@ public class VentanaComerciante extends JFrame {
         }
 
         DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas) {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return column == 2; // Solo la columna de "Comprar" es editable
             }
@@ -84,7 +93,12 @@ public class VentanaComerciante extends JFrame {
 
     // Renderizador personalizado para la columna de botones
     class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public ButtonRenderer() {
             setOpaque(true);
         }
 
@@ -98,7 +112,11 @@ public class VentanaComerciante extends JFrame {
 
     // Editor personalizado para manejar compras
     class ButtonEditor extends DefaultCellEditor {
-        private JButton button;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private JButton button;
         private String productoSeleccionado;
         private int precioSeleccionado;
         private boolean clicked;

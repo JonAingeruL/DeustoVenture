@@ -107,6 +107,11 @@ public class Mapa {
 	 */
 	public void cargarCelda(String celda, int num) {
 		ArrayList<Integer> celdasEspeciales = new ArrayList<Integer>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			{
 				add(41);
 				add(84);
@@ -114,6 +119,11 @@ public class Mapa {
 			}
 		};
 		ArrayList<String> llaves = new ArrayList<String>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			{
 				add("Llave del bosque");
 				add("Llave de la montaña");

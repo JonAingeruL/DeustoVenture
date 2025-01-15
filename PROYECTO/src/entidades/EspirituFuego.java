@@ -3,7 +3,7 @@ package entidades;
 import java.util.Random;
 
 import main.GamePanel;
-import main.Mapa;
+
 
 public class EspirituFuego extends Enemigo {
 	

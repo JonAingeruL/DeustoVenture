@@ -3,7 +3,6 @@ package entidades;
 import java.util.Random;
 
 import main.GamePanel;
-import main.Mapa;
 
 public class CangrejoFuego extends Enemigo {
 	

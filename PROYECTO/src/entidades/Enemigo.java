@@ -270,15 +270,6 @@ public abstract class Enemigo extends Personaje{
 
 	//colisiones iguales a las del jugador (no detecta ni al jugador ni a la espada todavía, por lo cual la variable de vida no es utilizada)
 	public boolean detectaColision(Mapa mapa, int tamanobaldosa) {
-		// se usa para saber en que celda esta el jugador
-		int celdaX = (x + 32) / tamanobaldosa;
-		if (x < -32) {
-			celdaX = mapa.getCelda().length - 1;
-		}
-		int celdaY = (y + 32) / tamanobaldosa;
-		if (y < -32) {
-			celdaY = mapa.getCelda()[0].length - 1;
-		}
 		//System.out.println("Posicionjugador:" + celdaX + "," + celdaY + ", Posicion coords: " + x + "," + y);
 		// Recorro el array celda completo
 
