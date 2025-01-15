@@ -7,8 +7,9 @@ Oro;100
 Platano;2
 -resources/mapas/mapa.txt,31-
 Espada de Piedra;1
--resources/mapas/mapa.txt,83-
-Llave de la montaña;1
+-resources/mapas/mapa.txt,74-
+Pocion de salud;1
+Manzana;2
 -resources/mapas/mapa.txt,67-
 Llave del volcán;1
 -resources/mapas/dungeon1.txt,3-
