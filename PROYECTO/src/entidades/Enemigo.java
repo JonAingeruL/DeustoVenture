@@ -324,7 +324,8 @@ public abstract class Enemigo extends Personaje{
 		//este hashMap vacío se va a llenar con {Nombre de item, Cantidad de item}
 		 objetosLooteados= new HashMap<String,Integer>();
 		Random r = new Random();
-		int oroRecibido = 0;
+		
+		int oroRecibido = 0; //metodo necesario
 		
 		//LOOT SLIME
 		if (this instanceof Slime) {
