@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import gui.menus.*;
 import main.GamePanel;
-import main.GestorBD;
+import db.*;
 
 public class VentanaContinuarJugador extends JFrame{
 	/**

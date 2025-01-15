@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 import gui.menus.*;
 import gui.inventario.*;
+import db.*;
 
 
 import javax.swing.JPanel;

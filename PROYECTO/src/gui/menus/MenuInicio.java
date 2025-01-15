@@ -20,8 +20,7 @@ import javax.swing.JPanel;
 
 import gui.VentanaContinuarJugador;
 import gui.VentanaRegistroJugador;
-import main.GestorBD;
-import main.Usuario;
+import db.*;
 
 
 public class MenuInicio extends JFrame {

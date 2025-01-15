@@ -6,7 +6,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import main.Usuario;
+import db.*;
 
 public class TablaDePuntuaciones extends JFrame {
 

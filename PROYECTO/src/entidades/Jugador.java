@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
-
+import db.*;
 import gui.menus.*;
 import gui.inventario.*;
 import gui.Mensaje;
