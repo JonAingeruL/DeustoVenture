@@ -10,7 +10,7 @@ public class NPC {
     private int posX;
     private int posY;
     private String frase;
-    private boolean esComerciante;
+
 
     public NPC(int posX, int posY, String frase, GamePanel gp) {
         this.posX = posX;
