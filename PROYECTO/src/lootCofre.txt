@@ -1,18 +1,35 @@
 -resources/mapas/tutorial.txt,1-
-Manzana;1
+Manzana;3
 Espada de Madera;1
-Espada de Piedra;1
 Pocion de salud;1
--resources/mapas/tutorial.txt,2-
-Espada de Hielo;1
 -resources/mapas/mapa.txt,1-
-Oro;500
+Oro;100
+Platano;2
 -resources/mapas/mapa.txt,31-
-Llave del bosque;1
+Espada de Piedra;1
 -resources/mapas/mapa.txt,83-
 Llave de la montaña;1
 -resources/mapas/mapa.txt,67-
 Llave del volcán;1
 -resources/mapas/dungeon1.txt,3-
 Llave del bosque;1
+Chuleta;1
+Oro;100
+-resources/mapas/dungeon1.txt,13-
+Espada de Hierro;1
+Cacaolat;1
+Limon;2
+-resources/mapas/dungeon2.txt,23-
+Llave de la montaña;1
+Espada de Diamante;1
+Radler Limon;1
+Durum solo Carne;1
+-resources/mapas/dungeon3.txt,13-
+Llave del volcán;1
+Monster Java;1
+Fabada asturiana;1
+Oro;300
+-resources/mapas/dungeon3.txt,21-
+Espada de Obsidiana;1
+Pocion de Salud;1
 -
