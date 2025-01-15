@@ -6,7 +6,7 @@ public class ArmaduraEncantadaFuego extends Enemigo {
 	
 	public ArmaduraEncantadaFuego(int x, int y, GamePanel gp) {
 		
-		super(12,gp);
+		super(75,gp);
 		this.setNombre("Caballero fundido");
 		this.velocidad = 6;
 		this.x = x;
