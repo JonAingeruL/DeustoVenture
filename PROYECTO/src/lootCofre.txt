@@ -1,7 +1,4 @@
 -resources/mapas/tutorial.txt,1-
-Manzana;3
-Espada de Madera;1
-Pocion de salud;1
 -resources/mapas/mapa.txt,1-
 Oro;100
 Platano;2
@@ -17,6 +14,9 @@ Platano;1
 Java en vena;3
 Java Monster;1
 -resources/mapas/dungeon1.txt,3-
+Llave del bosque;1
+Chuleta;1
+Oro;100
 -resources/mapas/dungeon1.txt,13-
 Espada de Hierro;1
 Cacaolat;1

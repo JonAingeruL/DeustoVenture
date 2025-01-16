@@ -175,11 +175,11 @@ public class VentanaComerciante extends JFrame {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (dineroJugador >= precioSeleccionado && jugador.getInventario().containsKey(productoSeleccionado)) {
+                    if (dineroJugador >= precioSeleccionado && !jugador.getInventario().containsKey(productoSeleccionado)) {
                         dineroJugador -= precioSeleccionado;
-                        if(jugador.getInventario().containsKey("Oro")) {
+                        if(jugador.getInventario().containsKey("Oro")&&(!jugador.getInventario().containsValue(precioSeleccionado))) {
                         	int cantidadOro = jugador.getInventario().get("Oro") - precioSeleccionado;
-                        	jugador.getInventario().put("Oro", cantidadOro);
+                        	jugador.getInventario().replace("Oro", cantidadOro);
                         }
                         JOptionPane.showMessageDialog(button, "Has comprado: " + productoSeleccionado);
                         jugador.getInventario().put(productoSeleccionado, +1);
