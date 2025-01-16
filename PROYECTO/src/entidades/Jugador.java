@@ -11,7 +11,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+<<<<<<< HEAD
 import javax.imageio.ImageIO;
+=======
+import javax.swing.ImageIcon;
+
+>>>>>>> branch 'master' of https://github.com/JonAingeruL/DeustoVenture.git
 import db.*;
 import gui.menus.*;
 import gui.inventario.*;
