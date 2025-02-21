@@ -170,7 +170,13 @@ public class Jugador extends Personaje {
 																												// corazón
 																												// a
 																												// medias
-			espada = ImageIO.read(getClass().getResourceAsStream("/texturas/texInventario/espada.png"));
+			if((!objetoEnMano.equals("")) && (!objetoEnMano.equals("Espada de Madera"))) {
+				String tipoEspada = objetoEnMano.substring(objetoEnMano.indexOf("de ")+3).toLowerCase();
+				System.out.println(tipoEspada);
+			espada = ImageIO.read(getClass().getResourceAsStream("/texturas/texInventario/espada_"+tipoEspada+".png"));
+			}else {
+				espada = ImageIO.read(getClass().getResourceAsStream("/texturas/texInventario/espada.png"));
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -152,6 +152,7 @@ public class Inventario extends JFrame {
 								jugador.getInventario().put(jugador.objetoEnMano, 1);
 							}
 							jugador.objetoEnMano = objetoSeleccionado;
+							jugador.conseguirImagenJugador();
 							jugador.danoJugador = espadasDisponibles.get(objetoSeleccionado);
 							//Si el objeto es curativo, el jugador se cura el valor que corresponda al objeto
 						} else if (objetosCurativos.containsKey(objetoSeleccionado)) {
